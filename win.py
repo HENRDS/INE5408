@@ -18,6 +18,7 @@ class SGI(UI):
     def add_obj(self, obj: GraphicalObject):
         self.objects.append(obj)
 
-    def on_canvas_draw(self, widget, ctx: Context) -> None:
+    def on_canvas_draw(self, ctx: Context) -> None:
         for object in self.objects:
             object.draw(ctx)
+
