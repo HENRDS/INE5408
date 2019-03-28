@@ -2,8 +2,14 @@
 from xml.etree import ElementTree
 from string import Template
 import os
-from mako.template import Template
 import weakref
+
+try:
+    from mako.template import Template
+except ImportError:
+    raise ImportError("Mako template engine is required to run this file")
+
+
 
 class Control:
     def __init__(self, name, type_):
@@ -19,6 +25,7 @@ class Control:
     def __repr__(self):
         return f"Control(name={self.name}, type={self.type_}, ptr_t={self.ptr_t})"
 
+
 class Event:
     def __init__(self, ctrl: Control, name: str, handler: str):
         self.ctrl = weakref.proxy(ctrl)
@@ -30,13 +37,14 @@ class Event:
 
 
 def cpp(controls, events):
-    header_templ = Template(filename="events.hpp.mako")    
-    src_templ = Template(filename="events.cc.mako")    
+    header_templ = Template(filename="events.hpp.mako")
+    src_templ = Template(filename="events.cc.mako")
     with open("./events.hpp", "w") as header:
         header.write(header_templ.render(guard="EVENTS_HPP", controls=controls, events=events))
     print("header")
     with open("./events.cc", "w") as src:
         src.write(src_templ.render(header_path="events.hpp", controls=controls, events=events))
+
 
 def python3(controls, events):
     py_templ = Template(filename="ui.py.mako")
@@ -44,8 +52,9 @@ def python3(controls, events):
     with open("./ui.py", "w") as src:
         src.write(text)
 
+
 def main():
-    file = os.path.abspath( "../main_window.glade")
+    file = os.path.abspath("../main_window.glade")
     tree = ElementTree.parse(file)
     root = tree.getroot()
     controls = []
@@ -53,7 +62,7 @@ def main():
 
     for c in root.findall(".//object[@id]"):
         name = c.get("id")
-        ctrl = Control(name, c.get("class")) 
+        ctrl = Control(name, c.get("class"))
         controls.append(ctrl)
         for x in c.findall("signal"):
             event = Event(ctrl, x.get("name"), x.get("handler"))
@@ -65,9 +74,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
-
-
-
-
-

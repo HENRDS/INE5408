@@ -1,20 +1,19 @@
-from infra.ui import UI
-from geometry.base import GraphicalObject
 import typing as tp
-from cairo import Context
+
 import gi
-from shapes import Line
+
+from infra.ui import UI
+from shapes import GraphicalObject, Line
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gdk, Gtk, GObject
+from gi.repository import Gtk
 
 
 class SGI(UI):
     def __init__(self, builder: Gtk.Builder):
         super().__init__(builder)
-        self.objects: tp.List[GraphicalObject] = [
-        ]
+        self.objects: tp.List[GraphicalObject] = []
         self.tree_model = Gtk.ListStore(str, str)
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
@@ -40,4 +39,3 @@ class SGI(UI):
 
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
         pass
-

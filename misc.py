@@ -2,9 +2,6 @@ import numpy as np
 import geometry
 
 
-
-
-
 class Window:
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -23,8 +20,3 @@ class Viewport:
         v = self.bottom_right - self.top_left
         u = np.array([0., -1.])
         return v * (u - ((p - window.p1) / (window.p2 - window.p1)))
-
-
-
-
-

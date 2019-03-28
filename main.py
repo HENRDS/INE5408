@@ -2,7 +2,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, Gtk, GObject
-from win import SGI
+from sgi import SGI
 
 
 def main():
@@ -10,7 +10,10 @@ def main():
     v = SGI(builder)
     v.show()
     v.connect_model()
-    Gtk.main()
+    try:
+        Gtk.main()
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == '__main__':

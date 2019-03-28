@@ -1,5 +1,5 @@
 
-from geometry.base import GraphicalObject
+from .base import GraphicalObject
 
 
 class Polygon(GraphicalObject):

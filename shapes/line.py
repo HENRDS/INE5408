@@ -1,4 +1,4 @@
-from geometry.base import GraphicalObject
+from .base import GraphicalObject
 
 
 class Line(GraphicalObject):
