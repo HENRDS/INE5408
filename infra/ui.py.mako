@@ -7,7 +7,7 @@ import abc
 class ${cls_name}:
     def __init__(self, builder: Gtk.Builder):
     % for control in controls:
-        self.${control.name}: Gtk.${control.type_.lstrip("Gtk")} = builder.get_object("${control.name}")
+        self.${control.name}: Gtk.${control.py_type} = builder.get_object("${control.name}")
     % endfor
     % for control in controls:
     %if control.events:
@@ -25,7 +25,7 @@ class ${cls_name}:
 
 % for event in events:
     @abc.abstractmethod
-    def ${event.handler}(self\
+    def ${event.handler}(self, sender: ${event.ctrl.py_type}\
 %if hasattr(event, "args"):
 , ${', '.join(event.args)}\
 %endif

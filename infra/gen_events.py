@@ -3,7 +3,7 @@ from xml.etree import ElementTree
 from string import Template
 import os
 from mako.template import Template
-
+import weakref
 
 class Control:
     def __init__(self, name, type_):
@@ -12,12 +12,16 @@ class Control:
         self.ptr_t = type_ + "*"
         self.events = []
 
+    @property
+    def py_type(self):
+        return f".".join(self.type_.rpartition("Gtk")[1:])
+
     def __repr__(self):
         return f"Control(name={self.name}, type={self.type_}, ptr_t={self.ptr_t})"
 
 class Event:
     def __init__(self, ctrl: Control, name: str, handler: str):
-        self.ctrl = ctrl
+        self.ctrl = weakref.proxy(ctrl)
         self.name = name
         self.handler = handler
 
