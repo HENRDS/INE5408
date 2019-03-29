@@ -1,4 +1,8 @@
 #!usr/bin/env python3
+"""
+This script generates code for ui event handlers and groups them in classes
+author: Henry R. Da Silva
+"""
 from xml.etree import ElementTree
 import os
 import weakref
@@ -63,21 +67,21 @@ class Window(Control):
             self.controls.append(ctrl)
 
 
-def main():
+def main(ui_file_path: str, template_path: str, des_path: str, ui_class="UI", main_window="main_window"):
     from pprint import pprint
-    file = os.path.abspath("../main_window.glade")
+    file = os.path.abspath(ui_file_path)
     tree = ElementTree.parse(file)
     root = tree.getroot()
     windows = [Window(x) for x in root.findall("./object[@id][@class='GtkWindow']")]
     pprint(windows)
-    templ = Template(filename="ui.py.mako")
-    text = templ.render(cls_name="UI",
-                        main_window="win_main",
+    templ = Template(filename=template_path)
+    text = templ.render(cls_name=ui_class,
+                        main_window=main_window,
                         windows=windows)
-    with open("../views/ui.py", "w") as src:
+    with open(des_path, "w") as src:
         src.write(text)
-    print("Saved to ./ui.py")
+    print(f"Saved to {des_path}")
 
 
 if __name__ == "__main__":
-    main()
+    main("../main_window.glade", "ui.py.mako", "../views/ui.py")
