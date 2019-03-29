@@ -1,6 +1,16 @@
 import numpy as np
 
 
+def pt(*items) -> np.ndarray:
+    """builds a simple point"""
+    return np.array(items)
+
+
+def hpt(*items) -> np.ndarray:
+    """Builds an homogeneous coordinate system point"""
+    return pt(*items, 1)
+
+
 def translate(n: int, point) -> np.ndarray:
     matrix = np.eye(n, n)
     m = n - 1
@@ -24,4 +34,3 @@ def rotate2D(angle: float):
         [s, c, 0],
         [0, 0, 1]
     ])
-

@@ -1,6 +1,7 @@
 import numpy as np
 import geometry
 
+
 class Window:
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -15,9 +16,12 @@ class Viewport:
         self.top_left = top_left
         self.bottom_right = bottom_right
 
-    def transform(self, window: Window, p):
+    def transformer(self, window: Window):
         v = self.bottom_right - self.top_left
-        u = np.array([0., -1.])
-        return v * (u - ((p - window.p1) / (window.p2 - window.p1)))
 
+        def transform(p):
 
+            x, y = (p - window.p1)[:-1] / (window.p2 - window.p1)[:-1]
+            return v * np.array([x, 1 - y, 1])
+
+        return transform

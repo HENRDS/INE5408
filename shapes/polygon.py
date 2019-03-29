@@ -7,12 +7,12 @@ class Polygon(GraphicalObject):
         super().__init__(name)
         self.points = points
 
-    def draw(self, ctx) -> None:
+    def draw(self, ctx, tr) -> None:
         pts = iter(self.points)
-        x = next(pts)
+        x = tr(next(pts))
         ctx.move_to(*x[:-1])
         for p in pts:
-            ctx.line_to(*p[:-1])
+            ctx.line_to(*tr(p)[:-1])
         ctx.line_to(*x[:-1])
         ctx.stroke()
 
