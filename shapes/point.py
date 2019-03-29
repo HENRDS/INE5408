@@ -9,7 +9,7 @@ class Point(GraphicalObject):
         super().__init__(name)
         self.pos = pos
 
-    def draw(self, ctx: Context) -> None:
-        x, y = self.pos
+    def draw(self, ctx: Context, tr) -> None:
+        x, y = self.pos[:-1]
         ctx.arc(x, y, 5, 0, 2 * np.pi)
         ctx.fill()

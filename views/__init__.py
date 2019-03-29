@@ -6,7 +6,8 @@ from gi.repository import Gtk
 from .ui import UI
 from .main import MainHandler
 import numpy as np
-from shapes import Line, Rect
+from shapes import Line, Rect, Point
+from geometry import hpt
 
 
 class SGI(UI):
@@ -16,7 +17,7 @@ class SGI(UI):
         super().__init__(builder)
         self.win_main.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
         self.win_main.add_obj(Rect("wee", np.array([10, 10, 1]), np.array([23, 70, 1])))
-
+        self.win_main.add_obj(Point("kkk", hpt(69, 69)))
 
 __all__ = [
     "SGI",

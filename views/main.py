@@ -12,8 +12,10 @@ class MainHandler(WinMain):
 
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        self.window = Window(hpt(0., 0.), hpt(400., 400.))
-        self.viewport = Viewport(hpt(0., 0.), hpt(400., 400.))
+        w, h = float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height())
+        print(w, h)
+        self.window = Window(hpt(0., 0.), hpt(w, h))
+        self.viewport = Viewport(hpt(0., 0.), hpt(w, h))
         self.tree_model = Gtk.ListStore(str, str)
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
