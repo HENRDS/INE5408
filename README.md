@@ -5,8 +5,6 @@ SGI(Sistema grafico interativo) from portuguese means Interactive Graphical Syst
 ## Requirements for running
  
  - Python 3.7+
- - numpy 
- 
  - numpy(1.16.2)
  - pycairo(1.18.0)
  - PyGObject(3.32.0)
