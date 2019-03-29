@@ -2,150 +2,12 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow">
-    <property name="can_focus">False</property>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">11</property>
-                <property name="label" translatable="yes">Name:</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="entry_add_name">
-                <property name="name">btn</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="margin_right">24</property>
-                <property name="margin_top">10</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">x:</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="entry_add_pointx">
-                <property name="name">btn_add_xpoint</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="margin_left">30</property>
-                <property name="margin_right">24</property>
-                <property name="margin_top">12</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">y:</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="entry_add_pointy">
-                <property name="name">btn_add_ypoint</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="margin_left">29</property>
-                <property name="margin_right">23</property>
-                <property name="margin_top">2</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">Add Point</property>
-            <property name="name">btn_add_point</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="margin_top">40</property>
-            <signal name="clicked" handler="on_btn_add_point_activate" swapped="no"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-      </object>
-    </child>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
-  <object class="GtkWindow" id="add_line_window">
+  <object class="GtkWindow" id="win_add_line">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>
@@ -352,7 +214,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="on_btn_add_line_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_add_line_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -363,7 +225,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="add_object_3D">
+  <object class="GtkWindow" id="win_add_object3d">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>
@@ -529,7 +391,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_left">47</property>
                 <property name="margin_right">32</property>
-                <signal name="clicked" handler="on_btn_add_vertice_activate" swapped="no"/>
+                <signal name="clicked" handler="on_btn_add_vertice_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -545,7 +407,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_left">34</property>
                 <property name="margin_right">47</property>
-                <signal name="clicked" handler="on_btn_finish_object_activate" swapped="no"/>
+                <signal name="clicked" handler="on_btn_finish_object_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -563,7 +425,151 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="add_polygon_window">
+  <object class="GtkWindow" id="win_add_point">
+    <property name="can_focus">False</property>
+    <property name="modal">True</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_top">11</property>
+                <property name="label" translatable="yes">Name:</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry_add_name">
+                <property name="name">btn</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="margin_right">24</property>
+                <property name="margin_top">10</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">x:</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry_add_pointx">
+                <property name="name">btn_add_xpoint</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="margin_left">30</property>
+                <property name="margin_right">24</property>
+                <property name="margin_top">12</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">y:</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry_add_pointy">
+                <property name="name">btn_add_ypoint</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="margin_left">29</property>
+                <property name="margin_right">23</property>
+                <property name="margin_top">2</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Add Point</property>
+            <property name="name">btn_add_point</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_top">40</property>
+            <signal name="clicked" handler="on_btn_add_point_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="win_add_polygon">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>
@@ -735,7 +741,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">40</property>
-            <signal name="clicked" handler="on_btn_add_polygon_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_add_polygon_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -746,12 +752,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkAdjustment" id="adjustment1">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkWindow" id="escalonate_window1">
+  <object class="GtkWindow" id="win_escalonate">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>
@@ -843,7 +844,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="on_btn_add_escale_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_add_escale_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -854,8 +855,9 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="includeObject_window">
+  <object class="GtkWindow" id="win_include_object">
     <property name="can_focus">False</property>
+    <property name="modal">True</property>
     <property name="default_width">450</property>
     <child>
       <placeholder/>
@@ -902,7 +904,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_polygon_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_polygon_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -918,7 +920,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_line_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_line_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -934,7 +936,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_spline_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_spline_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -950,7 +952,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_object3d_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_object3d_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -966,7 +968,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_bezier_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_bezier_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -977,12 +979,12 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="main_window">
+  <object class="GtkWindow" id="win_main">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="default_width">1223</property>
     <property name="default_height">600</property>
-    <signal name="activate-focus" handler="on_main_window_activate_focus" swapped="no"/>
+    <signal name="activate-focus" handler="on_main_window_clicked_focus" swapped="no"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -1478,7 +1480,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="translate_window">
+  <object class="GtkWindow" id="win_translate">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>
