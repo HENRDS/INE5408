@@ -38,4 +38,12 @@ class SGI(UI):
         self.canvas.queue_draw()
 
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.includeObject_window.present()
+
+
+
+
+
+
+
+
