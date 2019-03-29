@@ -6,9 +6,6 @@ import abc
 
 class UI:
     def __init__(self, builder: Gtk.Builder):
-        self.entry_add_name: Gtk.Gtk.Entry = builder.get_object("entry_add_name")
-        self.entry_add_pointx: Gtk.Gtk.Entry = builder.get_object("entry_add_pointx")
-        self.entry_add_pointy: Gtk.Gtk.Entry = builder.get_object("entry_add_pointy")
         self.add_line_window: Gtk.Gtk.Window = builder.get_object("add_line_window")
         self.entry_add_line_name: Gtk.Gtk.Entry = builder.get_object("entry_add_line_name")
         self.entry_add_line_x: Gtk.Gtk.Entry = builder.get_object("entry_add_line_x")
@@ -73,6 +70,10 @@ class UI:
         self.btn_translate: Gtk.Gtk.Button = builder.get_object("btn_translate")
         self.canvas: Gtk.Gtk.DrawingArea = builder.get_object("canvas")
         self.lstLog: Gtk.Gtk.ListBox = builder.get_object("lstLog")
+        self.point_window: Gtk.Gtk.Window = builder.get_object("point_window")
+        self.entry_add_name: Gtk.Gtk.Entry = builder.get_object("entry_add_name")
+        self.entry_add_pointx: Gtk.Gtk.Entry = builder.get_object("entry_add_pointx")
+        self.entry_add_pointy: Gtk.Gtk.Entry = builder.get_object("entry_add_pointy")
         self.translate_window: Gtk.Gtk.Window = builder.get_object("translate_window")
         self.entry_translatex: Gtk.Gtk.Entry = builder.get_object("entry_translatex")
         self.entry_translatey: Gtk.Gtk.Entry = builder.get_object("entry_translatey")
@@ -88,7 +89,7 @@ class UI:
         # btn_add_escale
         self.btn_add_escale.connect("clicked", self.on_btn_add_escale_activate)
         # btn_include_point
-        self.btn_include_point.connect("clicked", self.on_btn_include_point_activate)
+        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
         # btn_include_polygon
         self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_activate)
         # btn_include_line
@@ -154,7 +155,7 @@ class UI:
         pass
 
     @abc.abstractmethod
-    def on_btn_include_point_activate(self, sender: Gtk.Button) -> None:
+    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
         pass
 
     @abc.abstractmethod

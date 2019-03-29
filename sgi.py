@@ -41,6 +41,17 @@ class SGI(UI):
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
         self.includeObject_window.present()
 
+    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
+        self.point_window.present()
+
+    def on_btn_include_line_activate(self, sender: Gtk.Button) -> None:
+        self.add_line_window.present()
+
+
+
+
+
+
 
 
 
