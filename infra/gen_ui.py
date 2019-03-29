@@ -51,7 +51,7 @@ def python3(controls, events):
     text = py_templ.render(cls_name="UI", controls=controls, events=events)
     with open("./ui.py", "w") as src:
         src.write(text)
-
+    print("Saved to ./ui.py")
 
 def main():
     file = os.path.abspath("../main_window.glade")

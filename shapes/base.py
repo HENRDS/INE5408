@@ -1,5 +1,5 @@
 import abc
-
+from cairo import Context
 
 class GraphicalObject:
     def __init__(self, name: str):
@@ -10,5 +10,5 @@ class GraphicalObject:
         return self._name
 
     @abc.abstractmethod
-    def draw(self, ctx) -> None:
+    def draw(self, ctx: Context) -> None:
         pass

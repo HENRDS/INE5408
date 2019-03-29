@@ -1,9 +1,9 @@
 import typing as tp
 
 import gi
-
+import numpy as np
 from infra.ui import UI
-from shapes import GraphicalObject, Line
+from shapes import GraphicalObject, Line, Rect
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
@@ -24,7 +24,8 @@ class SGI(UI):
         self.tree_objects.set_model(self.tree_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
-        self.add_obj(Line("noia", (10, 10, 1), (100, 100, 1)))
+        self.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
+        self.add_obj(Rect("wee", np.array([10, 10, 1]), np.array([23, 70, 1])))
 
     def add_obj(self, obj: GraphicalObject):
         self.objects.append(obj)
