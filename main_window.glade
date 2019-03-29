@@ -752,7 +752,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="win_escalonate">
+  <object class="GtkWindow" id="win_scale">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
     <child>

@@ -9,10 +9,10 @@ try:
 except ImportError:
     raise ImportError("Mako template engine is required to run this file")
 
-
 _extra_args = {
     "draw": ("ctx: Context",)
 }
+
 
 class Control:
     def __init__(self, node: ElementTree.Element):
@@ -46,9 +46,11 @@ class Event:
 class Window(Control):
     def __init__(self, node: ElementTree.Element):
         super().__init__(node)
-        self.controls = [Control(c) for c in node.findall(".//object[@id]")]
-
-
+        self.controls = []
+        for c in node.findall(".//object[@id]"):
+            ctrl = Control(c)
+            self.events.extend(ctrl.events)
+            self.controls.append(ctrl)
 
 
 def main():
@@ -60,11 +62,13 @@ def main():
     print(len(props))
     templ = Template(filename="ui.py.mako")
     text = templ.render(cls_name="UI",
-                        props=props,
+                        main_window="win_main",
+                        props=[w for w in props if not isinstance(w, Window)],
                         windows=[w for w in props if isinstance(w, Window)])
-    with open("./ui.py", "w") as src:
+    with open("../views/ui.py", "w") as src:
         src.write(text)
     print("Saved to ./ui.py")
+
 
 if __name__ == "__main__":
     main()
