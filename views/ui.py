@@ -5,8 +5,8 @@ from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gdk, Gtk, GObject
-
+from gi.repository import Gtk
+from shapes import GraphicalModel
 
 class WindowEventHandler:
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
@@ -287,8 +287,8 @@ class UI:
     _WIN_SCALE = WinScale
     _WIN_TRANSLATE = WinTranslate
 
-    def __init__(self, builder: Gtk.Builder):
-        self.display_file: List[GraphicalObject] = []
+    def __init__(self, builder: Gtk.Builder, model: GraphicalModel):
+        self.model: GraphicalModel = model
         self.win_add_line: WinAddLine = self._WIN_ADD_LINE(self, builder)
         self.win_add_object3d: WinAddObject3D = self._WIN_ADD_OBJECT3D(self, builder)
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
@@ -297,7 +297,7 @@ class UI:
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_scale: WinScale = self._WIN_SCALE(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
-        self.win_main.win.connect("destroy", Gtk.main_quit)
+        self.main_window.win.connect("destroy", Gtk.main_quit)
 
     def show(self):
-        self.win_main.win.show()
+        self.main_window.win.show()

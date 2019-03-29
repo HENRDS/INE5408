@@ -5,8 +5,8 @@ from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gdk, Gtk, GObject
-
+from gi.repository import Gtk
+from shapes import GraphicalModel
 
 class WindowEventHandler:
     def __init__(self, app_handler: "${cls_name}", builder: Gtk.Builder):
@@ -52,8 +52,8 @@ class ${cls_name}:
     ${win.attr_name} = ${win.cls_name}
 %endfor
 
-    def __init__(self, builder: Gtk.Builder):
-        self.display_file: List[GraphicalObject] = []
+    def __init__(self, builder: Gtk.Builder, model: GraphicalModel):
+        self.model: GraphicalModel = model
     %for win in windows:
         self.${win.name}: ${win.cls_name} = self.${win.attr_name}(self, builder)
     %endfor
