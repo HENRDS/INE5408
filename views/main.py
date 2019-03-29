@@ -43,9 +43,35 @@ class MainHandler(WinMain):
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.win_include_object.present()
 
-    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_point.present()
+    def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
+        pass
 
-    def on_btn_include_line_activate(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_line.present()
+    def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
+        self.app_handler.win_scale.present()
+
+    def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
+        self.app_handler.win_translate.present()
+
+ 
 
