@@ -886,7 +886,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="margin_top">10</property>
-            <signal name="clicked" handler="on_btn_include_point_activate" swapped="no"/>
+            <signal name="clicked" handler="on_btn_include_point_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1450,7 +1450,7 @@
                 <signal name="draw" handler="on_canvas_draw" swapped="no"/>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>

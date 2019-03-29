@@ -1,6 +1,6 @@
 #!usr/bin/env python3
 from xml.etree import ElementTree
-from string import Template
+import re
 import os
 import weakref
 
@@ -10,69 +10,61 @@ except ImportError:
     raise ImportError("Mako template engine is required to run this file")
 
 
+_extra_args = {
+    "draw": ("ctx: Context",)
+}
 
 class Control:
-    def __init__(self, name, type_):
-        self.name = name
-        self.type_ = type_
-        self.ptr_t = type_ + "*"
-        self.events = []
+    def __init__(self, node: ElementTree.Element):
+        self.name: str = node.get("id")
+        self.type_: str = node.get("class")
+        self.cls_name = self.name.title().replace("_", "")
+        self.attr_name = f"_{self.name.upper()}"
+        self.events = [Event(self, e) for e in node.findall("signal")]
 
     @property
     def py_type(self):
         return f".".join(self.type_.rpartition("Gtk")[1:])
 
     def __repr__(self):
-        return f"Control(name={self.name}, type={self.type_}, ptr_t={self.ptr_t})"
+        return f"Control(name={self.name}, type={self.type_}, py_type={self.py_type})"
 
 
 class Event:
-    def __init__(self, ctrl: Control, name: str, handler: str):
+    def __init__(self, ctrl, node: ElementTree.Element):
         self.ctrl = weakref.proxy(ctrl)
-        self.name = name
-        self.handler = handler
+        self.name = node.get("name")
+        args = _extra_args.get(self.name)
+        if args is not None:
+            self.args = args
+        self.handler = node.get("handler")
 
     def __repr__(self):
         return f"Event(ctrl={self.ctrl.name}, name={self.name}, handler={self.handler})"
 
 
-def cpp(controls, events):
-    header_templ = Template(filename="events.hpp.mako")
-    src_templ = Template(filename="events.cc.mako")
-    with open("./events.hpp", "w") as header:
-        header.write(header_templ.render(guard="EVENTS_HPP", controls=controls, events=events))
-    print("header")
-    with open("./events.cc", "w") as src:
-        src.write(src_templ.render(header_path="events.hpp", controls=controls, events=events))
+class Window(Control):
+    def __init__(self, node: ElementTree.Element):
+        super().__init__(node)
+        self.controls = [Control(c) for c in node.findall(".//object[@id]")]
 
 
-def python3(controls, events):
-    py_templ = Template(filename="ui.py.mako")
-    text = py_templ.render(cls_name="UI", controls=controls, events=events)
-    with open("./ui.py", "w") as src:
-        src.write(text)
-    print("Saved to ./ui.py")
+
 
 def main():
     file = os.path.abspath("../main_window.glade")
     tree = ElementTree.parse(file)
     root = tree.getroot()
-    controls = []
-    events = []
-
-    for c in root.findall(".//object[@id]"):
-        name = c.get("id")
-        ctrl = Control(name, c.get("class"))
-        controls.append(ctrl)
-        for x in c.findall("signal"):
-            event = Event(ctrl, x.get("name"), x.get("handler"))
-            if event.name == "draw":
-                event.args = ("ctx",)
-            ctrl.events.append(event)
-            events.append(event)
-    python3(controls, events)
-
+    props = [(Window if x.get("class") == "GtkWindow" else Control)(x)
+             for x in root.findall("./object[@id]")]
+    print(len(props))
+    templ = Template(filename="ui.py.mako")
+    text = templ.render(cls_name="UI",
+                        props=props,
+                        windows=[w for w in props if isinstance(w, Window)])
+    with open("./ui.py", "w") as src:
+        src.write(text)
+    print("Saved to ./ui.py")
 
 if __name__ == "__main__":
-
     main()

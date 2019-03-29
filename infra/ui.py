@@ -1,22 +1,23 @@
+from cairo import Context
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, Gtk, GObject
-import abc
 
-class UI:
+
+class AddLineWindow:
     def __init__(self, builder: Gtk.Builder):
-        self.entry_add_name: Gtk.Gtk.Entry = builder.get_object("entry_add_name")
-        self.entry_add_pointx: Gtk.Gtk.Entry = builder.get_object("entry_add_pointx")
-        self.entry_add_pointy: Gtk.Gtk.Entry = builder.get_object("entry_add_pointy")
-        self.add_line_window: Gtk.Gtk.Window = builder.get_object("add_line_window")
         self.entry_add_line_name: Gtk.Gtk.Entry = builder.get_object("entry_add_line_name")
         self.entry_add_line_x: Gtk.Gtk.Entry = builder.get_object("entry_add_line_x")
         self.entry_add_line_y: Gtk.Gtk.Entry = builder.get_object("entry_add_line_y")
         self.entry_add_line_x2: Gtk.Gtk.Entry = builder.get_object("entry_add_line_x2")
         self.entry_add_line_y2: Gtk.Gtk.Entry = builder.get_object("entry_add_line_y2")
         self.btn_add_line: Gtk.Gtk.Button = builder.get_object("btn_add_line")
-        self.add_object_3D: Gtk.Gtk.Window = builder.get_object("add_object_3D")
+        # btn_add_line
+        self.btn_add_line.connect("clicked", self.on_btn_add_line_activate)
+
+class AddObject3D:
+    def __init__(self, builder: Gtk.Builder):
         self.box49: Gtk.Gtk.Box = builder.get_object("box49")
         self.box50: Gtk.Gtk.Box = builder.get_object("box50")
         self.label32: Gtk.Gtk.Label = builder.get_object("label32")
@@ -33,25 +34,52 @@ class UI:
         self.box53: Gtk.Gtk.Box = builder.get_object("box53")
         self.btn_add_vertice: Gtk.Gtk.Button = builder.get_object("btn_add_vertice")
         self.btn_finish_object: Gtk.Gtk.Button = builder.get_object("btn_finish_object")
-        self.add_polygon_window: Gtk.Gtk.Window = builder.get_object("add_polygon_window")
+        # btn_add_vertice
+        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_activate)
+        # btn_finish_object
+        self.btn_finish_object.connect("clicked", self.on_btn_finish_object_activate)
+
+class AddPolygonWindow:
+    def __init__(self, builder: Gtk.Builder):
         self.entry_add_polygon_name: Gtk.Gtk.Entry = builder.get_object("entry_add_polygon_name")
         self.entry_add_polygonx: Gtk.Gtk.Entry = builder.get_object("entry_add_polygonx")
         self.entry_add_polygony: Gtk.Gtk.Entry = builder.get_object("entry_add_polygony")
         self.entry_add_polygonz: Gtk.Gtk.Entry = builder.get_object("entry_add_polygonz")
         self.btn_add_polygon: Gtk.Gtk.Button = builder.get_object("btn_add_polygon")
-        self.adjustment1: Gtk.Gtk.Adjustment = builder.get_object("adjustment1")
-        self.escalonate_window1: Gtk.Gtk.Window = builder.get_object("escalonate_window1")
+        # btn_add_polygon
+        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_activate)
+
+class EscalonateWindow1:
+    def __init__(self, builder: Gtk.Builder):
         self.entry_escalex: Gtk.Gtk.Entry = builder.get_object("entry_escalex")
         self.entry_escaley: Gtk.Gtk.Entry = builder.get_object("entry_escaley")
         self.btn_add_escale: Gtk.Gtk.Button = builder.get_object("btn_add_escale")
-        self.includeObject_window: Gtk.Gtk.Window = builder.get_object("includeObject_window")
+        # btn_add_escale
+        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_activate)
+
+class IncludeobjectWindow:
+    def __init__(self, builder: Gtk.Builder):
         self.btn_include_point: Gtk.Gtk.Button = builder.get_object("btn_include_point")
         self.btn_include_polygon: Gtk.Gtk.Button = builder.get_object("btn_include_polygon")
         self.btn_include_line: Gtk.Gtk.Button = builder.get_object("btn_include_line")
         self.btn_include_spline: Gtk.Gtk.Button = builder.get_object("btn_include_spline")
         self.btn_include_object3d: Gtk.Gtk.Button = builder.get_object("btn_include_object3d")
         self.btn_include_bezier: Gtk.Gtk.Button = builder.get_object("btn_include_bezier")
-        self.main_window: Gtk.Gtk.Window = builder.get_object("main_window")
+        # btn_include_point
+        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
+        # btn_include_polygon
+        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_activate)
+        # btn_include_line
+        self.btn_include_line.connect("clicked", self.on_btn_include_line_activate)
+        # btn_include_spline
+        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_activate)
+        # btn_include_object3d
+        self.btn_include_object3d.connect("clicked", self.on_btn_include_object3d_activate)
+        # btn_include_bezier
+        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_activate)
+
+class MainWindow:
+    def __init__(self, builder: Gtk.Builder):
         self.btn_new: Gtk.Gtk.Button = builder.get_object("btn_new")
         self.btn_save: Gtk.Gtk.Button = builder.get_object("btn_save")
         self.btn_open: Gtk.Gtk.Button = builder.get_object("btn_open")
@@ -73,34 +101,6 @@ class UI:
         self.btn_translate: Gtk.Gtk.Button = builder.get_object("btn_translate")
         self.canvas: Gtk.Gtk.DrawingArea = builder.get_object("canvas")
         self.lstLog: Gtk.Gtk.ListBox = builder.get_object("lstLog")
-        self.translate_window: Gtk.Gtk.Window = builder.get_object("translate_window")
-        self.entry_translatex: Gtk.Gtk.Entry = builder.get_object("entry_translatex")
-        self.entry_translatey: Gtk.Gtk.Entry = builder.get_object("entry_translatey")
-        self.btn_apply_translation: Gtk.Gtk.Button = builder.get_object("btn_apply_translation")
-        # btn_add_line
-        self.btn_add_line.connect("clicked", self.on_btn_add_line_activate)
-        # btn_add_vertice
-        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_activate)
-        # btn_finish_object
-        self.btn_finish_object.connect("clicked", self.on_btn_finish_object_activate)
-        # btn_add_polygon
-        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_activate)
-        # btn_add_escale
-        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_activate)
-        # btn_include_point
-        self.btn_include_point.connect("clicked", self.on_btn_include_point_activate)
-        # btn_include_polygon
-        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_activate)
-        # btn_include_line
-        self.btn_include_line.connect("clicked", self.on_btn_include_line_activate)
-        # btn_include_spline
-        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_activate)
-        # btn_include_object3d
-        self.btn_include_object3d.connect("clicked", self.on_btn_include_object3d_activate)
-        # btn_include_bezier
-        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_activate)
-        # main_window
-        self.main_window.connect("activate-focus", self.on_main_window_activate_focus)
         # btn_add_object
         self.btn_add_object.connect("clicked", self.on_btn_add_object_clicked)
         # btn_up
@@ -125,111 +125,43 @@ class UI:
         self.btn_translate.connect("clicked", self.on_btn_translate_clicked)
         # canvas
         self.canvas.connect("draw", self.on_canvas_draw)
+
+    def on_main_window_activate_focus(self, sender: Gtk.Window) -> None:
+        pass
+
+class TranslateWindow:
+    def __init__(self, builder: Gtk.Builder):
+        self.entry_translatex: Gtk.Gtk.Entry = builder.get_object("entry_translatex")
+        self.entry_translatey: Gtk.Gtk.Entry = builder.get_object("entry_translatey")
+        self.btn_apply_translation: Gtk.Gtk.Button = builder.get_object("btn_apply_translation")
         # btn_apply_translation
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
-    
+
+
+
+class UI:
+    _ADD_LINE_WINDOW = AddLineWindow
+    _ADD_OBJECT_3D = AddObject3D
+    _ADD_POLYGON_WINDOW = AddPolygonWindow
+    _ESCALONATE_WINDOW1 = EscalonateWindow1
+    _INCLUDEOBJECT_WINDOW = IncludeobjectWindow
+    _MAIN_WINDOW = MainWindow
+    _TRANSLATE_WINDOW = TranslateWindow
+
+
+    def __init__(self, builder: Gtk.Builder):
+        self.add_line_window: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.add_object_3D: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.add_polygon_window: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.adjustment1: Gtk.Gtk.Adjustment = self._TRANSLATE_WINDOW(builder)
+        self.escalonate_window1: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.includeObject_window: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.main_window: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+        self.translate_window: Gtk.Gtk.Window = self._TRANSLATE_WINDOW(builder)
+
+
         self.main_window.connect("destroy", Gtk.main_quit)
 
     def show(self):
         self.main_window.show()
-
-    @abc.abstractmethod
-    def on_btn_add_line_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_add_vertice_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_finish_object_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_add_polygon_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_add_escale_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_point_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_polygon_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_line_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_spline_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_object3d_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_include_bezier_activate(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_main_window_activate_focus(self, sender: Gtk.Window) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
-        pass
-
-    @abc.abstractmethod
-    def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
-        pass
 

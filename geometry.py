@@ -9,7 +9,8 @@ def translate(n: int, point) -> np.ndarray:
     return matrix
 
 
-def scale(n: int, vector) -> np.ndarray:
+def scale(vector) -> np.ndarray:
+    n = len(vector)
     matrix = np.eye(n, n)
     for i, x in enumerate(vector):
         matrix[i, i] = x
