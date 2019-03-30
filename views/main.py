@@ -73,5 +73,5 @@ class MainHandler(WinMain):
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.win_translate.present()
 
- 
+
 
