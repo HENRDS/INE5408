@@ -1,12 +1,9 @@
-from shapes import GraphicalObject
 from cairo import Context
-from typing import List
 from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
-from shapes import GraphicalModel
 
 
 class WindowEventHandler:
@@ -53,8 +50,7 @@ class ${cls_name}:
     ${win.attr_name} = ${win.cls_name}
 %endfor
 
-    def __init__(self, builder: Gtk.Builder, model: GraphicalModel):
-        self.model: GraphicalModel = model
+    def __init__(self, builder: Gtk.Builder):
     %for win in windows:
         self.${win.name}: ${win.cls_name} = self.${win.attr_name}(self, builder)
     %endfor

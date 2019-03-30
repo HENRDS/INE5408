@@ -1,12 +1,9 @@
-from shapes import GraphicalObject
 from cairo import Context
-from typing import List
 from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
-from shapes import GraphicalModel
 
 
 class WindowEventHandler:
@@ -316,8 +313,7 @@ class UI:
     _WIN_MAIN = WinMain
     _WIN_TRANSLATE = WinTranslate
 
-    def __init__(self, builder: Gtk.Builder, model: GraphicalModel):
-        self.model: GraphicalModel = model
+    def __init__(self, builder: Gtk.Builder):
         self.win_add_line: WinAddLine = self._WIN_ADD_LINE(self, builder)
         self.win_add_object3d: WinAddObject3D = self._WIN_ADD_OBJECT3D(self, builder)
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
