@@ -4,7 +4,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
-from geometry import hpt, scale
+from geometry import hpt
 from shapes import Line, Point, Polygon
 
 
@@ -21,9 +21,9 @@ class AddLineHandler(WinAddLine):
 class AddPointHandler(WinAddPoint):
     def on_win_add_point_activate_focus(self, sender: Gtk.Window) -> None:
         point = Point(self.entry_add_name.get_text(),
-                      hpt(float(self.entry_add_pointx.get_text())),
-                      hpt(float(self.entry_add_pointy.get_text())))
-        self.app_handler.model.add_object(point)
+                      hpt(float(self.entry_add_pointx.get_text()),
+                          float(self.entry_add_pointy.get_text())))
+        self.app_handler.win_main.add_obj(point)
 
 
 class AddPolygonHandler(WinAddPolygon):
@@ -32,7 +32,7 @@ class AddPolygonHandler(WinAddPolygon):
                           float(self.entry_add_polygonx.get_text()),
                           float(self.entry_add_polygony.get_text()),
                           float(self.entry_add_polygonz.get_text()))
-        self.app_handler.model.add_object(polygon)
+        self.app_handler.win_main.add_obj(polygon)
 
 
 
