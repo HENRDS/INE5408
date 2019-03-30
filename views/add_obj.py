@@ -18,5 +18,6 @@ class AddLineHandler(WinAddLine):
                         float(self.entry_add_line_y2.get_text())))
         self.app_handler.model.add_object(line)
 
+
 class AddPointHandler(WinAddPoint):
     pass

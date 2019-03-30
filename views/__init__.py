@@ -10,7 +10,7 @@ from .ui import UI
 from .main import MainHandler
 import numpy as np
 from shapes import GraphicalModel, Line, Rect, Point, GraphicalObject, Polygon
-from geometry import hpt
+from geometry import hpt, translate
 
 
 class SGI(UI, GraphicalModel):
@@ -36,7 +36,15 @@ class SGI(UI, GraphicalModel):
         return self.win_main.viewport
 
     def translate_object(self, x, y, obj=...) -> GraphicalObject:
-        pass
+
+        m = translate(3, (x, y))
+        for p in obj:
+            p *= m
+        return obj
+
+
+
+
 
     def scale_object(self, x, y, obj=...) -> GraphicalObject:
         pass
