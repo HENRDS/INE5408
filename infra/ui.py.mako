@@ -8,6 +8,7 @@ gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
 from shapes import GraphicalModel
 
+
 class WindowEventHandler:
     def __init__(self, app_handler: "${cls_name}", builder: Gtk.Builder):
         """

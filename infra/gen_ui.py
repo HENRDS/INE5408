@@ -67,7 +67,7 @@ class Window(Control):
             self.controls.append(ctrl)
 
 
-def main(ui_file_path: str, template_path: str, des_path: str, ui_class="UI", main_window="main_window"):
+def main(ui_file_path: str, template_path: str, des_path: str, ui_class="UI", main_window="win_main"):
     from pprint import pprint
     file = os.path.abspath(ui_file_path)
     tree = ElementTree.parse(file)
