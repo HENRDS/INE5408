@@ -23,28 +23,16 @@ class GraphicalModel(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def add_line(self, name, x0, y0, x1, y1) -> Line:
+    def translate_object(self, x, y, obj=...) -> GraphicalObject:
         pass
 
     @abc.abstractmethod
-    def add_point(self, name, x, y) -> Point:
+    def scale_object(self, x, y, obj=...) -> GraphicalObject:
         pass
-
-    @abc.abstractmethod
-    def add_polygon(self, name) -> Polygon:
-        pass
-
-    @abc.abstractmethod
-    def translate_object(self, obj, x, y) -> GraphicalObject:
-        pass
-
-    @abc.abstractmethod
-    def scale_object(self, obj, x, y) -> GraphicalObject:
-        pass
-
 
 
 __all__ = [
+    "GraphicalModel",
     "GraphicalObject",
     "Line",
     "Point",

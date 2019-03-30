@@ -8,6 +8,7 @@ gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
 from shapes import GraphicalModel
 
+
 class WindowEventHandler:
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         """
@@ -30,6 +31,10 @@ class WinAddLine(WindowEventHandler):
         self.btn_add_line: Gtk.Button = builder.get_object("btn_add_line")
         # btn_add_line handlers
         self.btn_add_line.connect("clicked", self.on_btn_add_line_clicked)
+
+    def on_win_add_line_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_line."""
+        pass
 
     def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add_line."""
@@ -61,6 +66,10 @@ class WinAddObject3D(WindowEventHandler):
         # btn_finish_object handlers
         self.btn_finish_object.connect("clicked", self.on_btn_finish_object_clicked)
 
+    def on_win_add_object3d_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_object3d."""
+        pass
+
     def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add_vertice."""
         pass
@@ -78,6 +87,10 @@ class WinAddPoint(WindowEventHandler):
         self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
         self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
 
+    def on_win_add_point_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_point."""
+        pass
+
 
 class WinAddPolygon(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
@@ -91,8 +104,31 @@ class WinAddPolygon(WindowEventHandler):
         # btn_add_polygon handlers
         self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
 
+    def on_win_add_polygon_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_polygon."""
+        pass
+
     def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add_polygon."""
+        pass
+
+
+class WinEscalonate(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_escalonate")
+        self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
+        self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
+        self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
+        # btn_add_escale handlers
+        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
+
+    def on_win_escalonate_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_escalonate."""
+        pass
+
+    def on_btn_add_escale_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_escale."""
         pass
 
 
@@ -118,6 +154,10 @@ class WinIncludeObject(WindowEventHandler):
         self.btn_include_object3d.connect("clicked", self.on_btn_include_object3d_clicked)
         # btn_include_bezier handlers
         self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
+
+    def on_win_include_object_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_include_object."""
+        pass
 
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_include_point."""
@@ -247,21 +287,6 @@ class WinMain(WindowEventHandler):
         pass
 
 
-class WinScale(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_scale")
-        self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
-        self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
-        self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
-        # btn_add_escale handlers
-        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
-
-    def on_btn_add_escale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_escale."""
-        pass
-
-
 class WinTranslate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -271,6 +296,10 @@ class WinTranslate(WindowEventHandler):
         self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
         # btn_apply_translation handlers
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
+
+    def on_win_translate_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_translate."""
+        pass
 
     def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_apply_translation."""
@@ -282,9 +311,9 @@ class UI:
     _WIN_ADD_OBJECT3D = WinAddObject3D
     _WIN_ADD_POINT = WinAddPoint
     _WIN_ADD_POLYGON = WinAddPolygon
+    _WIN_ESCALONATE = WinEscalonate
     _WIN_INCLUDE_OBJECT = WinIncludeObject
     _WIN_MAIN = WinMain
-    _WIN_SCALE = WinScale
     _WIN_TRANSLATE = WinTranslate
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel):
@@ -293,11 +322,11 @@ class UI:
         self.win_add_object3d: WinAddObject3D = self._WIN_ADD_OBJECT3D(self, builder)
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
+        self.win_escalonate: WinEscalonate = self._WIN_ESCALONATE(self, builder)
         self.win_include_object: WinIncludeObject = self._WIN_INCLUDE_OBJECT(self, builder)
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
-        self.win_scale: WinScale = self._WIN_SCALE(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
-        self.main_window.win.connect("destroy", Gtk.main_quit)
+        self.win_main.win.connect("destroy", Gtk.main_quit)
 
     def show(self):
-        self.main_window.win.show()
+        self.win_main.win.show()
