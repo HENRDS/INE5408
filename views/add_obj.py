@@ -1,4 +1,4 @@
-from views.ui import WinAddLine
+from views.ui import WinAddLine, WinAddPoint
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -15,5 +15,6 @@ class AddLineHandler(WinAddLine):
                                                float(self.entry_add_line_x2.get_text()),
                                                float(self.entry_add_line_y2.get_text()))
 
+class AddPointHandler(WinAddPoint):
 
 
