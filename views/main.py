@@ -7,16 +7,17 @@ from gi.repository import Gtk
 from shapes import GraphicalObject
 from misc import Window, Viewport
 from geometry import hpt
+import  typing as tp
+
 
 class MainHandler(WinMain):
-
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         w, h = float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height())
         print(w, h)
         self.window = Window(hpt(0., 0.), hpt(w, h))
         self.viewport = Viewport(hpt(0., 0.), hpt(w, h))
-        self.tree_model = Gtk.ListStore(str, str)
+        self.tree_model = Gtk.ListStore(str, str, )
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
@@ -27,6 +28,7 @@ class MainHandler(WinMain):
         self.tree_objects.set_model(self.tree_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
+
 
     def add_obj(self, obj: GraphicalObject):
         self.app_handler.display_file.append(obj)
