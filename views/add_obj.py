@@ -9,10 +9,15 @@ from shapes import Line, Point, Polygon
 
 
 class AddObjController(WinIncludeObject):
+
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.selected_window: Gtk.Window = None
+
     
+
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.win_add_point.win.present()
-
 
     def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.win_add_polygon.win.present()
@@ -24,8 +29,6 @@ class AddObjController(WinIncludeObject):
         #                 float(self.entry_add_line_y.get_text())),
         #             hpt(float(self.entry_add_line_x2.get_text()),
         #                 float(self.entry_add_line_y2.get_text()))
-
-
 
     def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
         raise NotImplemented
@@ -47,6 +50,7 @@ class AddLineHandler(WinAddLine):
             if not f.get_text().is_num():
                 f.set_tooltip_text("Invalid Number")
 
+
 class AddPointHandler(WinAddPoint):
     def on_win_add_point_activate_focus(self, sender: Gtk.Window) -> None:
         pass
@@ -59,6 +63,3 @@ class AddPolygonHandler(WinAddPolygon):
                           float(self.entry_add_polygony.get_text()),
                           float(self.entry_add_polygonz.get_text()))
         self.app_handler.win_main.add_obj(polygon)
-
-
-

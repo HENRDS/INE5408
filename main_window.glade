@@ -923,7 +923,7 @@
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">450</property>
-    <property name="type_hint">utility</property>
+    <property name="type_hint">dialog</property>
     <signal name="activate-focus" handler="on_win_include_object_activate_focus" swapped="no"/>
     <child>
       <placeholder/>
