@@ -93,16 +93,33 @@ class WinAddPolygon(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.win: Gtk.Window = builder.get_object("win_add_polygon")
-        self.entry_add_polygon_name: Gtk.Entry = builder.get_object("entry_add_polygon_name")
-        self.entry_add_polygonx: Gtk.Entry = builder.get_object("entry_add_polygonx")
-        self.entry_add_polygony: Gtk.Entry = builder.get_object("entry_add_polygony")
-        self.entry_add_polygonz: Gtk.Entry = builder.get_object("entry_add_polygonz")
+        self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
+        self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
+        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
         self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
+        # btn_remove_polygon_point handlers
+        self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
+        # btn_add_polygon_point handlers
+        self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
+        # lst_polygon_points handlers
+        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
         # btn_add_polygon handlers
         self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
 
     def on_win_add_polygon_activate_focus(self, sender: Gtk.Window) -> None:
         """Handler for event 'activate-focus' of control win_add_polygon."""
+        pass
+
+    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_remove_polygon_point."""
+        pass
+
+    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_polygon_point."""
+        pass
+
+    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox) -> None:
+        """Handler for event 'row-activated' of control lst_polygon_points."""
         pass
 
     def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
