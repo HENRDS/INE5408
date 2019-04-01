@@ -43,6 +43,7 @@
                 <property name="margin_right">10</property>
                 <property name="margin_top">10</property>
                 <property name="margin_bottom">7</property>
+                <property name="input_purpose">name</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -82,6 +83,7 @@
                 <property name="margin_right">10</property>
                 <property name="margin_top">5</property>
                 <property name="margin_bottom">1</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -119,6 +121,7 @@
                 <property name="can_focus">True</property>
                 <property name="margin_left">23</property>
                 <property name="margin_right">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -157,6 +160,7 @@
                 <property name="margin_left">23</property>
                 <property name="margin_right">10</property>
                 <property name="margin_bottom">1</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -194,6 +198,7 @@
                 <property name="can_focus">True</property>
                 <property name="margin_left">23</property>
                 <property name="margin_right">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -259,6 +264,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_right">13</property>
+                <property name="input_purpose">name</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -294,6 +300,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_right">13</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -330,6 +337,7 @@
                 <property name="can_focus">True</property>
                 <property name="margin_right">13</property>
                 <property name="margin_top">2</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -366,6 +374,7 @@
                 <property name="can_focus">True</property>
                 <property name="margin_right">13</property>
                 <property name="margin_top">2</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -463,6 +472,7 @@
                 <property name="can_focus">True</property>
                 <property name="margin_right">24</property>
                 <property name="margin_top">10</property>
+                <property name="input_purpose">name</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -501,6 +511,7 @@
                 <property name="margin_left">30</property>
                 <property name="margin_right">24</property>
                 <property name="margin_top">12</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -539,6 +550,7 @@
                 <property name="margin_left">29</property>
                 <property name="margin_right">23</property>
                 <property name="margin_top">2</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -671,6 +683,7 @@
                   <object class="GtkEntry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="input_purpose">name</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -705,6 +718,7 @@
                   <object class="GtkEntry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -739,6 +753,7 @@
                   <object class="GtkEntry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -773,6 +788,7 @@
                   <object class="GtkEntry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -848,6 +864,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_top">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -885,6 +902,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_top">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -1577,6 +1595,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_top">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -1614,6 +1633,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_top">10</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="expand">True</property>
