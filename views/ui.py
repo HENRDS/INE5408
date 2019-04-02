@@ -169,8 +169,20 @@ class WinIncludeObject(WindowEventHandler):
         # btn_include_bezier handlers
         self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
 
-    def on_win_include_object_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_include_object."""
+    def on_win_include_object_destroy(self, sender: Gtk.Window) -> None:
+        """Handler for event 'destroy' of control win_include_object."""
+        pass
+
+    def on_win_include_object_hide(self, sender: Gtk.Window) -> None:
+        """Handler for event 'hide' of control win_include_object."""
+        pass
+
+    def on_win_include_object_realize(self, sender: Gtk.Window) -> None:
+        """Handler for event 'realize' of control win_include_object."""
+        pass
+
+    def on_win_include_object_show(self, sender: Gtk.Window) -> None:
+        """Handler for event 'show' of control win_include_object."""
         pass
 
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:

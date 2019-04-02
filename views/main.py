@@ -43,7 +43,7 @@ class MainHandler(WinMain):
             obj.draw(ctx, tr)
 
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_include_object.win.present()
+        self.app_handler.win_include_object.win.show()
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
         pass

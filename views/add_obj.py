@@ -13,17 +13,20 @@ class AddObjController(WinIncludeObject):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.selected_window: Gtk.Window = None
-
-    
+        print("AddObjController in da house!")
 
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_point.win.present()
+        self.selected_window = self.app_handler.win_add_point.win
+        self.win.close()
 
     def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_polygon.win.present()
+        self.selected_window = self.app_handler.win_add_polygon.win
+        self.win.close()
 
     def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_line.win.present()
+        self.selected_window = self.app_handler.win_add_line.win
+        self.win.close()
+
         # line = Line(self.entry_add_line_name.get_text(),
         #             hpt(float(self.entry_add_line_x.get_text()),
         #                 float(self.entry_add_line_y.get_text())),
@@ -38,6 +41,19 @@ class AddObjController(WinIncludeObject):
 
     def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
         raise NotImplemented
+
+    def on_win_include_object_destroy(self, sender: Gtk.Window) -> None:
+        print("destroy")
+
+    def on_win_include_object_hide(self, sender: Gtk.Window) -> None:
+        print("hide")
+
+    def on_win_include_object_realize(self, sender: Gtk.Window) -> None:
+        print("realize")
+
+    def on_win_include_object_show(self, sender: Gtk.Window) -> None:
+        print("show")
+        self.selected_window = None
 
 
 class AddLineHandler(WinAddLine):
@@ -63,3 +79,4 @@ class AddPolygonHandler(WinAddPolygon):
                           float(self.entry_add_polygony.get_text()),
                           float(self.entry_add_polygonz.get_text()))
         self.app_handler.win_main.add_obj(polygon)
+
