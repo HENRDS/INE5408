@@ -27,7 +27,7 @@ class AddPointHandler(WinAddPoint):
 
 
 class AddPolygonHandler(WinAddPolygon):
-    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
+    def on_btn_add_polygon__clicked(self, sender: Gtk.Button) -> None:
         polygon = Polygon(self.entry_add_polygon_name.get_text(),
                           float(self.entry_add_polygonx.get_text()),
                           float(self.entry_add_polygony.get_text()),
