@@ -3,63 +3,82 @@ import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gtk
-from shapes import GraphicalObject
-from misc import Window, Viewport
+from gi.repository import Gtk, Gdk
+from misc import Viewport, Window
 from geometry import hpt
-import typing as tp
 
 
 class MainHandler(WinMain):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        self.window = Window(hpt(0., 0.), hpt(800., 600.))
+        self._step = 10
         self.viewport = Viewport(hpt(0., 0.), hpt(1., 1.))
-        self.tree_model = Gtk.ListStore(str, str)
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
         self.type_col = Gtk.TreeViewColumn("Type", self.type_rt, text=1)
-        self.connect_model()
-
-    def _update(self):
-        self.canvas.queue_draw()
-        self.tree_model.clear()
-        for obj in self.model.display_file:
-            self.tree_model.append([str(obj.name), obj.__class__.__name__])
-
-    def connect_model(self):
-        self.tree_objects.set_model(self.tree_model)
+        self.tree_objects.set_model(self.model.list_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
         self.model.subscribe(self._update)
 
+        self.no_shift = {
+            Gdk.KEY_Up: self.on_btn_up_clicked,
+            Gdk.KEY_Down: self.on_btn_down_clicked,
+            Gdk.KEY_Left: self.on_btn_right_clicked,
+            Gdk.KEY_Right: self.on_btn_left_clicked,
+        }
+        self.with_ctrl = {
+            Gdk.KEY_Up: self.on_btn_zoom_in_clicked,
+            Gdk.KEY_Down: self.on_btn_zoom_out_clicked,
+            Gdk.KEY_Left: self.on_btn_right_rotate_clicked,
+            Gdk.KEY_Right: self.on_btn_left_rotate_clicked,
+            Gdk.KEY_plus: self.on_btn_zoom_in_clicked,
+            Gdk.KEY_minus: self.on_btn_zoom_out_clicked,
+        }
+
+    def _update(self):
+        self.canvas.queue_draw()
+
+    def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
+        _, val = event.get_keyval()
+        # print("\n".join(dir(Gdk.ModifierType)))
+        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
+            meth = self.with_ctrl.get(val)
+        else:
+            meth = self.no_shift.get(val)
+        if meth is not None:
+            meth(None)
+
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         self.viewport.resize(float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height()))
-        tr = self.viewport.transformer(self.window)
+        tr = self.viewport.transformer(self.model.window)
         for obj in self.model.objects():
             obj.draw(ctx, tr)
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.move_up(self._step)
+        self._update()
 
     def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.move_left(self._step)
+        self._update()
 
     def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.move_right(self._step)
+        self._update()
 
     def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.move_down(self._step)
+        self._update()
 
     def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.zoom_out(self._step)
+        self._update()
 
     def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
-        pass
-
-    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.window.zoom_in(self._step)
+        self._update()
 
     def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
         pass

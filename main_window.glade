@@ -103,6 +103,7 @@
     <property name="default_width">1223</property>
     <property name="default_height">600</property>
     <signal name="activate-focus" handler="on_main_window_clicked_focus" swapped="no"/>
+    <signal name="key-press-event" handler="on_win_main_key_press_event" swapped="no"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

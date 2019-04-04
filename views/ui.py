@@ -4,7 +4,7 @@ from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 
 class WindowEventHandler:
@@ -44,6 +44,7 @@ class WinMain(WindowEventHandler):
         self.canvas: Gtk.DrawingArea = builder.get_object("canvas")
         self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
         self.win.connect("activate-focus", self.on_main_window_clicked_focus)
+        self.win.connect("key-press-event", self.on_win_main_key_press_event)
         # btn_up handlers
         self.btn_up.connect("clicked", self.on_btn_up_clicked)
         # btn_left handlers
@@ -69,6 +70,10 @@ class WinMain(WindowEventHandler):
 
     def on_main_window_clicked_focus(self, sender: Gtk.Window) -> None:
         """Handler for event 'activate-focus' of control win_main."""
+        pass
+
+    def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
+        """Handler for event 'key-press-event' of control win_main."""
         pass
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:

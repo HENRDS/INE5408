@@ -1,5 +1,5 @@
 import numpy as np
-import geometry
+from geometry import hpt, translate
 import operator as op
 import functools as fn
 import itertools as itt
@@ -10,8 +10,29 @@ class Window:
         self.p1 = p1
         self.p2 = p2
 
-    def translation_matrix(self, n):
-        return geometry.translate(n, self.p1)
+    def move_up(self, amount):
+        self.p1 += hpt(0., amount)
+        self.p2 += hpt(0., amount)
+
+    def move_down(self, amount):
+        self.p1 -= hpt(0., amount)
+        self.p2 -= hpt(0., amount)
+
+    def move_left(self, amount):
+        self.p1 += hpt(amount, 0.)
+        self.p2 += hpt(amount, 0.)
+
+    def move_right(self, amount):
+        self.p1 -= hpt(amount, 0.)
+        self.p2 -= hpt(amount, 0.)
+
+    def zoom_in(self, amount):
+        self.p1 += hpt(amount, amount)
+        self.p2 -= hpt(amount, amount)
+
+    def zoom_out(self, amount):
+        self.p1 -= hpt(amount, amount)
+        self.p2 += hpt(amount, amount)
 
 
 class Viewport:
@@ -20,7 +41,7 @@ class Viewport:
         self.size = size
 
     def resize(self, width, height):
-        size = geometry.hpt(width, height)
+        size = hpt(width, height)
         self.size = size
 
     def transformer(self, window: Window):

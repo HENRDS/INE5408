@@ -14,7 +14,8 @@ except ImportError:
     raise ImportError("Mako template engine is required to run this file")
 
 _extra_args = {
-    "draw": ["ctx: Context"]
+    "draw": ["ctx: Context"],
+    "key-press-event": ["event: Gdk.EventKey"]
 }
 from dataclasses import dataclass
 
