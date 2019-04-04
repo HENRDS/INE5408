@@ -1,5 +1,8 @@
 import numpy as np
 import geometry
+import operator as op
+import functools as fn
+import itertools as itt
 
 
 class Window:
@@ -12,16 +15,23 @@ class Window:
 
 
 class Viewport:
-    def __init__(self, top_left, bottom_right):
+    def __init__(self, top_left, size):
         self.top_left = top_left
-        self.bottom_right = bottom_right
+        self.size = size
+
+    def resize(self, width, height):
+        size = geometry.hpt(width, height)
+        self.size = size
 
     def transformer(self, window: Window):
-        v = self.bottom_right - self.top_left
-
         def transform(p):
-
-            x, y = (p - window.p1)[:-1] / (window.p2 - window.p1)[:-1]
-            return v * np.array([x, 1 - y, 1])
+            u = (window.p2 - window.p1)[:-1]
+            x, y = (p - window.p1)[:-1] / u
+            z = np.array([x, 1 - y, 1])
+            return self.size * z
 
         return transform
+
+
+class Clipper:
+    pass

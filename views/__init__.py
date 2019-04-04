@@ -17,12 +17,12 @@ class SGI(UI):
     _WIN_ADD_LINE = AddLineHandler
     _OBJPOPOVER = AddObjController
     _WIN_ADD_POINT = AddPointHandler
+
     def __init__(self, builder: Gtk.Builder):
         super().__init__(builder)
-        self.display_file: tp.List[GraphicalObject] = []
-        self.win_main.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
-        self.win_main.add_obj(Rect("wee", np.array([10, 10, 1]), np.array([23, 70, 1])))
-        self.win_main.add_obj(Point("kkk", hpt(69, 69)))
+        self.model.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
+        self.model.add_obj(Rect("wee", np.array([10, 10, 1]), np.array([23, 70, 1])))
+        self.model.add_obj(Point("kkk", hpt(69, 69)))
         self.win_main: MainHandler = self.win_main
 
 

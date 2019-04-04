@@ -7,15 +7,14 @@ from gi.repository import Gtk
 from shapes import GraphicalObject
 from misc import Window, Viewport
 from geometry import hpt
-import  typing as tp
+import typing as tp
 
 
 class MainHandler(WinMain):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        w, h = float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height())
-        self.window = Window(hpt(0., 0.), hpt(w, h))
-        self.viewport = Viewport(hpt(0., 0.), hpt(w, h))
+        self.window = Window(hpt(0., 0.), hpt(800., 600.))
+        self.viewport = Viewport(hpt(0., 0.), hpt(1., 1.))
         self.tree_model = Gtk.ListStore(str, str)
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
@@ -25,28 +24,21 @@ class MainHandler(WinMain):
 
     def _update(self):
         self.canvas.queue_draw()
-
+        self.tree_model.clear()
+        for obj in self.model.display_file:
+            self.tree_model.append([str(obj.name), obj.__class__.__name__])
 
     def connect_model(self):
         self.tree_objects.set_model(self.tree_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
-        print(dir(self.canvas))
         self.model.subscribe(self._update)
 
-
-    def add_obj(self, obj: GraphicalObject):
-        self.app_handler.display_file.append(obj)
-        self.tree_model.append([obj.name, type(obj).__name__])
-
-
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
+        self.viewport.resize(float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height()))
         tr = self.viewport.transformer(self.window)
         for obj in self.model.objects():
             obj.draw(ctx, tr)
-
-    def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_include_object.win.show()
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
         pass
@@ -73,10 +65,7 @@ class MainHandler(WinMain):
         pass
 
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_scale.present()
+        pass
 
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_translate.present()
-
-
-
+        pass
