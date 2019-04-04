@@ -1,4 +1,5 @@
 from cairo import Context
+from shapes import GraphicalObject, GraphicalModel
 from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
@@ -14,6 +15,7 @@ class WindowEventHandler:
         :type Gtk.Builder
         """
         self.app_handler: "${cls_name}" = proxy(app_handler)
+        self.model: GraphicalModel = proxy(app_handler.model)
 
 
 %for win in windows:
@@ -25,7 +27,7 @@ class ${win.cls_name}(WindowEventHandler):
         self.${control.name}: ${control.py_type} = builder.get_object("${control.name}")
     % endfor
     % for event in win.events:
-        self.${win.name}.win.connect("${event.name}", self.${event.handler})
+        self.win.connect("${event.name}", self.${event.handler})
     %endfor
     % for control in win.controls:
     %if control.events:
@@ -35,7 +37,7 @@ class ${win.cls_name}(WindowEventHandler):
         self.${control.name}.connect("${event.name}", self.${event.handler})
     %endfor
     % endfor
-% for event in win.events:
+% for event in win.all_events:
 
     def ${event.handler}(self, sender: ${event.ctrl.py_type}\
 %if event.args:
@@ -53,7 +55,10 @@ class ${cls_name}:
     ${win.attr_name} = ${win.cls_name}
 %endfor
 
-    def __init__(self, builder: Gtk.Builder):
+    def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
+        if model is ...:
+            model = GraphicalModel()
+        self.model: GraphicalModel = model
     %for win in windows:
         self.${win.name}: ${win.cls_name} = self.${win.attr_name}(self, builder)
     %endfor

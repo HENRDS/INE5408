@@ -63,8 +63,15 @@ class Window(Control):
         self.controls = []
         for c in node.findall(".//object[@id]"):
             ctrl = Control(c)
-            self.events.extend(ctrl.events)
             self.controls.append(ctrl)
+
+    @property
+    def all_events(self):
+        for e in self.events:
+            yield e
+        for c in self.controls:
+            for e in c.events:
+                yield e
 
 
 def main(ui_file_path: str, template_path: str, des_path: str, ui_class="UI", main_window="win_main"):
@@ -73,6 +80,7 @@ def main(ui_file_path: str, template_path: str, des_path: str, ui_class="UI", ma
     tree = ElementTree.parse(file)
     root = tree.getroot()
     windows = [Window(x) for x in root.findall("./object[@id][@class='GtkWindow']")]
+    windows.extend(Window(x) for x in root.findall("./object[@id][@class='GtkPopover']"))
     pprint(windows)
     templ = Template(filename=template_path)
     text = templ.render(cls_name=ui_class,

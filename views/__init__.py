@@ -1,11 +1,12 @@
 import gi
 import typing as tp
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
 from .ui import UI
 from .main import MainHandler
-from .add_obj import AddObjController,  AddLineHandler
+from .add_obj import AddObjController, AddLineHandler, AddPointHandler
 import numpy as np
 from shapes import Line, Rect, Point, GraphicalObject
 from geometry import hpt
@@ -13,8 +14,9 @@ from geometry import hpt
 
 class SGI(UI):
     _WIN_MAIN = MainHandler
-    _WIN_INCLUDE_OBJECT = AddObjController
     _WIN_ADD_LINE = AddLineHandler
+    _OBJPOPOVER = AddObjController
+    _WIN_ADD_POINT = AddPointHandler
     def __init__(self, builder: Gtk.Builder):
         super().__init__(builder)
         self.display_file: tp.List[GraphicalObject] = []

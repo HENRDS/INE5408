@@ -14,32 +14,35 @@ class MainHandler(WinMain):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         w, h = float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height())
-        print(w, h)
         self.window = Window(hpt(0., 0.), hpt(w, h))
         self.viewport = Viewport(hpt(0., 0.), hpt(w, h))
-        self.tree_model = Gtk.ListStore(str, str, )
+        self.tree_model = Gtk.ListStore(str, str)
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
         self.type_col = Gtk.TreeViewColumn("Type", self.type_rt, text=1)
         self.connect_model()
 
+    def _update(self):
+        self.canvas.queue_draw()
+
+
     def connect_model(self):
         self.tree_objects.set_model(self.tree_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
+        print(dir(self.canvas))
+        self.model.subscribe(self._update)
 
 
     def add_obj(self, obj: GraphicalObject):
         self.app_handler.display_file.append(obj)
         self.tree_model.append([obj.name, type(obj).__name__])
 
-    def on_main_window_clicked_focus(self, sender: Gtk.Window) -> None:
-        self.canvas.draw_queue()
 
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         tr = self.viewport.transformer(self.window)
-        for obj in self.app_handler.display_file:
+        for obj in self.model.objects():
             obj.draw(ctx, tr)
 
     def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:

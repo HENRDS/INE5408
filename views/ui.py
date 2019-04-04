@@ -1,4 +1,5 @@
 from cairo import Context
+from shapes import GraphicalObject, GraphicalModel
 from weakref import proxy
 import gi
 gi.require_version('Gtk', '3.0')
@@ -14,223 +15,7 @@ class WindowEventHandler:
         :type Gtk.Builder
         """
         self.app_handler: "UI" = proxy(app_handler)
-
-
-class WinAddLine(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_add_line")
-        self.entry_add_line_name: Gtk.Entry = builder.get_object("entry_add_line_name")
-        self.entry_add_line_x: Gtk.Entry = builder.get_object("entry_add_line_x")
-        self.entry_add_line_y: Gtk.Entry = builder.get_object("entry_add_line_y")
-        self.entry_add_line_x2: Gtk.Entry = builder.get_object("entry_add_line_x2")
-        self.entry_add_line_y2: Gtk.Entry = builder.get_object("entry_add_line_y2")
-        self.btn_add_line: Gtk.Button = builder.get_object("btn_add_line")
-        self.win_add_line.win.connect("activate-focus", self.on_win_add_line_activate_focus)
-        self.win_add_line.win.connect("clicked", self.on_btn_add_line_clicked)
-        # btn_add_line handlers
-        self.btn_add_line.connect("clicked", self.on_btn_add_line_clicked)
-
-    def on_win_add_line_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_add_line."""
-        pass
-
-    def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_line."""
-        pass
-
-
-class WinAddObject3D(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_add_object3d")
-        self.box49: Gtk.Box = builder.get_object("box49")
-        self.box50: Gtk.Box = builder.get_object("box50")
-        self.label32: Gtk.Label = builder.get_object("label32")
-        self.entry_add_object_name: Gtk.Entry = builder.get_object("entry_add_object_name")
-        self.box51: Gtk.Box = builder.get_object("box51")
-        self.label33: Gtk.Label = builder.get_object("label33")
-        self.entry_add_objectx: Gtk.Entry = builder.get_object("entry_add_objectx")
-        self.box52: Gtk.Box = builder.get_object("box52")
-        self.label34: Gtk.Label = builder.get_object("label34")
-        self.entry_add_objecty: Gtk.Entry = builder.get_object("entry_add_objecty")
-        self.box54: Gtk.Box = builder.get_object("box54")
-        self.label35: Gtk.Label = builder.get_object("label35")
-        self.entry_add_objectz: Gtk.Entry = builder.get_object("entry_add_objectz")
-        self.box53: Gtk.Box = builder.get_object("box53")
-        self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
-        self.btn_finish_object: Gtk.Button = builder.get_object("btn_finish_object")
-        self.win_add_object3d.win.connect("activate-focus", self.on_win_add_object3d_activate_focus)
-        self.win_add_object3d.win.connect("clicked", self.on_btn_add_vertice_clicked)
-        self.win_add_object3d.win.connect("clicked", self.on_btn_finish_object_clicked)
-        # btn_add_vertice handlers
-        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
-        # btn_finish_object handlers
-        self.btn_finish_object.connect("clicked", self.on_btn_finish_object_clicked)
-
-    def on_win_add_object3d_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_add_object3d."""
-        pass
-
-    def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_vertice."""
-        pass
-
-    def on_btn_finish_object_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_finish_object."""
-        pass
-
-
-class WinAddPoint(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_add_point")
-        self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
-        self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
-        self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
-        self.win_add_point.win.connect("activate-focus", self.on_win_add_point_activate_focus)
-
-    def on_win_add_point_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_add_point."""
-        pass
-
-
-class WinAddPolygon(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_add_polygon")
-        self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
-        self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
-        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
-        self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
-        self.win_add_polygon.win.connect("activate-focus", self.on_win_add_polygon_activate_focus)
-        self.win_add_polygon.win.connect("clicked", self.on_btn_remove_polygon_point_clicked)
-        self.win_add_polygon.win.connect("clicked", self.on_btn_add_polygon_point_clicked)
-        self.win_add_polygon.win.connect("row-activated", self.on_lst_polygon_points_row_activated)
-        self.win_add_polygon.win.connect("clicked", self.on_btn_add_polygon_clicked)
-        # btn_remove_polygon_point handlers
-        self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
-        # btn_add_polygon_point handlers
-        self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
-        # lst_polygon_points handlers
-        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
-        # btn_add_polygon handlers
-        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
-
-    def on_win_add_polygon_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_add_polygon."""
-        pass
-
-    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_remove_polygon_point."""
-        pass
-
-    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_polygon_point."""
-        pass
-
-    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox) -> None:
-        """Handler for event 'row-activated' of control lst_polygon_points."""
-        pass
-
-    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_polygon."""
-        pass
-
-
-class WinEscalonate(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_escalonate")
-        self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
-        self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
-        self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
-        self.win_escalonate.win.connect("activate-focus", self.on_win_escalonate_activate_focus)
-        self.win_escalonate.win.connect("clicked", self.on_btn_add_escale_clicked)
-        # btn_add_escale handlers
-        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
-
-    def on_win_escalonate_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_escalonate."""
-        pass
-
-    def on_btn_add_escale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_escale."""
-        pass
-
-
-class WinIncludeObject(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_include_object")
-        self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
-        self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
-        self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
-        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
-        self.btn_include_object3d: Gtk.Button = builder.get_object("btn_include_object3d")
-        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
-        self.win_include_object.win.connect("destroy", self.on_win_include_object_destroy)
-        self.win_include_object.win.connect("hide", self.on_win_include_object_hide)
-        self.win_include_object.win.connect("realize", self.on_win_include_object_realize)
-        self.win_include_object.win.connect("show", self.on_win_include_object_show)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_point_clicked)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_polygon_clicked)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_line_clicked)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_spline_clicked)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_object3d_clicked)
-        self.win_include_object.win.connect("clicked", self.on_btn_include_bezier_clicked)
-        # btn_include_point handlers
-        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
-        # btn_include_polygon handlers
-        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
-        # btn_include_line handlers
-        self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
-        # btn_include_spline handlers
-        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
-        # btn_include_object3d handlers
-        self.btn_include_object3d.connect("clicked", self.on_btn_include_object3d_clicked)
-        # btn_include_bezier handlers
-        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
-
-    def on_win_include_object_destroy(self, sender: Gtk.Window) -> None:
-        """Handler for event 'destroy' of control win_include_object."""
-        pass
-
-    def on_win_include_object_hide(self, sender: Gtk.Window) -> None:
-        """Handler for event 'hide' of control win_include_object."""
-        pass
-
-    def on_win_include_object_realize(self, sender: Gtk.Window) -> None:
-        """Handler for event 'realize' of control win_include_object."""
-        pass
-
-    def on_win_include_object_show(self, sender: Gtk.Window) -> None:
-        """Handler for event 'show' of control win_include_object."""
-        pass
-
-    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_point."""
-        pass
-
-    def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_polygon."""
-        pass
-
-    def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_line."""
-        pass
-
-    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_spline."""
-        pass
-
-    def on_btn_include_object3d_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_object3d."""
-        pass
-
-    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_bezier."""
-        pass
+        self.model: GraphicalModel = proxy(app_handler.model)
 
 
 class WinMain(WindowEventHandler):
@@ -241,7 +26,7 @@ class WinMain(WindowEventHandler):
         self.btn_save: Gtk.Button = builder.get_object("btn_save")
         self.btn_open: Gtk.Button = builder.get_object("btn_open")
         self.tree_objects: Gtk.TreeView = builder.get_object("tree_objects")
-        self.btn_add_object: Gtk.Button = builder.get_object("btn_add_object")
+        self.btn_menu_object: Gtk.MenuButton = builder.get_object("btn_menu_object")
         self.btn_up: Gtk.Button = builder.get_object("btn_up")
         self.btn_left: Gtk.Button = builder.get_object("btn_left")
         self.btn_right: Gtk.Button = builder.get_object("btn_right")
@@ -258,21 +43,7 @@ class WinMain(WindowEventHandler):
         self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
         self.canvas: Gtk.DrawingArea = builder.get_object("canvas")
         self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
-        self.win_main.win.connect("activate-focus", self.on_main_window_clicked_focus)
-        self.win_main.win.connect("clicked", self.on_btn_add_object_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_up_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_left_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_right_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_down_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_zoom_out_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_zoom_in_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_left_rotate_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_right_rotate_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_scale_clicked)
-        self.win_main.win.connect("clicked", self.on_btn_translate_clicked)
-        self.win_main.win.connect("draw", self.on_canvas_draw)
-        # btn_add_object handlers
-        self.btn_add_object.connect("clicked", self.on_btn_add_object_clicked)
+        self.win.connect("activate-focus", self.on_main_window_clicked_focus)
         # btn_up handlers
         self.btn_up.connect("clicked", self.on_btn_up_clicked)
         # btn_left handlers
@@ -298,10 +69,6 @@ class WinMain(WindowEventHandler):
 
     def on_main_window_clicked_focus(self, sender: Gtk.Window) -> None:
         """Handler for event 'activate-focus' of control win_main."""
-        pass
-
-    def on_btn_add_object_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_object."""
         pass
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
@@ -349,6 +116,148 @@ class WinMain(WindowEventHandler):
         pass
 
 
+class WinAddLine(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_add_line")
+        self.entry_add_line_name: Gtk.Entry = builder.get_object("entry_add_line_name")
+        self.entry_add_line_x: Gtk.Entry = builder.get_object("entry_add_line_x")
+        self.entry_add_line_y: Gtk.Entry = builder.get_object("entry_add_line_y")
+        self.entry_add_line_x2: Gtk.Entry = builder.get_object("entry_add_line_x2")
+        self.entry_add_line_y2: Gtk.Entry = builder.get_object("entry_add_line_y2")
+        self.btn_add_line: Gtk.Button = builder.get_object("btn_add_line")
+        self.win.connect("activate-focus", self.on_win_add_line_activate_focus)
+        # btn_add_line handlers
+        self.btn_add_line.connect("clicked", self.on_btn_add_line_clicked)
+
+    def on_win_add_line_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_line."""
+        pass
+
+    def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_line."""
+        pass
+
+
+class WinAddObject3D(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_add_object3d")
+        self.box49: Gtk.Box = builder.get_object("box49")
+        self.box50: Gtk.Box = builder.get_object("box50")
+        self.label32: Gtk.Label = builder.get_object("label32")
+        self.entry_add_object_name: Gtk.Entry = builder.get_object("entry_add_object_name")
+        self.box51: Gtk.Box = builder.get_object("box51")
+        self.label33: Gtk.Label = builder.get_object("label33")
+        self.entry_add_objectx: Gtk.Entry = builder.get_object("entry_add_objectx")
+        self.box52: Gtk.Box = builder.get_object("box52")
+        self.label34: Gtk.Label = builder.get_object("label34")
+        self.entry_add_objecty: Gtk.Entry = builder.get_object("entry_add_objecty")
+        self.box54: Gtk.Box = builder.get_object("box54")
+        self.label35: Gtk.Label = builder.get_object("label35")
+        self.entry_add_objectz: Gtk.Entry = builder.get_object("entry_add_objectz")
+        self.box53: Gtk.Box = builder.get_object("box53")
+        self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
+        self.btn_finish_object: Gtk.Button = builder.get_object("btn_finish_object")
+        self.win.connect("activate-focus", self.on_win_add_object3d_activate_focus)
+        # btn_add_vertice handlers
+        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
+        # btn_finish_object handlers
+        self.btn_finish_object.connect("clicked", self.on_btn_finish_object_clicked)
+
+    def on_win_add_object3d_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_object3d."""
+        pass
+
+    def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_vertice."""
+        pass
+
+    def on_btn_finish_object_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_finish_object."""
+        pass
+
+
+class WinAddPoint(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_add_point")
+        self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
+        self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
+        self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
+        self.btn_add_point: Gtk.Button = builder.get_object("btn_add_point")
+        self.win.connect("show", self.on_win_add_point_show)
+        # btn_add_point handlers
+        self.btn_add_point.connect("clicked", self.on_btn_add_point_clicked)
+
+    def on_win_add_point_show(self, sender: Gtk.Window) -> None:
+        """Handler for event 'show' of control win_add_point."""
+        pass
+
+    def on_btn_add_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_point."""
+        pass
+
+
+class WinAddPolygon(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_add_polygon")
+        self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
+        self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
+        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
+        self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
+        self.win.connect("activate-focus", self.on_win_add_polygon_activate_focus)
+        # btn_remove_polygon_point handlers
+        self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
+        # btn_add_polygon_point handlers
+        self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
+        # lst_polygon_points handlers
+        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
+        # btn_add_polygon handlers
+        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
+
+    def on_win_add_polygon_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_add_polygon."""
+        pass
+
+    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_remove_polygon_point."""
+        pass
+
+    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_polygon_point."""
+        pass
+
+    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox) -> None:
+        """Handler for event 'row-activated' of control lst_polygon_points."""
+        pass
+
+    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_polygon."""
+        pass
+
+
+class WinEscalonate(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_escalonate")
+        self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
+        self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
+        self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
+        self.win.connect("activate-focus", self.on_win_escalonate_activate_focus)
+        # btn_add_escale handlers
+        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
+
+    def on_win_escalonate_activate_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_escalonate."""
+        pass
+
+    def on_btn_add_escale_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_escale."""
+        pass
+
+
 class WinTranslate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -356,8 +265,7 @@ class WinTranslate(WindowEventHandler):
         self.entry_translatex: Gtk.Entry = builder.get_object("entry_translatex")
         self.entry_translatey: Gtk.Entry = builder.get_object("entry_translatey")
         self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
-        self.win_translate.win.connect("activate-focus", self.on_win_translate_activate_focus)
-        self.win_translate.win.connect("clicked", self.on_btn_apply_translation_clicked)
+        self.win.connect("activate-focus", self.on_win_translate_activate_focus)
         # btn_apply_translation handlers
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
 
@@ -370,25 +278,76 @@ class WinTranslate(WindowEventHandler):
         pass
 
 
+class Objpopover(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Popover = builder.get_object("ObjPopover")
+        self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
+        self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
+        self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
+        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
+        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
+        self.btn_include_3d: Gtk.Button = builder.get_object("btn_include_3d")
+        # btn_include_point handlers
+        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
+        # btn_include_line handlers
+        self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
+        # btn_include_polygon handlers
+        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
+        # btn_include_spline handlers
+        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
+        # btn_include_bezier handlers
+        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
+        # btn_include_3d handlers
+        self.btn_include_3d.connect("clicked", self.on_btn_include_3d_clicked)
+
+    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_point."""
+        pass
+
+    def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_line."""
+        pass
+
+    def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_polygon."""
+        pass
+
+    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_spline."""
+        pass
+
+    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_bezier."""
+        pass
+
+    def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_3d."""
+        pass
+
+
 class UI:
+    _WIN_MAIN = WinMain
     _WIN_ADD_LINE = WinAddLine
     _WIN_ADD_OBJECT3D = WinAddObject3D
     _WIN_ADD_POINT = WinAddPoint
     _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_ESCALONATE = WinEscalonate
-    _WIN_INCLUDE_OBJECT = WinIncludeObject
-    _WIN_MAIN = WinMain
     _WIN_TRANSLATE = WinTranslate
+    _OBJPOPOVER = Objpopover
 
-    def __init__(self, builder: Gtk.Builder):
+    def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
+        if model is ...:
+            model = GraphicalModel()
+        self.model: GraphicalModel = model
+        self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_add_line: WinAddLine = self._WIN_ADD_LINE(self, builder)
         self.win_add_object3d: WinAddObject3D = self._WIN_ADD_OBJECT3D(self, builder)
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_escalonate: WinEscalonate = self._WIN_ESCALONATE(self, builder)
-        self.win_include_object: WinIncludeObject = self._WIN_INCLUDE_OBJECT(self, builder)
-        self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
+        self.ObjPopover: Objpopover = self._OBJPOPOVER(self, builder)
         self.win_main.win.connect("destroy", Gtk.main_quit)
 
     def show(self):
