@@ -26,6 +26,8 @@ class WinAddLine(WindowEventHandler):
         self.entry_add_line_x2: Gtk.Entry = builder.get_object("entry_add_line_x2")
         self.entry_add_line_y2: Gtk.Entry = builder.get_object("entry_add_line_y2")
         self.btn_add_line: Gtk.Button = builder.get_object("btn_add_line")
+        self.win_add_line.win.connect("activate-focus", self.on_win_add_line_activate_focus)
+        self.win_add_line.win.connect("clicked", self.on_btn_add_line_clicked)
         # btn_add_line handlers
         self.btn_add_line.connect("clicked", self.on_btn_add_line_clicked)
 
@@ -58,6 +60,9 @@ class WinAddObject3D(WindowEventHandler):
         self.box53: Gtk.Box = builder.get_object("box53")
         self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
         self.btn_finish_object: Gtk.Button = builder.get_object("btn_finish_object")
+        self.win_add_object3d.win.connect("activate-focus", self.on_win_add_object3d_activate_focus)
+        self.win_add_object3d.win.connect("clicked", self.on_btn_add_vertice_clicked)
+        self.win_add_object3d.win.connect("clicked", self.on_btn_finish_object_clicked)
         # btn_add_vertice handlers
         self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
         # btn_finish_object handlers
@@ -83,6 +88,7 @@ class WinAddPoint(WindowEventHandler):
         self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
         self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
         self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
+        self.win_add_point.win.connect("activate-focus", self.on_win_add_point_activate_focus)
 
     def on_win_add_point_activate_focus(self, sender: Gtk.Window) -> None:
         """Handler for event 'activate-focus' of control win_add_point."""
@@ -96,11 +102,12 @@ class WinAddPolygon(WindowEventHandler):
         self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
         self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
         self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
-        self.entry_add_polygon_name: Gtk.Entry = builder.get_object("entry_add_polygon_name")
-        self.entry_add_polygonx: Gtk.Entry = builder.get_object("entry_add_polygonx")
-        self.entry_add_polygony: Gtk.Entry = builder.get_object("entry_add_polygony")
-        self.entry_add_polygonz: Gtk.Entry = builder.get_object("entry_add_polygonz")
         self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
+        self.win_add_polygon.win.connect("activate-focus", self.on_win_add_polygon_activate_focus)
+        self.win_add_polygon.win.connect("clicked", self.on_btn_remove_polygon_point_clicked)
+        self.win_add_polygon.win.connect("clicked", self.on_btn_add_polygon_point_clicked)
+        self.win_add_polygon.win.connect("row-activated", self.on_lst_polygon_points_row_activated)
+        self.win_add_polygon.win.connect("clicked", self.on_btn_add_polygon_clicked)
         # btn_remove_polygon_point handlers
         self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
         # btn_add_polygon_point handlers
@@ -138,6 +145,8 @@ class WinEscalonate(WindowEventHandler):
         self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
         self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
         self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
+        self.win_escalonate.win.connect("activate-focus", self.on_win_escalonate_activate_focus)
+        self.win_escalonate.win.connect("clicked", self.on_btn_add_escale_clicked)
         # btn_add_escale handlers
         self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
 
@@ -160,6 +169,16 @@ class WinIncludeObject(WindowEventHandler):
         self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
         self.btn_include_object3d: Gtk.Button = builder.get_object("btn_include_object3d")
         self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
+        self.win_include_object.win.connect("destroy", self.on_win_include_object_destroy)
+        self.win_include_object.win.connect("hide", self.on_win_include_object_hide)
+        self.win_include_object.win.connect("realize", self.on_win_include_object_realize)
+        self.win_include_object.win.connect("show", self.on_win_include_object_show)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_point_clicked)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_polygon_clicked)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_line_clicked)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_spline_clicked)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_object3d_clicked)
+        self.win_include_object.win.connect("clicked", self.on_btn_include_bezier_clicked)
         # btn_include_point handlers
         self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
         # btn_include_polygon handlers
@@ -239,6 +258,19 @@ class WinMain(WindowEventHandler):
         self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
         self.canvas: Gtk.DrawingArea = builder.get_object("canvas")
         self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
+        self.win_main.win.connect("activate-focus", self.on_main_window_clicked_focus)
+        self.win_main.win.connect("clicked", self.on_btn_add_object_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_up_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_left_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_right_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_down_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_zoom_out_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_zoom_in_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_left_rotate_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_right_rotate_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_scale_clicked)
+        self.win_main.win.connect("clicked", self.on_btn_translate_clicked)
+        self.win_main.win.connect("draw", self.on_canvas_draw)
         # btn_add_object handlers
         self.btn_add_object.connect("clicked", self.on_btn_add_object_clicked)
         # btn_up handlers
@@ -324,6 +356,8 @@ class WinTranslate(WindowEventHandler):
         self.entry_translatex: Gtk.Entry = builder.get_object("entry_translatex")
         self.entry_translatey: Gtk.Entry = builder.get_object("entry_translatey")
         self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
+        self.win_translate.win.connect("activate-focus", self.on_win_translate_activate_focus)
+        self.win_translate.win.connect("clicked", self.on_btn_apply_translation_clicked)
         # btn_apply_translation handlers
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
 

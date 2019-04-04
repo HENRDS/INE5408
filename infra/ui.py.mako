@@ -24,6 +24,9 @@ class ${win.cls_name}(WindowEventHandler):
     % for control in win.controls:
         self.${control.name}: ${control.py_type} = builder.get_object("${control.name}")
     % endfor
+    % for event in win.events:
+        self.${win.name}.win.connect("${event.name}", self.${event.handler})
+    %endfor
     % for control in win.controls:
     %if control.events:
         # ${control.name} handlers
