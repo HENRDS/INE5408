@@ -96,10 +96,6 @@ class WinAddPolygon(WindowEventHandler):
         self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
         self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
         self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
-        self.entry_add_polygon_name: Gtk.Entry = builder.get_object("entry_add_polygon_name")
-        self.entry_add_polygonx: Gtk.Entry = builder.get_object("entry_add_polygonx")
-        self.entry_add_polygony: Gtk.Entry = builder.get_object("entry_add_polygony")
-        self.entry_add_polygonz: Gtk.Entry = builder.get_object("entry_add_polygonz")
         self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
         # btn_remove_polygon_point handlers
         self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
