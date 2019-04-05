@@ -14,10 +14,10 @@ from geometry import hpt
 
 class GraphicalModel:
 
-    def __init__(self):
+    def __init__(self, list_model: ListStore):
         self.display_file: tp.Dict[str, GraphicalObject] = {}
         self.subscriptions = []
-        self.list_model: ListStore = ListStore(str, str)
+        self.list_model = list_model
         self.window = Window(hpt(0., 0.), hpt(800., 600.))
 
     def subscribe(self, callback):

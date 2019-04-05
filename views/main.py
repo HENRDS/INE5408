@@ -22,7 +22,7 @@ class MainHandler(WinMain):
         self.tree_objects.set_model(self.model.list_model)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
-        self.model.subscribe(self._update)
+        self.model.subscribe(self.update_screen)
 
         self.no_shift = {
             Gdk.KEY_Up: self.on_btn_up_clicked,
@@ -39,7 +39,7 @@ class MainHandler(WinMain):
             Gdk.KEY_minus: self.on_btn_zoom_out_clicked,
         }
 
-    def _update(self):
+    def update_screen(self):
         self.canvas.queue_draw()
 
     def get_selected_name(self) -> tp.Optional[str]:
@@ -62,9 +62,9 @@ class MainHandler(WinMain):
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         self.viewport.resize(float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height()))
         tr = self.viewport.transformer(self.model.window)
-        selected = self.get_selected_name()
+
         for obj in self.model.objects():
-            if obj.name == selected:
+            if obj.name == self.get_selected_name():
                 ctx.set_source_rgb(1., 0., 0.)
                 obj.draw(ctx, tr, verbose=True)
                 ctx.set_source_rgb(0., 0., 0.)
@@ -73,31 +73,31 @@ class MainHandler(WinMain):
 
     def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath,
                                       column: Gtk.TreeViewColumn) -> None:
-        self._update()
+        self.update_screen()
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.move_up(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.move_left(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.move_right(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.move_down(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.zoom_out(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.zoom_in(self._step)
-        self._update()
+        self.update_screen()
 
     def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
         pass
@@ -106,4 +106,7 @@ class MainHandler(WinMain):
         pass
 
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
+        nm = self.get_selected_name()
+        if nm is None:
+            return
         self.app_handler.win_translate.win.show()

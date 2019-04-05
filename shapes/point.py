@@ -8,10 +8,9 @@ class Point(GraphicalObject):
     def __init__(self, name: str, pos):
         super().__init__(name)
         self.points = [pos]
-        self.pos = pos
 
     def draw(self, ctx: Context, transform, verbose=False) -> None:
-        x, y = transform(self.pos)[:-1]
+        x, y = transform(self.points[0])[:-1]
         ctx.arc(x, y, 5, 0, 2 * np.pi)
         ctx.fill()
         if verbose:

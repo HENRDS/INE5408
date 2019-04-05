@@ -57,7 +57,7 @@ class ${cls_name}:
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
         if model is ...:
-            model = GraphicalModel()
+            model = GraphicalModel(builder.get_object("lst_store_objects"))
         self.model: GraphicalModel = model
     %for win in windows:
         self.${win.name}: ${win.cls_name} = self.${win.attr_name}(self, builder)

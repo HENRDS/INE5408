@@ -1025,6 +1025,14 @@
     <property name="xpad">10</property>
     <property name="stock">gtk-remove</property>
   </object>
+  <object class="GtkListStore" id="lst_store_objects">
+    <columns>
+      <!-- column-name Name -->
+      <column type="gchararray"/>
+      <!-- column-name Type -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="win_main">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
@@ -1140,8 +1148,11 @@
                         <property name="can_focus">True</property>
                         <property name="margin_top">5</property>
                         <property name="margin_bottom">8</property>
+                        <property name="model">lst_store_objects</property>
                         <property name="search_column">0</property>
                         <property name="enable_grid_lines">both</property>
+                        <property name="activate_on_single_click">True</property>
+                        <signal name="row-activated" handler="on_tree_objects_row_activated" swapped="no"/>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection"/>
                         </child>
@@ -1560,7 +1571,13 @@
                 <property name="width_request">400</property>
                 <property name="height_request">400</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="app_paintable">True</property>
+                <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
+                <property name="is_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
                 <signal name="draw" handler="on_canvas_draw" swapped="no"/>
               </object>
               <packing>
@@ -1701,7 +1718,7 @@
   <object class="GtkWindow" id="win_translate">
     <property name="can_focus">False</property>
     <property name="default_width">450</property>
-    <signal name="activate-focus" handler="on_win_translate_activate_focus" swapped="no"/>
+    <signal name="show" handler="on_win_translate_show" swapped="no"/>
     <child>
       <placeholder/>
     </child>

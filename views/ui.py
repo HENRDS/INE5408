@@ -18,115 +18,6 @@ class WindowEventHandler:
         self.model: GraphicalModel = proxy(app_handler.model)
 
 
-class WinMain(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_main")
-        self.btn_new: Gtk.Button = builder.get_object("btn_new")
-        self.btn_save: Gtk.Button = builder.get_object("btn_save")
-        self.btn_open: Gtk.Button = builder.get_object("btn_open")
-        self.tree_objects: Gtk.TreeView = builder.get_object("tree_objects")
-        self.btn_menu_object: Gtk.MenuButton = builder.get_object("btn_menu_object")
-        self.btn_up: Gtk.Button = builder.get_object("btn_up")
-        self.btn_left: Gtk.Button = builder.get_object("btn_left")
-        self.btn_right: Gtk.Button = builder.get_object("btn_right")
-        self.btn_down: Gtk.Button = builder.get_object("btn_down")
-        self.comboboxtext_options: Gtk.ComboBoxText = builder.get_object("comboboxtext_options")
-        self.btn_zoom_out: Gtk.Button = builder.get_object("btn_zoom_out")
-        self.btn_zoom_in: Gtk.Button = builder.get_object("btn_zoom_in")
-        self.btn_left_rotate: Gtk.Button = builder.get_object("btn_left_rotate")
-        self.btn_right_rotate: Gtk.Button = builder.get_object("btn_right_rotate")
-        self.btn_rotate_object: Gtk.Button = builder.get_object("btn_rotate_object")
-        self.btn_rotate_world: Gtk.Button = builder.get_object("btn_rotate_world")
-        self.btn_rotate_specific: Gtk.Button = builder.get_object("btn_rotate_specific")
-        self.btn_scale: Gtk.Button = builder.get_object("btn_scale")
-        self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
-        self.canvas: Gtk.DrawingArea = builder.get_object("canvas")
-        self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
-        self.win.connect("activate-focus", self.on_main_window_clicked_focus)
-        self.win.connect("key-press-event", self.on_win_main_key_press_event)
-        # tree_objects handlers
-        self.tree_objects.connect("row-activated", self.on_tree_objects_row_activated)
-        # btn_up handlers
-        self.btn_up.connect("clicked", self.on_btn_up_clicked)
-        # btn_left handlers
-        self.btn_left.connect("clicked", self.on_btn_left_clicked)
-        # btn_right handlers
-        self.btn_right.connect("clicked", self.on_btn_right_clicked)
-        # btn_down handlers
-        self.btn_down.connect("clicked", self.on_btn_down_clicked)
-        # btn_zoom_out handlers
-        self.btn_zoom_out.connect("clicked", self.on_btn_zoom_out_clicked)
-        # btn_zoom_in handlers
-        self.btn_zoom_in.connect("clicked", self.on_btn_zoom_in_clicked)
-        # btn_left_rotate handlers
-        self.btn_left_rotate.connect("clicked", self.on_btn_left_rotate_clicked)
-        # btn_right_rotate handlers
-        self.btn_right_rotate.connect("clicked", self.on_btn_right_rotate_clicked)
-        # btn_scale handlers
-        self.btn_scale.connect("clicked", self.on_btn_scale_clicked)
-        # btn_translate handlers
-        self.btn_translate.connect("clicked", self.on_btn_translate_clicked)
-        # canvas handlers
-        self.canvas.connect("draw", self.on_canvas_draw)
-
-    def on_main_window_clicked_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_main."""
-        pass
-
-    def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
-        """Handler for event 'key-press-event' of control win_main."""
-        pass
-
-    def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
-        """Handler for event 'row-activated' of control tree_objects."""
-        pass
-
-    def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_up."""
-        pass
-
-    def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_left."""
-        pass
-
-    def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_right."""
-        pass
-
-    def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_down."""
-        pass
-
-    def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_zoom_out."""
-        pass
-
-    def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_zoom_in."""
-        pass
-
-    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_left_rotate."""
-        pass
-
-    def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_right_rotate."""
-        pass
-
-    def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_scale."""
-        pass
-
-    def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_translate."""
-        pass
-
-    def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx: Context) -> None:
-        """Handler for event 'draw' of control canvas."""
-        pass
-
-
 class WinAddLine(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -249,6 +140,129 @@ class WinAddPolygon(WindowEventHandler):
         pass
 
 
+class WinMain(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Window = builder.get_object("win_main")
+        self.btn_new: Gtk.Button = builder.get_object("btn_new")
+        self.btn_save: Gtk.Button = builder.get_object("btn_save")
+        self.btn_open: Gtk.Button = builder.get_object("btn_open")
+        self.tree_objects: Gtk.TreeView = builder.get_object("tree_objects")
+        self.btn_menu_object: Gtk.MenuButton = builder.get_object("btn_menu_object")
+        self.btn_up: Gtk.Button = builder.get_object("btn_up")
+        self.btn_left: Gtk.Button = builder.get_object("btn_left")
+        self.btn_right: Gtk.Button = builder.get_object("btn_right")
+        self.btn_down: Gtk.Button = builder.get_object("btn_down")
+        self.comboboxtext_options: Gtk.ComboBoxText = builder.get_object("comboboxtext_options")
+        self.btn_zoom_out: Gtk.Button = builder.get_object("btn_zoom_out")
+        self.btn_zoom_in: Gtk.Button = builder.get_object("btn_zoom_in")
+        self.btn_left_rotate: Gtk.Button = builder.get_object("btn_left_rotate")
+        self.btn_right_rotate: Gtk.Button = builder.get_object("btn_right_rotate")
+        self.btn_rotate_object: Gtk.Button = builder.get_object("btn_rotate_object")
+        self.btn_rotate_world: Gtk.Button = builder.get_object("btn_rotate_world")
+        self.btn_rotate_specific: Gtk.Button = builder.get_object("btn_rotate_specific")
+        self.btn_scale: Gtk.Button = builder.get_object("btn_scale")
+        self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
+        self.btn_delete_object: Gtk.Button = builder.get_object("btn_delete_object")
+        self.btn_clean_window: Gtk.Button = builder.get_object("btn_clean_window")
+        self.canvas: Gtk.DrawingArea = builder.get_object("canvas")
+        self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
+        self.win.connect("activate-focus", self.on_main_window_clicked_focus)
+        self.win.connect("key-press-event", self.on_win_main_key_press_event)
+        # tree_objects handlers
+        self.tree_objects.connect("row-activated", self.on_tree_objects_row_activated)
+        # btn_up handlers
+        self.btn_up.connect("clicked", self.on_btn_up_clicked)
+        # btn_left handlers
+        self.btn_left.connect("clicked", self.on_btn_left_clicked)
+        # btn_right handlers
+        self.btn_right.connect("clicked", self.on_btn_right_clicked)
+        # btn_down handlers
+        self.btn_down.connect("clicked", self.on_btn_down_clicked)
+        # btn_zoom_out handlers
+        self.btn_zoom_out.connect("clicked", self.on_btn_zoom_out_clicked)
+        # btn_zoom_in handlers
+        self.btn_zoom_in.connect("clicked", self.on_btn_zoom_in_clicked)
+        # btn_left_rotate handlers
+        self.btn_left_rotate.connect("clicked", self.on_btn_left_rotate_clicked)
+        # btn_right_rotate handlers
+        self.btn_right_rotate.connect("clicked", self.on_btn_right_rotate_clicked)
+        # btn_scale handlers
+        self.btn_scale.connect("clicked", self.on_btn_scale_clicked)
+        # btn_translate handlers
+        self.btn_translate.connect("clicked", self.on_btn_translate_clicked)
+        # btn_delete_object handlers
+        self.btn_delete_object.connect("clicked", self.on_btn_delete_object_clicked)
+        # btn_clean_window handlers
+        self.btn_clean_window.connect("clicked", self.on_btn_clean_window_clicked)
+        # canvas handlers
+        self.canvas.connect("draw", self.on_canvas_draw)
+
+    def on_main_window_clicked_focus(self, sender: Gtk.Window) -> None:
+        """Handler for event 'activate-focus' of control win_main."""
+        pass
+
+    def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
+        """Handler for event 'key-press-event' of control win_main."""
+        pass
+
+    def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
+        """Handler for event 'row-activated' of control tree_objects."""
+        pass
+
+    def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_up."""
+        pass
+
+    def on_btn_left_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_left."""
+        pass
+
+    def on_btn_right_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_right."""
+        pass
+
+    def on_btn_down_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_down."""
+        pass
+
+    def on_btn_zoom_out_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_zoom_out."""
+        pass
+
+    def on_btn_zoom_in_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_zoom_in."""
+        pass
+
+    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_left_rotate."""
+        pass
+
+    def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_right_rotate."""
+        pass
+
+    def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_scale."""
+        pass
+
+    def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_translate."""
+        pass
+
+    def on_btn_delete_object_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_delete_object."""
+        pass
+
+    def on_btn_clean_window_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_clean_window."""
+        pass
+
+    def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx: Context) -> None:
+        """Handler for event 'draw' of control canvas."""
+        pass
+
+
 class WinEscalonate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -276,12 +290,12 @@ class WinTranslate(WindowEventHandler):
         self.entry_translatex: Gtk.Entry = builder.get_object("entry_translatex")
         self.entry_translatey: Gtk.Entry = builder.get_object("entry_translatey")
         self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
-        self.win.connect("activate-focus", self.on_win_translate_activate_focus)
+        self.win.connect("show", self.on_win_translate_show)
         # btn_apply_translation handlers
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
 
-    def on_win_translate_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_translate."""
+    def on_win_translate_show(self, sender: Gtk.Window) -> None:
+        """Handler for event 'show' of control win_translate."""
         pass
 
     def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
@@ -338,24 +352,24 @@ class Objpopover(WindowEventHandler):
 
 
 class UI:
-    _WIN_MAIN = WinMain
     _WIN_ADD_LINE = WinAddLine
     _WIN_ADD_OBJECT3D = WinAddObject3D
     _WIN_ADD_POINT = WinAddPoint
     _WIN_ADD_POLYGON = WinAddPolygon
+    _WIN_MAIN = WinMain
     _WIN_ESCALONATE = WinEscalonate
     _WIN_TRANSLATE = WinTranslate
     _OBJPOPOVER = Objpopover
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
         if model is ...:
-            model = GraphicalModel()
+            model = GraphicalModel(builder.get_object("lst_store_objects"))
         self.model: GraphicalModel = model
-        self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_add_line: WinAddLine = self._WIN_ADD_LINE(self, builder)
         self.win_add_object3d: WinAddObject3D = self._WIN_ADD_OBJECT3D(self, builder)
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
+        self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_escalonate: WinEscalonate = self._WIN_ESCALONATE(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
         self.ObjPopover: Objpopover = self._OBJPOPOVER(self, builder)
