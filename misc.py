@@ -7,6 +7,7 @@ import itertools as itt
 
 class Window:
     def __init__(self, p1, p2):
+        super().__init__()
         self.p1 = p1
         self.p2 = p2
 

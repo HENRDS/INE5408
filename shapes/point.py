@@ -7,6 +7,7 @@ class Point(GraphicalObject):
 
     def __init__(self, name: str, pos):
         super().__init__(name)
+        self.points = [pos]
         self.pos = pos
 
     def draw(self, ctx: Context, transform, verbose=False) -> None:

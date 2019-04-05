@@ -7,6 +7,7 @@ class Line(GraphicalObject):
 
     def __init__(self, name: str, p1, p2):
         super().__init__(name)
+        self.points = [p1, p2]
         self.p1 = p1
         self.p2 = p2
 

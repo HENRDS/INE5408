@@ -5,7 +5,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
 from misc import Viewport, Window
-from geometry import hpt
+from geometry import hpt, translate
 import typing as tp
 from shapes import GraphicalObject
 
@@ -106,4 +106,4 @@ class MainHandler(WinMain):
         pass
 
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.app_handler.win_translate.win.show()

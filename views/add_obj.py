@@ -13,9 +13,6 @@ class AddObjController(Objpopover):
         self.app_handler.win_add_point.win.show()
 
 
-class AddLineHandler(WinAddLine):
-    def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
-        pass
 
 
 class AddPointHandler(WinAddPoint):
@@ -32,11 +29,3 @@ class AddPointHandler(WinAddPoint):
         self.model.add_obj(Point(name, hpt(x, y)))
         self.win.hide()
 
-
-class AddPolygonHandler(WinAddPolygon):
-    def on_btn_add_polygon__clicked(self, sender: Gtk.Button) -> None:
-        polygon = Polygon(self.entry_add_polygon_name.get_text(),
-                          float(self.entry_add_polygonx.get_text()),
-                          float(self.entry_add_polygony.get_text()),
-                          float(self.entry_add_polygonz.get_text()))
-        self.app_handler.win_main.add_obj(polygon)

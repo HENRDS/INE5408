@@ -21,8 +21,3 @@ class GraphicalObject:
     def draw(self, ctx: Context, transform, verbose=False) -> None:
         pass
 
-    @abc.abstractmethod
-    def __iter__(self):
-        pass
-
-
