@@ -104,12 +104,10 @@
   </object>
   <object class="GtkWindow" id="win_add_line">
     <property name="can_focus">False</property>
-    <property name="type">popup</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">450</property>
-    <property name="type_hint">utility</property>
     <signal name="activate-focus" handler="on_win_add_line_activate_focus" swapped="no"/>
     <child>
       <placeholder/>
