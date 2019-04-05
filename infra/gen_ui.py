@@ -15,7 +15,8 @@ except ImportError:
 
 _extra_args = {
     "draw": ["ctx: Context"],
-    "key-press-event": ["event: Gdk.EventKey"]
+    "key-press-event": ["event: Gdk.EventKey"],
+    "row-activated": ["path: Gtk.TreePath", "column: Gtk.TreeViewColumn"]
 }
 from dataclasses import dataclass
 

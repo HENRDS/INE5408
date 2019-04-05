@@ -15,13 +15,7 @@ class AddObjController(Objpopover):
 
 class AddLineHandler(WinAddLine):
     def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
-        fields = (self.entry_add_line_x,
-                  self.entry_add_line_y,
-                  self.entry_add_line_x2,
-                  self.entry_add_line_y2)
-        for f in fields:
-            if not f.get_text().is_num():
-                f.set_tooltip_text("Invalid Number")
+        pass
 
 
 class AddPointHandler(WinAddPoint):

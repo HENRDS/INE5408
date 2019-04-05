@@ -45,6 +45,8 @@ class WinMain(WindowEventHandler):
         self.lstLog: Gtk.ListBox = builder.get_object("lstLog")
         self.win.connect("activate-focus", self.on_main_window_clicked_focus)
         self.win.connect("key-press-event", self.on_win_main_key_press_event)
+        # tree_objects handlers
+        self.tree_objects.connect("row-activated", self.on_tree_objects_row_activated)
         # btn_up handlers
         self.btn_up.connect("clicked", self.on_btn_up_clicked)
         # btn_left handlers
@@ -74,6 +76,10 @@ class WinMain(WindowEventHandler):
 
     def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
         """Handler for event 'key-press-event' of control win_main."""
+        pass
+
+    def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
+        """Handler for event 'row-activated' of control tree_objects."""
         pass
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
@@ -234,7 +240,7 @@ class WinAddPolygon(WindowEventHandler):
         """Handler for event 'clicked' of control btn_add_polygon_point."""
         pass
 
-    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox) -> None:
+    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
         """Handler for event 'row-activated' of control lst_polygon_points."""
         pass
 

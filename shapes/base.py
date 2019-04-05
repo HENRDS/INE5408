@@ -1,12 +1,12 @@
 import numpy as np
 import abc
 from cairo import Context
-
+import typing as tp
 
 class GraphicalObject:
     def __init__(self, name: str):
         self._name = name
-        self.points = []
+        self.points: tp.List[np.ndarray] = []
 
     @property
     def name(self) -> str:
@@ -14,10 +14,11 @@ class GraphicalObject:
 
     @property
     def center(self) -> np.ndarray:
-        pass
+        n = len(self.points)
+        return sum(self.points) / n
 
     @abc.abstractmethod
-    def draw(self, ctx: Context, transform) -> None:
+    def draw(self, ctx: Context, transform, verbose=False) -> None:
         pass
 
     @abc.abstractmethod

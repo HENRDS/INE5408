@@ -6,6 +6,8 @@ gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
 from misc import Viewport, Window
 from geometry import hpt
+import typing as tp
+from shapes import GraphicalObject
 
 
 class MainHandler(WinMain):
@@ -40,6 +42,13 @@ class MainHandler(WinMain):
     def _update(self):
         self.canvas.queue_draw()
 
+    def get_selected_name(self) -> tp.Optional[str]:
+        selection = self.tree_objects.get_selection()
+        model, tree_iter = selection.get_selected()
+        if tree_iter is None:
+            return None
+        return model[tree_iter][0]
+
     def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
         _, val = event.get_keyval()
         # print("\n".join(dir(Gdk.ModifierType)))
@@ -53,8 +62,18 @@ class MainHandler(WinMain):
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         self.viewport.resize(float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height()))
         tr = self.viewport.transformer(self.model.window)
+        selected = self.get_selected_name()
         for obj in self.model.objects():
-            obj.draw(ctx, tr)
+            if obj.name == selected:
+                ctx.set_source_rgb(1., 0., 0.)
+                obj.draw(ctx, tr, verbose=True)
+                ctx.set_source_rgb(0., 0., 0.)
+            else:
+                obj.draw(ctx, tr)
+
+    def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath,
+                                      column: Gtk.TreeViewColumn) -> None:
+        self._update()
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
         self.model.window.move_up(self._step)

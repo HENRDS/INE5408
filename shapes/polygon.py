@@ -1,4 +1,6 @@
 import numpy as np
+from cairo import Context
+
 from .base import GraphicalObject
 
 
@@ -7,14 +9,22 @@ class Polygon(GraphicalObject):
         super().__init__(name)
         self.points = points
 
-    def draw(self, ctx, tr) -> None:
+    def draw(self, ctx: Context, transform, verbose=False) -> None:
         pts = iter(self.points)
-        x = tr(next(pts))
+        x = transform(next(pts))
         ctx.move_to(*x[:-1])
         for p in pts:
-            ctx.line_to(*tr(p)[:-1])
+            ctx.line_to(*transform(p)[:-1])
         ctx.line_to(*x[:-1])
         ctx.stroke()
+        if verbose:
+            src = ctx.get_source()
+            ctx.set_source_rgb(0., 1., 0.)
+            for point in self.points:
+                x, y = transform(point)[:-1]
+                ctx.arc(x, y, 5, 0, 2*np.pi)
+                ctx.fill()
+            ctx.set_source(src)
 
 
 class Rect(Polygon):
