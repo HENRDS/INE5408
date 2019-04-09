@@ -3,6 +3,7 @@ import abc
 from cairo import Context
 import typing as tp
 
+
 class GraphicalObject:
     def __init__(self, name: str):
         self._name = name
@@ -20,4 +21,3 @@ class GraphicalObject:
     @abc.abstractmethod
     def draw(self, ctx: Context, transform, verbose=False) -> None:
         pass
-

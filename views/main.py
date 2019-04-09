@@ -1,16 +1,16 @@
-from views.ui import WinMain
 import gi
+
+from views.ui import WinMain
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
-from misc import Viewport, Window
-from geometry import hpt, translate
+from misc import Viewport
+from geometry import hpt
 import typing as tp
-from shapes import GraphicalObject
 
 
-class MainHandler(WinMain):
+class MainController(WinMain):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self._step = 10
@@ -103,10 +103,17 @@ class MainHandler(WinMain):
         pass
 
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        if self.get_selected_name() is None:
+            return
+        self.app_handler.win_scale.win.show()
 
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
-        nm = self.get_selected_name()
-        if nm is None:
+        if self.get_selected_name() is None:
             return
         self.app_handler.win_translate.win.show()
+
+    def on_btn_add_obj_clicked(self, sender: Gtk.Button) -> None:
+        self.app_handler.pop_add_obj.win.show()
+
+    def on_btn_rotate_clicked(self, sender: Gtk.Button) -> None:
+        self.app_handler.win_rotate.win.show()

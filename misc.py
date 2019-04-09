@@ -5,6 +5,7 @@ import functools as fn
 import itertools as itt
 
 
+
 class Window:
     def __init__(self, p1, p2):
         super().__init__()

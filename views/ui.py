@@ -148,6 +148,7 @@ class WinMain(WindowEventHandler):
         self.btn_save: Gtk.Button = builder.get_object("btn_save")
         self.btn_open: Gtk.Button = builder.get_object("btn_open")
         self.tree_objects: Gtk.TreeView = builder.get_object("tree_objects")
+        self.btn_add_obj: Gtk.Button = builder.get_object("btn_add_obj")
         self.btn_menu_object: Gtk.MenuButton = builder.get_object("btn_menu_object")
         self.btn_up: Gtk.Button = builder.get_object("btn_up")
         self.btn_left: Gtk.Button = builder.get_object("btn_left")
@@ -158,9 +159,8 @@ class WinMain(WindowEventHandler):
         self.btn_zoom_in: Gtk.Button = builder.get_object("btn_zoom_in")
         self.btn_left_rotate: Gtk.Button = builder.get_object("btn_left_rotate")
         self.btn_right_rotate: Gtk.Button = builder.get_object("btn_right_rotate")
-        self.btn_rotate_object: Gtk.Button = builder.get_object("btn_rotate_object")
-        self.btn_rotate_world: Gtk.Button = builder.get_object("btn_rotate_world")
-        self.btn_rotate_specific: Gtk.Button = builder.get_object("btn_rotate_specific")
+        self.btn_rotate: Gtk.Button = builder.get_object("btn_rotate")
+        self.btn_menu_rotate: Gtk.MenuButton = builder.get_object("btn_menu_rotate")
         self.btn_scale: Gtk.Button = builder.get_object("btn_scale")
         self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
         self.btn_delete_object: Gtk.Button = builder.get_object("btn_delete_object")
@@ -171,6 +171,8 @@ class WinMain(WindowEventHandler):
         self.win.connect("key-press-event", self.on_win_main_key_press_event)
         # tree_objects handlers
         self.tree_objects.connect("row-activated", self.on_tree_objects_row_activated)
+        # btn_add_obj handlers
+        self.btn_add_obj.connect("clicked", self.on_btn_add_obj_clicked)
         # btn_up handlers
         self.btn_up.connect("clicked", self.on_btn_up_clicked)
         # btn_left handlers
@@ -187,6 +189,8 @@ class WinMain(WindowEventHandler):
         self.btn_left_rotate.connect("clicked", self.on_btn_left_rotate_clicked)
         # btn_right_rotate handlers
         self.btn_right_rotate.connect("clicked", self.on_btn_right_rotate_clicked)
+        # btn_rotate handlers
+        self.btn_rotate.connect("clicked", self.on_btn_rotate_clicked)
         # btn_scale handlers
         self.btn_scale.connect("clicked", self.on_btn_scale_clicked)
         # btn_translate handlers
@@ -208,6 +212,10 @@ class WinMain(WindowEventHandler):
 
     def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
         """Handler for event 'row-activated' of control tree_objects."""
+        pass
+
+    def on_btn_add_obj_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_obj."""
         pass
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
@@ -242,6 +250,10 @@ class WinMain(WindowEventHandler):
         """Handler for event 'clicked' of control btn_right_rotate."""
         pass
 
+    def on_btn_rotate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_rotate."""
+        pass
+
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_scale."""
         pass
@@ -263,23 +275,23 @@ class WinMain(WindowEventHandler):
         pass
 
 
-class WinEscalonate(WindowEventHandler):
+class WinScale(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_escalonate")
-        self.entry_escalex: Gtk.Entry = builder.get_object("entry_escalex")
-        self.entry_escaley: Gtk.Entry = builder.get_object("entry_escaley")
-        self.btn_add_escale: Gtk.Button = builder.get_object("btn_add_escale")
-        self.win.connect("activate-focus", self.on_win_escalonate_activate_focus)
-        # btn_add_escale handlers
-        self.btn_add_escale.connect("clicked", self.on_btn_add_escale_clicked)
+        self.win: Gtk.Window = builder.get_object("win_scale")
+        self.entry_scalex: Gtk.Entry = builder.get_object("entry_scalex")
+        self.entry_scaley: Gtk.Entry = builder.get_object("entry_scaley")
+        self.btn_add_scale: Gtk.Button = builder.get_object("btn_add_scale")
+        self.win.connect("show", self.on_win_scale_show)
+        # btn_add_scale handlers
+        self.btn_add_scale.connect("clicked", self.on_btn_add_scale_clicked)
 
-    def on_win_escalonate_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_escalonate."""
+    def on_win_scale_show(self, sender: Gtk.Window) -> None:
+        """Handler for event 'show' of control win_scale."""
         pass
 
-    def on_btn_add_escale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_escale."""
+    def on_btn_add_scale_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_scale."""
         pass
 
 
@@ -303,10 +315,10 @@ class WinTranslate(WindowEventHandler):
         pass
 
 
-class Objpopover(WindowEventHandler):
+class PopAddObj(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        self.win: Gtk.Popover = builder.get_object("ObjPopover")
+        self.win: Gtk.Popover = builder.get_object("pop_add_obj")
         self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
         self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
         self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
@@ -351,15 +363,23 @@ class Objpopover(WindowEventHandler):
         pass
 
 
+class WinRotate(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_rotate")
+        self.bt_cancel_rotate: Gtk.Button = builder.get_object("bt_cancel_rotate")
+
+
 class UI:
     _WIN_ADD_LINE = WinAddLine
     _WIN_ADD_OBJECT3D = WinAddObject3D
     _WIN_ADD_POINT = WinAddPoint
     _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_MAIN = WinMain
-    _WIN_ESCALONATE = WinEscalonate
+    _WIN_SCALE = WinScale
     _WIN_TRANSLATE = WinTranslate
-    _OBJPOPOVER = Objpopover
+    _POP_ADD_OBJ = PopAddObj
+    _WIN_ROTATE = WinRotate
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
         if model is ...:
@@ -370,9 +390,10 @@ class UI:
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
-        self.win_escalonate: WinEscalonate = self._WIN_ESCALONATE(self, builder)
+        self.win_scale: WinScale = self._WIN_SCALE(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
-        self.ObjPopover: Objpopover = self._OBJPOPOVER(self, builder)
+        self.pop_add_obj: PopAddObj = self._POP_ADD_OBJ(self, builder)
+        self.win_rotate: WinRotate = self._WIN_ROTATE(self, builder)
         self.win_main.win.connect("destroy", Gtk.main_quit)
 
     def show(self):

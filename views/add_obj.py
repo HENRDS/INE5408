@@ -1,4 +1,4 @@
-from views.ui import WinAddLine, WinAddPoint, WinAddPolygon, Objpopover
+from views.ui import WinAddLine, WinAddPoint, WinAddPolygon, PopAddObj
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -8,7 +8,7 @@ from geometry import hpt
 from shapes import Line, Point, Polygon
 
 
-class AddObjController(Objpopover):
+class AddObjController(PopAddObj):
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.win_add_point.win.show()
 
@@ -28,9 +28,6 @@ class AddObjController(Objpopover):
         pass
 
 
-
-
-
 class AddPointHandler(WinAddPoint):
 
     def on_win_add_point_show(self, sender: Gtk.Window) -> None:
@@ -44,6 +41,7 @@ class AddPointHandler(WinAddPoint):
         y = float(self.entry_add_pointy.get_text())
         self.model.add_obj(Point(name, hpt(x, y)))
         self.win.hide()
+
 
 class AddLineHandler(WinAddLine):
 
@@ -62,4 +60,3 @@ class AddLineHandler(WinAddLine):
         y2 = float(self.entry_add_line_y2.get_text())
         self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
         self.win.hide()
-
