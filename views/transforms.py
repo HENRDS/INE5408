@@ -3,7 +3,6 @@ from geometry import translate, hpt, scale, rotate2D
 from .ui import WinTranslate, WinScale
 import numpy as np
 
-
 class TranslateController(WinTranslate):
 
     def on_win_translate_show(self, sender: Gtk.Window) -> None:
