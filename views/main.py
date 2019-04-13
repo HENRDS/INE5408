@@ -1,3 +1,4 @@
+from core import Viewport
 import gi
 
 from views.ui import WinMain
@@ -5,7 +6,6 @@ from views.ui import WinMain
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
-from misc import Viewport
 from geometry import hpt
 import typing as tp
 

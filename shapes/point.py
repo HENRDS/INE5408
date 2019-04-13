@@ -1,6 +1,6 @@
 import numpy as np
 from cairo import Context
-from .base import GraphicalObject
+from core import GraphicalObject
 
 
 class Point(GraphicalObject):

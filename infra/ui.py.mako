@@ -1,21 +1,8 @@
-from cairo import Context
-from shapes import GraphicalObject, GraphicalModel
-from weakref import proxy
+from core import GraphicalModel, WindowEventHandler, Context
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
-
-
-class WindowEventHandler:
-    def __init__(self, app_handler: "${cls_name}", builder: Gtk.Builder):
-        """
-        :param app_handler: Handler for events of the whole application
-        :param builder: GtkBuilder used to load the controls, windows and connect their signals
-        :type Gtk.Builder
-        """
-        self.app_handler: "${cls_name}" = proxy(app_handler)
-        self.model: GraphicalModel = proxy(app_handler.model)
 
 
 %for win in windows:

@@ -1,21 +1,8 @@
-from cairo import Context
-from shapes import GraphicalObject, GraphicalModel
-from weakref import proxy
+from core import GraphicalModel, WindowEventHandler, Context
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
-
-
-class WindowEventHandler:
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        """
-        :param app_handler: Handler for events of the whole application
-        :param builder: GtkBuilder used to load the controls, windows and connect their signals
-        :type Gtk.Builder
-        """
-        self.app_handler: "UI" = proxy(app_handler)
-        self.model: GraphicalModel = proxy(app_handler.model)
 
 
 class WinAddLine(WindowEventHandler):
@@ -84,9 +71,6 @@ class WinAddPoint(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.win: Gtk.Window = builder.get_object("win_add_point")
-        self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
-        self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
-        self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
         self.btn_add_point: Gtk.Button = builder.get_object("btn_add_point")
         self.win.connect("show", self.on_win_add_point_show)
         # btn_add_point handlers
@@ -275,46 +259,6 @@ class WinMain(WindowEventHandler):
         pass
 
 
-class WinScale(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_scale")
-        self.entry_scalex: Gtk.Entry = builder.get_object("entry_scalex")
-        self.entry_scaley: Gtk.Entry = builder.get_object("entry_scaley")
-        self.btn_add_scale: Gtk.Button = builder.get_object("btn_add_scale")
-        self.win.connect("show", self.on_win_scale_show)
-        # btn_add_scale handlers
-        self.btn_add_scale.connect("clicked", self.on_btn_add_scale_clicked)
-
-    def on_win_scale_show(self, sender: Gtk.Window) -> None:
-        """Handler for event 'show' of control win_scale."""
-        pass
-
-    def on_btn_add_scale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_scale."""
-        pass
-
-
-class WinTranslate(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_translate")
-        self.entry_translatex: Gtk.Entry = builder.get_object("entry_translatex")
-        self.entry_translatey: Gtk.Entry = builder.get_object("entry_translatey")
-        self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
-        self.win.connect("show", self.on_win_translate_show)
-        # btn_apply_translation handlers
-        self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
-
-    def on_win_translate_show(self, sender: Gtk.Window) -> None:
-        """Handler for event 'show' of control win_translate."""
-        pass
-
-    def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_apply_translation."""
-        pass
-
-
 class PopAddObj(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -367,7 +311,24 @@ class WinRotate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.win: Gtk.Dialog = builder.get_object("win_rotate")
-        self.bt_cancel_rotate: Gtk.Button = builder.get_object("bt_cancel_rotate")
+
+
+class WinScale(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_scale")
+        self.btn_apply_scale: Gtk.Button = builder.get_object("btn_apply_scale")
+        self.entry_scalex: Gtk.Entry = builder.get_object("entry_scalex")
+        self.entry_scaley: Gtk.Entry = builder.get_object("entry_scaley")
+
+
+class WinTranslate(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_translate")
+        self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")
+        self.entry_translatex: Gtk.Entry = builder.get_object("entry_translatex")
+        self.entry_translatey: Gtk.Entry = builder.get_object("entry_translatey")
 
 
 class UI:
@@ -376,10 +337,10 @@ class UI:
     _WIN_ADD_POINT = WinAddPoint
     _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_MAIN = WinMain
-    _WIN_SCALE = WinScale
-    _WIN_TRANSLATE = WinTranslate
     _POP_ADD_OBJ = PopAddObj
     _WIN_ROTATE = WinRotate
+    _WIN_SCALE = WinScale
+    _WIN_TRANSLATE = WinTranslate
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
         if model is ...:
@@ -390,10 +351,10 @@ class UI:
         self.win_add_point: WinAddPoint = self._WIN_ADD_POINT(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
-        self.win_scale: WinScale = self._WIN_SCALE(self, builder)
-        self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
         self.pop_add_obj: PopAddObj = self._POP_ADD_OBJ(self, builder)
         self.win_rotate: WinRotate = self._WIN_ROTATE(self, builder)
+        self.win_scale: WinScale = self._WIN_SCALE(self, builder)
+        self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
         self.win_main.win.connect("destroy", Gtk.main_quit)
 
     def show(self):

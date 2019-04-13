@@ -1,4 +1,5 @@
-from shapes import GraphicalObject
+import core
+from shapes import Line
 from enum import IntFlag
 import typing as tp
 
@@ -11,19 +12,10 @@ class Direction(IntFlag):
     CENTER = 0
 
 
-class Clipper:
-    def __init__(self, window):
-        self.window = window
+class CohenSutherland(core.Clipper):
 
-    def __call__(self, obj: GraphicalObject) -> tp.Optional[GraphicalObject]:
-        return obj
-
-
-class CohenSutherland(Clipper):
-
-    def __call__(self, obj: GraphicalObject) -> tp.Optional[GraphicalObject]:
-        return super().__call__(obj)
-
+    def clip_line(self, line: Line):
+        pass
 
     def direction_of(self, point):
         cod = Direction.CENTER
@@ -39,5 +31,3 @@ class CohenSutherland(Clipper):
             cod |= Direction.LEFT
 
         return cod
-
-
