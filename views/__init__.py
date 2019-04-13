@@ -1,16 +1,15 @@
-import gi
-import typing as tp
-
-gi.require_version('Gtk', '3.0')
-gi.require_version('Gdk', '3.0')
-from gi.repository import Gtk
 import numpy as np
-from shapes import Line, Rect, Point, GraphicalObject
+from shapes import Line, Rect, Point
 from geometry import hpt
 from .ui import UI
 from .main import MainController
 from .add_obj import AddObjController, AddPointHandler
 from .transforms import TranslateController, ScaleController
+import gi
+
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gdk', '3.0')
+from gi.repository import Gtk
 
 
 class SGI(UI):

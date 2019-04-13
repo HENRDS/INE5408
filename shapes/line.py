@@ -1,6 +1,6 @@
 from cairo import Context
 import numpy as np
-from .base import GraphicalObject
+from core import GraphicalObject
 
 
 class Line(GraphicalObject):
