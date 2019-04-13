@@ -23,7 +23,7 @@ class CohenSutherland(Clipper):
 
     def __call__(self, obj: GraphicalObject) -> tp.Optional[GraphicalObject]:
         return super().__call__(obj)
-    
+
 
     def direction_of(self, point):
         cod = Direction.CENTER
