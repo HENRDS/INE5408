@@ -1,4 +1,4 @@
-from views.ui import WinAddLine, WinAddPoint, WinAddPolygon, PopAddObj
+from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -28,14 +28,8 @@ class AddObjController(PopAddObj):
         pass
 
 
-class AddPointHandler(WinAddPoint):
-
-    def on_win_add_point_show(self, sender: Gtk.Window) -> None:
-        self.entry_add_name.set_text("")
-        self.entry_add_pointx.set_text("0.0")
-        self.entry_add_pointy.set_text("0.0")
-
-    def on_btn_add_point_clicked(self, sender: Gtk.Button) -> None:
+class AddPointController(WinPoint):
+    def on_btn_add_clicked(self, sender: Gtk.Button) -> None:
         name = self.entry_add_name.get_text()
         x = float(self.entry_add_pointx.get_text())
         y = float(self.entry_add_pointy.get_text())
@@ -43,21 +37,12 @@ class AddPointHandler(WinAddPoint):
         self.win.hide()
 
 
-
-class AddLineHandler(WinAddLine):
-
-    def on_btn_add_line_show(self, sender: Gtk.Window) -> None:
-        self.entry_add_line_name.set_text("")
-        self.entry_add_line_x.set_text("0.0")
-        self.entry_add_line_y.set_text("0.0")
-        self.entry_add_line_x2.set_text("0.0")
-        self.entry_add_line_y2.set_text("0.0")
-
+class AddLineController(WinLine):
     def on_btn_add_line_clicked(self, sender: Gtk.Button) -> None:
-        name = self.entry_add_line_name.get_text()
-        x1 = float(self.entry_add_line_x.get_text())
-        y1 = float(self.entry_add_line_y.get_text())
-        x2 = float(self.entry_add_line_x2.get_text())
-        y2 = float(self.entry_add_line_y2.get_text())
+        name = self.name_line.get_text()
+        x1 = float(self.entry_x1_line.get_text())
+        y1 = float(self.entry_y1_line.get_text())
+        x2 = float(self.entry_x2_line.get_text())
+        y2 = float(self.entry_y2_line.get_text())
         self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
         self.win.hide()

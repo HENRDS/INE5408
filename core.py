@@ -142,7 +142,6 @@ class ApplicationHandler:
             model = GraphicalModel(builder.get_object("lst_store_objects"))
         self.model: GraphicalModel = model
 
-    @abc.abstractmethod
     @property
     def main_window(self) -> WindowEventHandler:
-        pass
+        raise NotImplemented
