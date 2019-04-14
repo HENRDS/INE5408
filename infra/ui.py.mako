@@ -1,4 +1,4 @@
-from core import GraphicalModel, WindowEventHandler, Context
+from core import GraphicalModel, WindowEventHandler, Context, ApplicationHandler
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
@@ -37,19 +37,22 @@ class ${win.cls_name}(WindowEventHandler):
 
 
 %endfor
-class ${cls_name}:
+class ${cls_name}(ApplicationHandler):
 %for win in windows:
     ${win.attr_name} = ${win.cls_name}
 %endfor
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
-        if model is ...:
-            model = GraphicalModel(builder.get_object("lst_store_objects"))
-        self.model: GraphicalModel = model
+        super().__init__(builder, model)
     %for win in windows:
         self.${win.name}: ${win.cls_name} = self.${win.attr_name}(self, builder)
     %endfor
-        self.${main_window}.win.connect("destroy", Gtk.main_quit)
+        self.main_window.win.connect("destroy", Gtk.main_quit)
+
+
+    @property
+    def main_window(self):
+        return self.${main_window}
 
     def show(self):
-        self.${main_window}.win.show()
+        self.main_window.win.show()

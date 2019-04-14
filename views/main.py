@@ -73,6 +73,7 @@ class MainController(WinMain):
 
     def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath,
                                       column: Gtk.TreeViewColumn) -> None:
+        self.model.selected_name = self.get_selected_name()
         self.update_screen()
 
     def on_btn_up_clicked(self, sender: Gtk.Button) -> None:
@@ -116,4 +117,5 @@ class MainController(WinMain):
         self.app_handler.pop_add_obj.win.show()
 
     def on_btn_rotate_clicked(self, sender: Gtk.Button) -> None:
+        print(self.model.selected)
         self.app_handler.win_rotate.win.show()

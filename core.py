@@ -87,18 +87,23 @@ class GraphicalModel:
         self.subscriptions = []
         self.list_model = list_model
         self.window = Window(hpt(0., 0.), hpt(800., 600.))
+        self.selected_name = None
 
     def subscribe(self, callback):
         self.subscriptions.append(callback)
 
-    def _update(self):
+    @property
+    def selected(self) -> tp.Optional[GraphicalObject]:
+        return self.display_file.get(self.selected_name)
+
+    def update(self):
         for s in self.subscriptions:
             s()
 
     def add_obj(self, obj: GraphicalObject):
         self.display_file[obj.name] = obj
         self.list_model.append([obj.name, obj.__class__.__name__])
-        self._update()
+        self.update()
 
     def objects(self, clipper=...):
         if clipper is ...:
@@ -114,16 +119,14 @@ class Clipper:
 
     def __call__(self, obj: GraphicalObject) -> tp.Optional[GraphicalObject]:
         name = obj.__class__.__name__.lower()
-        if hasattr(self, f"clip_{name}"):
-            return getattr(self, name)(self, obj)
+        meth = f"clip_{name}"
+        if hasattr(self, meth):
+            return getattr(self, meth)(self, obj)
         raise TypeError(f"This clipper cannot clip a {name}.")
 
 
-
-
-
 class WindowEventHandler:
-    def __init__(self, app_handler, builder: Gtk.Builder):
+    def __init__(self, app_handler: "ApplicationHandler", builder: Gtk.Builder):
         """
         :param app_handler: Handler for events of the whole application
         :param builder: GtkBuilder used to load the controls, windows and connect their signals
@@ -131,3 +134,15 @@ class WindowEventHandler:
         """
         self.app_handler = weakref.proxy(app_handler)
         self.model: GraphicalModel = weakref.proxy(app_handler.model)
+
+
+class ApplicationHandler:
+    def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
+        if model is ...:
+            model = GraphicalModel(builder.get_object("lst_store_objects"))
+        self.model: GraphicalModel = model
+
+    @abc.abstractmethod
+    @property
+    def main_window(self) -> WindowEventHandler:
+        pass

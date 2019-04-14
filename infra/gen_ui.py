@@ -7,6 +7,7 @@ from xml.etree import ElementTree
 import os
 import weakref
 import typing as tp
+from dataclasses import dataclass
 
 try:
     from mako.template import Template
@@ -18,7 +19,7 @@ _extra_args = {
     "key-press-event": ["event: Gdk.EventKey"],
     "row-activated": ["path: Gtk.TreePath", "column: Gtk.TreeViewColumn"]
 }
-from dataclasses import dataclass
+_all_controls = {}
 
 
 @dataclass
@@ -35,6 +36,9 @@ class Control:
         self.cls_name = self.name.title().replace("_", "")
         self.attr_name = f"_{self.name.upper()}"
         self.events = [Event(self, e) for e in node.findall("signal")]
+
+        global _all_controls
+        _all_controls[self.name] = self
 
     @property
     def py_type(self):

@@ -5,11 +5,11 @@ import typing as tp
 
 
 class Direction(IntFlag):
+    CENTER = 0
     LEFT = 1
     RIGHT = 2
     UP = 4
     DOWN = 8
-    CENTER = 0
 
 
 class CohenSutherland(core.Clipper):
