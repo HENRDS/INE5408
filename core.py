@@ -133,7 +133,7 @@ class WindowEventHandler:
         :param builder: GtkBuilder used to load the controls, windows and connect their signals
         :type Gtk.Builder
         """
-        self.app_handler = weakref.proxy(app_handler)
+        self.app_handler: ApplicationHandler = weakref.proxy(app_handler)
         self.model: GraphicalModel = weakref.proxy(app_handler.model)
 
 
@@ -147,9 +147,9 @@ class ApplicationHandler:
     def main_window(self) -> WindowEventHandler:
         raise NotImplemented
 
-    def clean_entries(self):
-        for attr_name in dir(self):
-            attr = getattr(self, attr_name)
+    def clean_entries(self, win):
+        for attr_name in dir(win):
+            attr = getattr(win, attr_name)
             if isinstance(attr, Gtk.Entry):
                 p = attr.get_input_purpose()
                 if p == Gtk.InputPurpose.NUMBER:
