@@ -532,16 +532,6 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-go-back</property>
   </object>
-  <object class="GtkImage" id="image_new">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkImage" id="image_open">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-save</property>
-  </object>
   <object class="GtkImage" id="image_righ">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -551,11 +541,6 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-go-forward</property>
-  </object>
-  <object class="GtkImage" id="image_save">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-floppy</property>
   </object>
   <object class="GtkImage" id="image_up">
     <property name="visible">True</property>
