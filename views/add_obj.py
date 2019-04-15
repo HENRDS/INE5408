@@ -10,13 +10,19 @@ from shapes import Line, Point, Polygon
 
 class AddObjController(PopAddObj):
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_point.win.show()
+        win_point = self.app_handler.win_add_point
+        self.app_handler.clean_entries(win_point)
+        win_point.win.show()
 
     def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_line.win.show()
+        win_line = self.app_handler.win_add_line
+        self.app_handler.clean_entries(win_line)
+        win_line.win.show()
 
     def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
-        self.app_handler.win_add_polygon.win.show()
+        win_polygon = self.app_handler.win_add_polygon
+        self.app_handler.clean_entries(win_polygon)
+        win_polygon.win.show()
 
     def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
         pass

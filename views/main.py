@@ -106,7 +106,9 @@ class MainController(WinMain):
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
         if self.get_selected_name() is None:
             return
-        self.app_handler.win_scale.win.show()
+        win_scal = self.app_handler.win_scale
+        self.app_handler.clean_entries(win_scal)
+        win_scal.win.show()
 
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
         if self.get_selected_name() is None:
@@ -120,5 +122,7 @@ class MainController(WinMain):
 
     def on_btn_rotate_clicked(self, sender: Gtk.Button) -> None:
         print(self.model.selected)
-        self.app_handler.win_rotate.win.show()
+        win_rot = self.app_handler.win_rotate
+        self.app_handler.clean_entries(win_rot)
+        win_rot.win.show()
 
