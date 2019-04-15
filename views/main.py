@@ -111,7 +111,9 @@ class MainController(WinMain):
     def on_btn_translate_clicked(self, sender: Gtk.Button) -> None:
         if self.get_selected_name() is None:
             return
-        self.app_handler.win_translate.win.show()
+        win_trans = self.app_handler.win_translate
+        self.app_handler.clean_entries(win_trans)
+        win_trans.win.show()
 
     def on_btn_add_obj_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.pop_add_obj.win.show()
@@ -119,3 +121,4 @@ class MainController(WinMain):
     def on_btn_rotate_clicked(self, sender: Gtk.Button) -> None:
         print(self.model.selected)
         self.app_handler.win_rotate.win.show()
+
