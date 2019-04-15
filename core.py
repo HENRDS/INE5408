@@ -4,6 +4,7 @@ from geometry import hpt
 from cairo import Context
 import typing as tp
 import weakref
+import inspect
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -145,3 +146,13 @@ class ApplicationHandler:
     @property
     def main_window(self) -> WindowEventHandler:
         raise NotImplemented
+
+    def clean_entries(self):
+        for attr_name in dir(self):
+            attr = getattr(self, attr_name)
+            if isinstance(attr, Gtk.Entry):
+                p = attr.get_input_purpose()
+                if p == Gtk.InputPurpose.NUMBER:
+                    attr.set_text("0.0")
+                else:
+                    attr.set_text("")
