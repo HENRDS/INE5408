@@ -46,3 +46,13 @@ class AddLineController(WinLine):
         y2 = float(self.entry_y2_line.get_text())
         self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
         self.win.hide()
+
+class AddPolygonController(WinAddPolygon):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.__points = Gtk.ListStore(float, float, float)
+
+
+
+    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        super().on_btn_remove_polygon_point_clicked(sender)
