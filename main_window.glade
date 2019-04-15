@@ -228,7 +228,7 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-apply</property>
   </object>
-  <object class="GtkDialog">
+  <object class="GtkDialog" id="win_add_polygon">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
     <child>

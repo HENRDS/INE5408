@@ -5,49 +5,6 @@ gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
 
 
-class WinAddPolygon(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Window = builder.get_object("win_add_polygon")
-        self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
-        self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
-        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
-        self.entry_name_polygon: Gtk.Entry = builder.get_object("entry_name_polygon")
-        self.entry_poligonx: Gtk.Entry = builder.get_object("entry_poligonx")
-        self.entry_poligony: Gtk.Entry = builder.get_object("entry_poligony")
-        self.entry_poligonz: Gtk.Entry = builder.get_object("entry_poligonz")
-        self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
-        self.win.connect("activate-focus", self.on_win_add_polygon_activate_focus)
-        # btn_remove_polygon_point handlers
-        self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
-        # btn_add_polygon_point handlers
-        self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
-        # lst_polygon_points handlers
-        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
-        # btn_add_polygon handlers
-        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
-
-    def on_win_add_polygon_activate_focus(self, sender: Gtk.Window) -> None:
-        """Handler for event 'activate-focus' of control win_add_polygon."""
-        pass
-
-    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_remove_polygon_point."""
-        pass
-
-    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_polygon_point."""
-        pass
-
-    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
-        """Handler for event 'row-activated' of control lst_polygon_points."""
-        pass
-
-    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_polygon."""
-        pass
-
-
 class WinMain(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -273,6 +230,51 @@ class WinObj3D(WindowEventHandler):
         pass
 
 
+class WinAddPolygon(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_add_polygon")
+        self.btn_close_polygon: Gtk.Button = builder.get_object("btn_close_polygon")
+        self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
+        self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
+        self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
+        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
+        self.entry_name_polygon: Gtk.Entry = builder.get_object("entry_name_polygon")
+        self.entry_poligonx: Gtk.Entry = builder.get_object("entry_poligonx")
+        self.entry_poligony: Gtk.Entry = builder.get_object("entry_poligony")
+        self.entry_poligonz: Gtk.Entry = builder.get_object("entry_poligonz")
+        # btn_close_polygon handlers
+        self.btn_close_polygon.connect("clicked", self.on_btn_close_polygon_clicked)
+        # btn_add_polygon handlers
+        self.btn_add_polygon.connect("clicked", self.on_btn_add_polygon_clicked)
+        # btn_remove_polygon_point handlers
+        self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
+        # btn_add_polygon_point handlers
+        self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
+        # lst_polygon_points handlers
+        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
+
+    def on_btn_close_polygon_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_close_polygon."""
+        pass
+
+    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_polygon."""
+        pass
+
+    def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_remove_polygon_point."""
+        pass
+
+    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_polygon_point."""
+        pass
+
+    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
+        """Handler for event 'row-activated' of control lst_polygon_points."""
+        pass
+
+
 class WinRotate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -389,10 +391,10 @@ class WinTranslate(WindowEventHandler):
 
 
 class UI(ApplicationHandler):
-    _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_MAIN = WinMain
     _POP_ADD_OBJ = PopAddObj
     _WIN_OBJ_3D = WinObj3D
+    _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_ROTATE = WinRotate
     _WIN_LINE = WinLine
     _WIN_POINT = WinPoint
@@ -401,10 +403,10 @@ class UI(ApplicationHandler):
 
     def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
         super().__init__(builder, model)
-        self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.pop_add_obj: PopAddObj = self._POP_ADD_OBJ(self, builder)
         self.win_obj_3d: WinObj3D = self._WIN_OBJ_3D(self, builder)
+        self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_rotate: WinRotate = self._WIN_ROTATE(self, builder)
         self.win_line: WinLine = self._WIN_LINE(self, builder)
         self.win_point: WinPoint = self._WIN_POINT(self, builder)

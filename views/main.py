@@ -51,7 +51,6 @@ class MainController(WinMain):
 
     def on_win_main_key_press_event(self, sender: Gtk.Window, event: Gdk.EventKey) -> None:
         _, val = event.get_keyval()
-        # print("\n".join(dir(Gdk.ModifierType)))
         if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
             meth = self.with_ctrl.get(val)
         else:
