@@ -3,8 +3,8 @@ from shapes import Line, Rect, Point
 from geometry import hpt
 from .ui import UI
 from .main import MainController
-from .add_obj import AddObjController, AddPointHandler
-from .transforms import TranslateController, ScaleController
+from .add_obj import AddObjController, AddPointController, AddLineController, AddPolygonController
+from .transforms import TranslateController, ScaleController, RotateController
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -14,10 +14,13 @@ from gi.repository import Gtk
 
 class SGI(UI):
     _WIN_MAIN = MainController
+    _POP_ADD_OBJ = AddObjController
+    _WIN_ADD_POLYGON = AddPolygonController
+    _WIN_POINT = AddPointController
+    _WIN_LINE = AddLineController
     _WIN_TRANSLATE = TranslateController
-    _OBJPOPOVER = AddObjController
-    _WIN_ADD_POINT = AddPointHandler
     _WIN_SCALE = ScaleController
+    _WIN_ROTATE = RotateController
 
     def __init__(self, builder: Gtk.Builder):
         super().__init__(builder)
@@ -33,4 +36,5 @@ __all__ = [
     "MainController",
     "ScaleController",
     "TranslateController",
+    "RotateController"
 ]
