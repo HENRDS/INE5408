@@ -4,11 +4,22 @@ from geometry import hpt
 from cairo import Context
 import typing as tp
 import weakref
+from contextlib import contextmanager
 import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
+
+
+@contextmanager
+def with_source(ctx: Context, src):
+    old = ctx.get_source()
+    ctx.set_source(src)
+    try:
+        yield
+    finally:
+        ctx.set_source(old)
 
 
 class Window:
@@ -41,6 +52,10 @@ class Window:
         self.p1 -= hpt(amount, amount)
         self.p2 += hpt(amount, amount)
 
+    @property
+    def size(self) -> np.ndarray:
+        return self.p2 - self.p1
+
 
 class Viewport:
     def __init__(self, top_left, size):
@@ -51,14 +66,19 @@ class Viewport:
         size = hpt(width, height)
         self.size = size
 
-    def transformer(self, window: Window):
-        def transform(p):
-            u = (window.p2 - window.p1)[:-1]
-            x, y = (p - window.p1)[:-1] / u
-            z = np.array([x, 1 - y, 1])
-            return self.size * z
 
-        return transform
+class DrawContext:
+    def __init__(self, viewport: Viewport, win: Window, ctx: Context, verbose=False):
+        self.viewport = viewport
+        self.win = win
+        self.ctx = ctx
+        self.verbose = verbose
+
+    def __call__(self, p):
+        """ Viewport transform """
+        x, y = (p - self.win.p1)[:-1] / self.win.size[:-1]
+        z = np.array([x, 1 - y, 1])
+        return self.viewport.size * z
 
 
 class GraphicalObject:
@@ -76,7 +96,7 @@ class GraphicalObject:
         return sum(self.points) / n
 
     @abc.abstractmethod
-    def draw(self, ctx: Context, transform, verbose=False) -> None:
+    def draw(self, ctx: DrawContext) -> None:
         pass
 
 
@@ -132,7 +152,7 @@ class WindowEventHandler:
         :param builder: GtkBuilder used to load the controls, windows and connect their signals
         :type Gtk.Builder
         """
-        self.app_handler = weakref.proxy(app_handler)
+        self.app_handler: ApplicationHandler = weakref.proxy(app_handler)
         self.model: GraphicalModel = weakref.proxy(app_handler.model)
 
 
@@ -142,7 +162,16 @@ class ApplicationHandler:
             model = GraphicalModel(builder.get_object("lst_store_objects"))
         self.model: GraphicalModel = model
 
-    @abc.abstractmethod
     @property
     def main_window(self) -> WindowEventHandler:
-        pass
+        raise NotImplemented
+
+    def clean_entries(self, win):
+        for attr_name in dir(win):
+            attr = getattr(win, attr_name)
+            if isinstance(attr, Gtk.Entry):
+                p = attr.get_input_purpose()
+                if p == Gtk.InputPurpose.NUMBER:
+                    attr.set_text("0.0")
+                else:
+                    attr.set_text("")
