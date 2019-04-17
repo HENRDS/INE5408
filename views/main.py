@@ -102,6 +102,9 @@ class MainController(WinMain):
     def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
         pass
 
+    def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
         if self.get_selected_name() is None:
             return

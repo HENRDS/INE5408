@@ -1,12 +1,11 @@
-from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj
+from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj, WinCurve
 import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
 from geometry import hpt
-from shapes import Line, Point, Polygon
-
+from shapes import Line, Point, Polygon, Curve
 
 class AddObjController(PopAddObj):
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
@@ -25,10 +24,14 @@ class AddObjController(PopAddObj):
         win_polygon.win.show()
 
     def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        win_bezier = self.app_handler.win_curve
+        self.app_handler.clean_entries(win_bezier)
+        win_bezier.win.show()
 
     def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        win_spline = self.app_handler.win_curve
+        self.app_handler.clean_entries(win_spline)
+        win_spline.win.show()
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
         pass
@@ -67,7 +70,16 @@ class AddPolygonController(WinAddPolygon):
         super().__init__(app_handler, builder)
         self.__points = Gtk.ListStore(float, float, float)
 
-
-
     def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        super().on_btn_remove_polygon_point_clicked(sender)
+
+class AddCurveCotroller(WinCurve):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.__points = Gtk.ListStore(float, float, float)
+
+    def on_btn_add_curve_clicked(self, sender: Gtk.Button):
+        pass
+
+    def on_btn_close_curve_clicked(self, sender: Gtk.Button):
         super().on_btn_remove_polygon_point_clicked(sender)

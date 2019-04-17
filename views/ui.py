@@ -206,30 +206,6 @@ class PopAddObj(WindowEventHandler):
         pass
 
 
-class WinObj3D(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
-        self.win: Gtk.Dialog = builder.get_object("win_obj_3d")
-        self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
-        self.btn_finish_obj: Gtk.Button = builder.get_object("btn_finish_obj")
-        self.entry_obj_name: Gtk.Entry = builder.get_object("entry_obj_name")
-        self.entry_verticex: Gtk.Entry = builder.get_object("entry_verticex")
-        self.entry_verticey: Gtk.Entry = builder.get_object("entry_verticey")
-        self.entry_verticez: Gtk.Entry = builder.get_object("entry_verticez")
-        # btn_add_vertice handlers
-        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
-        # btn_finish_obj handlers
-        self.btn_finish_obj.connect("clicked", self.on_btn_finish_obj_clicked)
-
-    def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_vertice."""
-        pass
-
-    def on_btn_finish_obj_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_finish_obj."""
-        pass
-
-
 class WinAddPolygon(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -275,26 +251,41 @@ class WinAddPolygon(WindowEventHandler):
         pass
 
 
-class WinRotate(WindowEventHandler):
+class WinCurve(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
-        self.win: Gtk.Dialog = builder.get_object("win_rotate")
-        self.btn_close_rotate: Gtk.Button = builder.get_object("btn_close_rotate")
-        self.btn_apply_rotate: Gtk.Button = builder.get_object("btn_apply_rotate")
-        self.entry_radian: Gtk.Entry = builder.get_object("entry_radian")
-        self.entry_rotatex: Gtk.Entry = builder.get_object("entry_rotatex")
-        self.entry_rotatey: Gtk.Entry = builder.get_object("entry_rotatey")
-        # btn_close_rotate handlers
-        self.btn_close_rotate.connect("clicked", self.on_btn_close_rotate_clicked)
-        # btn_apply_rotate handlers
-        self.btn_apply_rotate.connect("clicked", self.on_btn_apply_rotate_clicked)
+        self.win: Gtk.Dialog = builder.get_object("win_curve")
+        self.btn_close_curve: Gtk.Button = builder.get_object("btn_close_curve")
+        self.btn_add_curve: Gtk.Button = builder.get_object("btn_add_curve")
+        self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
+        self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
+        self.lst_polygon_points1: Gtk.ListBox = builder.get_object("lst_polygon_points1")
+        self.entry_name_polygon1: Gtk.Entry = builder.get_object("entry_name_polygon1")
+        self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
+        self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
+        # btn_close_curve handlers
+        self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
+        # btn_add_curve handlers
+        self.btn_add_curve.connect("clicked", self.on_btn_add_curve_clicked)
+        # btn_remove_curve_point handlers
+        self.btn_remove_curve_point.connect("clicked", self.on_btn_remove_curve_point_clicked)
+        # btn_add_curve_point handlers
+        self.btn_add_curve_point.connect("clicked", self.on_btn_add_curve_point_clicked)
 
-    def on_btn_close_rotate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_close_rotate."""
+    def on_btn_close_curve_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_close_curve."""
         pass
 
-    def on_btn_apply_rotate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_apply_rotate."""
+    def on_btn_add_curve_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_curve."""
+        pass
+
+    def on_btn_remove_curve_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_remove_curve_point."""
+        pass
+
+    def on_btn_add_curve_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_curve_point."""
         pass
 
 
@@ -323,6 +314,30 @@ class WinLine(WindowEventHandler):
         pass
 
 
+class WinObj3D(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_obj_3d")
+        self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
+        self.btn_finish_obj: Gtk.Button = builder.get_object("btn_finish_obj")
+        self.entry_obj_name: Gtk.Entry = builder.get_object("entry_obj_name")
+        self.entry_verticex: Gtk.Entry = builder.get_object("entry_verticex")
+        self.entry_verticey: Gtk.Entry = builder.get_object("entry_verticey")
+        self.entry_verticez: Gtk.Entry = builder.get_object("entry_verticez")
+        # btn_add_vertice handlers
+        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
+        # btn_finish_obj handlers
+        self.btn_finish_obj.connect("clicked", self.on_btn_finish_obj_clicked)
+
+    def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_add_vertice."""
+        pass
+
+    def on_btn_finish_obj_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_finish_obj."""
+        pass
+
+
 class WinPoint(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
@@ -343,6 +358,29 @@ class WinPoint(WindowEventHandler):
 
     def on_btn_add_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add."""
+        pass
+
+
+class WinRotate(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
+        self.win: Gtk.Dialog = builder.get_object("win_rotate")
+        self.btn_close_rotate: Gtk.Button = builder.get_object("btn_close_rotate")
+        self.btn_apply_rotate: Gtk.Button = builder.get_object("btn_apply_rotate")
+        self.entry_radian: Gtk.Entry = builder.get_object("entry_radian")
+        self.entry_rotatex: Gtk.Entry = builder.get_object("entry_rotatex")
+        self.entry_rotatey: Gtk.Entry = builder.get_object("entry_rotatey")
+        # btn_close_rotate handlers
+        self.btn_close_rotate.connect("clicked", self.on_btn_close_rotate_clicked)
+        # btn_apply_rotate handlers
+        self.btn_apply_rotate.connect("clicked", self.on_btn_apply_rotate_clicked)
+
+    def on_btn_close_rotate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_close_rotate."""
+        pass
+
+    def on_btn_apply_rotate_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_apply_rotate."""
         pass
 
 
@@ -393,11 +431,12 @@ class WinTranslate(WindowEventHandler):
 class UI(ApplicationHandler):
     _WIN_MAIN = WinMain
     _POP_ADD_OBJ = PopAddObj
-    _WIN_OBJ_3D = WinObj3D
     _WIN_ADD_POLYGON = WinAddPolygon
-    _WIN_ROTATE = WinRotate
+    _WIN_CURVE = WinCurve
     _WIN_LINE = WinLine
+    _WIN_OBJ_3D = WinObj3D
     _WIN_POINT = WinPoint
+    _WIN_ROTATE = WinRotate
     _WIN_SCALE = WinScale
     _WIN_TRANSLATE = WinTranslate
 
@@ -405,11 +444,12 @@ class UI(ApplicationHandler):
         super().__init__(builder, model)
         self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.pop_add_obj: PopAddObj = self._POP_ADD_OBJ(self, builder)
-        self.win_obj_3d: WinObj3D = self._WIN_OBJ_3D(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
-        self.win_rotate: WinRotate = self._WIN_ROTATE(self, builder)
+        self.win_curve: WinCurve = self._WIN_CURVE(self, builder)
         self.win_line: WinLine = self._WIN_LINE(self, builder)
+        self.win_obj_3d: WinObj3D = self._WIN_OBJ_3D(self, builder)
         self.win_point: WinPoint = self._WIN_POINT(self, builder)
+        self.win_rotate: WinRotate = self._WIN_ROTATE(self, builder)
         self.win_scale: WinScale = self._WIN_SCALE(self, builder)
         self.win_translate: WinTranslate = self._WIN_TRANSLATE(self, builder)
         self.main_window.win.connect("destroy", Gtk.main_quit)
