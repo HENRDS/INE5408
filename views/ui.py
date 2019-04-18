@@ -7,7 +7,7 @@ from gi.repository import Gtk, Gdk
 
 class WinMain(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Window = builder.get_object("win_main")
         self.btn_new: Gtk.Button = builder.get_object("btn_new")
         self.btn_save: Gtk.Button = builder.get_object("btn_save")
@@ -160,7 +160,7 @@ class WinMain(WindowEventHandler):
 
 class PopAddObj(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Popover = builder.get_object("pop_add_obj")
         self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
         self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
@@ -208,7 +208,7 @@ class PopAddObj(WindowEventHandler):
 
 class WinAddPolygon(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_add_polygon")
         self.btn_close_polygon: Gtk.Button = builder.get_object("btn_close_polygon")
         self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
@@ -253,7 +253,7 @@ class WinAddPolygon(WindowEventHandler):
 
 class WinCurve(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_curve")
         self.btn_close_curve: Gtk.Button = builder.get_object("btn_close_curve")
         self.btn_add_curve: Gtk.Button = builder.get_object("btn_add_curve")
@@ -291,7 +291,7 @@ class WinCurve(WindowEventHandler):
 
 class WinLine(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_line")
         self.btn_close_line: Gtk.Button = builder.get_object("btn_close_line")
         self.btn_add_line: Gtk.Button = builder.get_object("btn_add_line")
@@ -316,7 +316,7 @@ class WinLine(WindowEventHandler):
 
 class WinObj3D(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_obj_3d")
         self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
         self.btn_finish_obj: Gtk.Button = builder.get_object("btn_finish_obj")
@@ -340,7 +340,7 @@ class WinObj3D(WindowEventHandler):
 
 class WinPoint(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_point")
         self.btn_close: Gtk.Button = builder.get_object("btn_close")
         self.btn_add: Gtk.Button = builder.get_object("btn_add")
@@ -363,7 +363,7 @@ class WinPoint(WindowEventHandler):
 
 class WinRotate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_rotate")
         self.btn_close_rotate: Gtk.Button = builder.get_object("btn_close_rotate")
         self.btn_apply_rotate: Gtk.Button = builder.get_object("btn_apply_rotate")
@@ -386,7 +386,7 @@ class WinRotate(WindowEventHandler):
 
 class WinScale(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_scale")
         self.btn_close_scale: Gtk.Button = builder.get_object("btn_close_scale")
         self.btn_apply_scale: Gtk.Button = builder.get_object("btn_apply_scale")
@@ -408,7 +408,7 @@ class WinScale(WindowEventHandler):
 
 class WinTranslate(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_translate")
         self.btn_close_translate: Gtk.Button = builder.get_object("btn_close_translate")
         self.btn_apply_translation: Gtk.Button = builder.get_object("btn_apply_translation")

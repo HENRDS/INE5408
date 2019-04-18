@@ -4,12 +4,22 @@ from geometry import hpt
 from cairo import Context
 import typing as tp
 import weakref
-import inspect
+from contextlib import contextmanager
 import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
+
+
+@contextmanager
+def with_source(ctx: Context, src):
+    old = ctx.get_source()
+    ctx.set_source(src)
+    try:
+        yield
+    finally:
+        ctx.set_source(old)
 
 
 class Window:
@@ -42,6 +52,10 @@ class Window:
         self.p1 -= hpt(amount, amount)
         self.p2 += hpt(amount, amount)
 
+    @property
+    def size(self) -> np.ndarray:
+        return self.p2 - self.p1
+
 
 class Viewport:
     def __init__(self, top_left, size):
@@ -52,14 +66,17 @@ class Viewport:
         size = hpt(width, height)
         self.size = size
 
-    def transformer(self, window: Window):
-        def transform(p):
-            u = (window.p2 - window.p1)[:-1]
-            x, y = (p - window.p1)[:-1] / u
-            z = np.array([x, 1 - y, 1])
-            return self.size * z
 
-        return transform
+class DrawContext:
+    def __init__(self, viewport: Viewport, win: Window, ctx: Context):
+        self.viewport = viewport
+        self.win = win
+        self.ctx = ctx
+
+    def viewport_transform(self, p):
+        x, y = (p - self.win.p1)[:-1] / self.win.size[:-1]
+        z = np.array([x, 1 - y, 1])
+        return self.viewport.size * z
 
 
 class GraphicalObject:
@@ -77,7 +94,11 @@ class GraphicalObject:
         return sum(self.points) / n
 
     @abc.abstractmethod
-    def draw(self, ctx: Context, transform, verbose=False) -> None:
+    def draw(self, ctx: DrawContext) -> None:
+        pass
+
+    @abc.abstractmethod
+    def draw_verbose(self, ctx: DrawContext) -> None:
         pass
 
 
@@ -127,7 +148,7 @@ class Clipper:
 
 
 class WindowEventHandler:
-    def __init__(self, app_handler: "ApplicationHandler", builder: Gtk.Builder):
+    def __init__(self, app_handler: "ApplicationHandler"):
         """
         :param app_handler: Handler for events of the whole application
         :param builder: GtkBuilder used to load the controls, windows and connect their signals
@@ -147,7 +168,8 @@ class ApplicationHandler:
     def main_window(self) -> WindowEventHandler:
         raise NotImplemented
 
-    def clean_entries(self, win):
+    @staticmethod
+    def clean_entries(win):
         for attr_name in dir(win):
             attr = getattr(win, attr_name)
             if isinstance(attr, Gtk.Entry):

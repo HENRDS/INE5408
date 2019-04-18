@@ -60,18 +60,46 @@ class AddLineController(WinLine):
         self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
         self.win.hide()
 
-    def on_btn_close__clicked(self, sender: Gtk.Button) -> None:
-        super().on_btn_close__clicked(sender)
-        self.win.hide()
-
 
 class AddPolygonController(WinAddPolygon):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.__points = Gtk.ListStore(float, float, float)
+        self.x_rt = Gtk.CellRendererText()
+        self.y_rt = Gtk.CellRendererText()
+        self.z_rt = Gtk.CellRendererText()
+        self.x_col = Gtk.TreeViewColumn("x", self.x_rt, text=0)
+        self.y_col = Gtk.TreeViewColumn("y", self.y_rt, text=1)
+        self.z_col = Gtk.TreeViewColumn("z", self.z_rt, text=2)
+        self.tree_polygon_points.set_model(self.__points)
+        self.tree_polygon_points.append_column(self.x_col)
+        self.tree_polygon_points.append_column(self.y_col)
+        self.tree_polygon_points.append_column(self.z_col)
+
+    def get_selected_name(self) -> tp.Optional[str]:
+        selection = self.__points.get_selection()
+        model, tree_iter = selection.get_selected()
+        if tree_iter is None:
+            return None
+        return model[tree_iter][0]
+
+    def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
+        self.__points.append(float(self.entry_poligonx.get_text()),
+                             float(self.entry_poligony.get_text()),
+                             float(self.entry_poligonz.get_text()))
 
     def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        super().on_btn_remove_polygon_point_clicked(sender)
+        selection = self.__points.get_selection()
+        model, tree_iter = selection.get_selected()
+        if tree_iter is None:
+            return None
+        self.__points.remove(tree_iter)
+
+    def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
+        pass
+
+    def on_btn_close_polygon_clicked(self, sender: Gtk.Button) -> None:
+        self.win.hide()
 
 class AddCurveCotroller(WinCurve):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
