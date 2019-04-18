@@ -1,4 +1,4 @@
-from core import Viewport
+from core import Viewport, DrawContext
 import gi
 
 from views.ui import WinMain
@@ -61,15 +61,17 @@ class MainController(WinMain):
 
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         self.viewport.resize(float(self.canvas.get_allocated_width()), float(self.canvas.get_allocated_height()))
-        tr = self.viewport.transformer(self.model.window)
-
+        draw_ctx = DrawContext(self.viewport, self.model.window, ctx)
         for obj in self.model.objects():
             if obj.name == self.get_selected_name():
                 ctx.set_source_rgb(1., 0., 0.)
-                obj.draw(ctx, tr, verbose=True)
+                obj.draw_verbose(draw_ctx)
                 ctx.set_source_rgb(0., 0., 0.)
             else:
-                obj.draw(ctx, tr)
+                obj.draw(draw_ctx)
+
+    def on_btn_new_clicked(self, sender: Gtk.Button) -> None:
+        super().on_btn_new_clicked(sender)
 
     def on_tree_objects_row_activated(self, sender: Gtk.TreeView, path: Gtk.TreePath,
                                       column: Gtk.TreeViewColumn) -> None:

@@ -68,14 +68,12 @@ class Viewport:
 
 
 class DrawContext:
-    def __init__(self, viewport: Viewport, win: Window, ctx: Context, verbose=False):
+    def __init__(self, viewport: Viewport, win: Window, ctx: Context):
         self.viewport = viewport
         self.win = win
         self.ctx = ctx
-        self.verbose = verbose
 
-    def __call__(self, p):
-        """ Viewport transform """
+    def viewport_transform(self, p):
         x, y = (p - self.win.p1)[:-1] / self.win.size[:-1]
         z = np.array([x, 1 - y, 1])
         return self.viewport.size * z
@@ -97,6 +95,10 @@ class GraphicalObject:
 
     @abc.abstractmethod
     def draw(self, ctx: DrawContext) -> None:
+        pass
+
+    @abc.abstractmethod
+    def draw_verbose(self, ctx: DrawContext) -> None:
         pass
 
 
@@ -146,7 +148,7 @@ class Clipper:
 
 
 class WindowEventHandler:
-    def __init__(self, app_handler: "ApplicationHandler", builder: Gtk.Builder):
+    def __init__(self, app_handler: "ApplicationHandler"):
         """
         :param app_handler: Handler for events of the whole application
         :param builder: GtkBuilder used to load the controls, windows and connect their signals
@@ -166,7 +168,8 @@ class ApplicationHandler:
     def main_window(self) -> WindowEventHandler:
         raise NotImplemented
 
-    def clean_entries(self, win):
+    @staticmethod
+    def clean_entries(win):
         for attr_name in dir(win):
             attr = getattr(win, attr_name)
             if isinstance(attr, Gtk.Entry):
