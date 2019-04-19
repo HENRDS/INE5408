@@ -25,7 +25,7 @@ class SGI(UI):
     def __init__(self, builder: Gtk.Builder):
         super().__init__(builder)
         self.model.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
-        self.model.add_obj(rect("wee", np.array([10, 10, 1]), np.array([23, 70, 0])))
+        self.model.add_obj(rect("wee", np.array([10, 10, 1]), np.array([80, 80, 0])))
         self.model.add_obj(Point("kkk", hpt(69, 69)))
         self.win_main: MainController = self.win_main
 

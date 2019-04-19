@@ -25,7 +25,6 @@ class WinMain(WindowEventHandler):
         self.btn_left_rotate: Gtk.Button = builder.get_object("btn_left_rotate")
         self.btn_right_rotate: Gtk.Button = builder.get_object("btn_right_rotate")
         self.btn_rotate: Gtk.Button = builder.get_object("btn_rotate")
-        self.btn_menu_rotate: Gtk.MenuButton = builder.get_object("btn_menu_rotate")
         self.btn_scale: Gtk.Button = builder.get_object("btn_scale")
         self.btn_translate: Gtk.Button = builder.get_object("btn_translate")
         self.btn_delete_object: Gtk.Button = builder.get_object("btn_delete_object")
@@ -214,7 +213,7 @@ class WinAddPolygon(WindowEventHandler):
         self.btn_add_polygon: Gtk.Button = builder.get_object("btn_add_polygon")
         self.btn_remove_polygon_point: Gtk.Button = builder.get_object("btn_remove_polygon_point")
         self.btn_add_polygon_point: Gtk.Button = builder.get_object("btn_add_polygon_point")
-        self.lst_polygon_points: Gtk.ListBox = builder.get_object("lst_polygon_points")
+        self.tree_polygon_points: Gtk.TreeView = builder.get_object("tree_polygon_points")
         self.entry_name_polygon: Gtk.Entry = builder.get_object("entry_name_polygon")
         self.entry_poligonx: Gtk.Entry = builder.get_object("entry_poligonx")
         self.entry_poligony: Gtk.Entry = builder.get_object("entry_poligony")
@@ -227,8 +226,6 @@ class WinAddPolygon(WindowEventHandler):
         self.btn_remove_polygon_point.connect("clicked", self.on_btn_remove_polygon_point_clicked)
         # btn_add_polygon_point handlers
         self.btn_add_polygon_point.connect("clicked", self.on_btn_add_polygon_point_clicked)
-        # lst_polygon_points handlers
-        self.lst_polygon_points.connect("row-activated", self.on_lst_polygon_points_row_activated)
 
     def on_btn_close_polygon_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_close_polygon."""
@@ -246,10 +243,6 @@ class WinAddPolygon(WindowEventHandler):
         """Handler for event 'clicked' of control btn_add_polygon_point."""
         pass
 
-    def on_lst_polygon_points_row_activated(self, sender: Gtk.ListBox, path: Gtk.TreePath, column: Gtk.TreeViewColumn) -> None:
-        """Handler for event 'row-activated' of control lst_polygon_points."""
-        pass
-
 
 class WinCurve(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
@@ -259,7 +252,7 @@ class WinCurve(WindowEventHandler):
         self.btn_add_curve: Gtk.Button = builder.get_object("btn_add_curve")
         self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
         self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
-        self.lst_polygon_points1: Gtk.ListBox = builder.get_object("lst_polygon_points1")
+        self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
         self.entry_name_polygon1: Gtk.Entry = builder.get_object("entry_name_polygon1")
         self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
         self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")

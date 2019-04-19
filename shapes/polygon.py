@@ -1,6 +1,6 @@
 import numpy as np
 from geometry import hpt
-from core import GraphicalObject, DrawContext
+from core import GraphicalObject, DrawContext, this_source
 
 
 class Polygon(GraphicalObject):

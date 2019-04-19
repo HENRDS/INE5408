@@ -1,37 +1,44 @@
 from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj, WinCurve
+import typing as tp
 import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
-from geometry import hpt
+from geometry import hpt, pt
 from shapes import Line, Point, Polygon, Curve
+
 
 class AddObjController(PopAddObj):
     def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        win_point = self.app_handler.win_add_point
+        win_point = self.app_handler.win_point
         self.app_handler.clean_entries(win_point)
         win_point.win.show()
+        self.win.hide()
 
     def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
-        win_line = self.app_handler.win_add_line
+        win_line = self.app_handler.win_line
         self.app_handler.clean_entries(win_line)
         win_line.win.show()
+        self.win.hide()
 
     def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
         win_polygon = self.app_handler.win_add_polygon
         self.app_handler.clean_entries(win_polygon)
         win_polygon.win.show()
+        self.win.hide()
 
     def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
         win_bezier = self.app_handler.win_curve
         self.app_handler.clean_entries(win_bezier)
         win_bezier.win.show()
+        self.win.hide()
 
     def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
         win_spline = self.app_handler.win_curve
         self.app_handler.clean_entries(win_spline)
         win_spline.win.show()
+        self.win.hide()
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
         pass
@@ -39,6 +46,8 @@ class AddObjController(PopAddObj):
 
 class AddPointController(WinPoint):
     def on_btn_add_clicked(self, sender: Gtk.Button) -> None:
+        if not self.check_numeric_entries():
+            return
         name = self.entry_add_name.get_text()
         x = float(self.entry_add_pointx.get_text())
         y = float(self.entry_add_pointy.get_text())
@@ -46,7 +55,6 @@ class AddPointController(WinPoint):
         self.win.hide()
 
     def on_btn_close_clicked(self, sender: Gtk.Button) -> None:
-        super().on_btn_close_clicked(sender)
         self.win.hide()
 
 
@@ -58,6 +66,9 @@ class AddLineController(WinLine):
         x2 = float(self.entry_x2_line.get_text())
         y2 = float(self.entry_y2_line.get_text())
         self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
+        self.win.hide()
+
+    def on_btn_close__clicked(self, sender: Gtk.Button) -> None:
         self.win.hide()
 
 
@@ -84,9 +95,12 @@ class AddPolygonController(WinAddPolygon):
         return model[tree_iter][0]
 
     def on_btn_add_polygon_point_clicked(self, sender: Gtk.Button) -> None:
-        self.__points.append(float(self.entry_poligonx.get_text()),
+        self.__points.append((float(self.entry_poligonx.get_text()),
                              float(self.entry_poligony.get_text()),
-                             float(self.entry_poligonz.get_text()))
+                             float(self.entry_poligonz.get_text())))
+        self.entry_poligonx.set_text("0.0")
+        self.entry_poligony.set_text("0.0")
+        self.entry_poligonz.set_text("0.0")
 
     def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
         selection = self.__points.get_selection()
@@ -96,10 +110,12 @@ class AddPolygonController(WinAddPolygon):
         self.__points.remove(tree_iter)
 
     def on_btn_add_polygon_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        self.model.add_obj(Polygon(self.entry_name_polygon.get_text(), *(pt(*p) for p in self.__points)))
+        self.win.hide()
 
     def on_btn_close_polygon_clicked(self, sender: Gtk.Button) -> None:
         self.win.hide()
+
 
 class AddCurveCotroller(WinCurve):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
@@ -110,4 +126,4 @@ class AddCurveCotroller(WinCurve):
         pass
 
     def on_btn_close_curve_clicked(self, sender: Gtk.Button):
-        super().on_btn_remove_polygon_point_clicked(sender)
+        super().on_btn_close_curve_clicked(sender)
