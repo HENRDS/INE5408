@@ -6,9 +6,9 @@ def pt(*items) -> np.ndarray:
     return np.array(items)
 
 
-def hpt(*items) -> np.ndarray:
+def hpt(*items, last=1) -> np.ndarray:
     """Builds an homogeneous coordinate system point"""
-    return pt(*items, 1)
+    return pt(*items, last)
 
 
 def translate(n: int, point) -> np.ndarray:
@@ -34,3 +34,15 @@ def rotate2D(angle: float):
         [s, c, 0],
         [0, 0, 1]
     ])
+
+
+def rel_transform(p, *trs):
+    n = len(p)
+    m = translate(n, p * hpt(-1, -1))
+    for t in trs:
+        m = np.matmul(m, t)
+    return np.matmul(m, translate(n, p))
+
+
+def rad(degrees: float) -> float:
+    return degrees * (np.pi / 180.)

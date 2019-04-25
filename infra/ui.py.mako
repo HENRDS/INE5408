@@ -8,7 +8,7 @@ from gi.repository import Gtk, Gdk
 %for win in windows:
 class ${win.cls_name}(WindowEventHandler):
     def __init__(self, app_handler: "${cls_name}", builder: Gtk.Builder):
-        super().__init__(app_handler, builder)
+        super().__init__(app_handler)
         self.win: ${win.py_type} = builder.get_object("${win.name}")
     % for control in win.controls:
         self.${control.name}: ${control.py_type} = builder.get_object("${control.name}")
