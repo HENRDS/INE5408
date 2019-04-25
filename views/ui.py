@@ -346,8 +346,7 @@ class WinPoint(WindowEventHandler):
         self.btn_add.connect("clicked", self.on_btn_add_clicked)
 
     def on_btn_close_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_close."""
-        pass
+        self.win.hide()
 
     def on_btn_add_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add."""
@@ -391,8 +390,7 @@ class WinScale(WindowEventHandler):
         self.btn_apply_scale.connect("clicked", self.on_btn_apply_scale_clicked)
 
     def on_btn_close_scale_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_close_scale."""
-        pass
+        self.win.hide()
 
     def on_btn_apply_scale_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_apply_scale."""
@@ -413,8 +411,7 @@ class WinTranslate(WindowEventHandler):
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
 
     def on_btn_close_translate_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_close_translate."""
-        pass
+        self.win.hide()
 
     def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_apply_translation."""
