@@ -253,9 +253,9 @@ class WinCurve(WindowEventHandler):
         self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
         self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
-        self.entry_name_polygon1: Gtk.Entry = builder.get_object("entry_name_polygon1")
         self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
         self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
+        self.comboboxtext_curve: Gtk.ComboBoxText = builder.get_object("comboboxtext_curve")
         # btn_close_curve handlers
         self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
         # btn_add_curve handlers
