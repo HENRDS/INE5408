@@ -15,7 +15,7 @@ class MainController(WinMain):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self._step = 10.0
-        self.viewport = Viewport(hpt(10., 10.), hpt(410., 410.))
+        self.viewport = Viewport(hpt(10., 10.), hpt(400., 400.))
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
@@ -108,29 +108,11 @@ class MainController(WinMain):
         self.model.update()
 
     def on_btn_right_rotate_clicked(self, sender: Gtk.Button) -> None:
-        pts = np.vstack((self.model.window.bottom_left,
-                         self.model.window.top_left,
-                         self.model.window.top_right,
-                         self.model.window.bottom_right))
-        m = rel_transform(self.model.window.center, rotate2D(rad(-self._step)))
-        pts = np.matmul(pts, m)
-        self.model.window.bottom_left = pts[0]
-        self.model.window.top_left = pts[1]
-        self.model.window.top_right = pts[2]
-        self.model.window.bottom_right = pts[3]
+        self.model.window.rotate(self._step)
         self.model.update()
 
     def on_btn_left_rotate_clicked(self, sender: Gtk.Button) -> None:
-        pts = np.vstack((self.model.window.bottom_left,
-                         self.model.window.top_left,
-                         self.model.window.top_right,
-                         self.model.window.bottom_right))
-        m = rel_transform(self.model.window.center, rotate2D(rad(self._step)))
-        pts = np.matmul(pts, m)
-        self.model.window.bottom_left = pts[0]
-        self.model.window.top_left = pts[1]
-        self.model.window.top_right = pts[2]
-        self.model.window.bottom_right = pts[3]
+        self.model.window.rotate(-self._step)
         self.model.update()
 
     def on_btn_scale_clicked(self, sender: Gtk.Button) -> None:
@@ -163,4 +145,5 @@ class MainController(WinMain):
         _, tree_iter = selection.get_selected()
         self.model.list_model.remove(tree_iter)
         del self.model.display_file[nm]
+        self.model.update()
         # self.tree_objects.set_selected(None)

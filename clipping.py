@@ -1,5 +1,5 @@
 import core
-from shapes import Line
+from shapes import Line, Point
 from enum import IntFlag
 import typing as tp
 
@@ -13,9 +13,25 @@ class Direction(IntFlag):
 
 
 class CohenSutherland(core.Clipper):
-
     def clip_line(self, line: Line):
-        pass
+        p1, p2 = line.points
+        d1, d2 = self.direction_of(p1), self.direction_of(p2)
+        if (d1 | d2) == Direction.CENTER:
+            return line
+        elif d1 != Direction.CENTER:
+
+
+
+
+    def clip_point(self, pt: Point):
+        x, y, _ = pt.points[0]
+        x0, y0, _ = self.window.origin
+        x1, y1, _ = self.window.origin + self.window.size
+        if not (x0 < x < x1):
+            return None
+        if not (y0 < y < y1):
+            return None
+        return pt
 
     def direction_of(self, point):
         cod = Direction.CENTER

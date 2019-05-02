@@ -1,4 +1,12 @@
 import numpy as np
+from enum import Enum
+
+
+class Axis(Enum):
+    X = 0
+    Y = 1
+    Z = 2
+    T = 3
 
 
 def pt(*items) -> np.ndarray:
@@ -11,12 +19,19 @@ def hpt(*items, last=1) -> np.ndarray:
     return pt(*items, last)
 
 
-def translate(n: int, point) -> np.ndarray:
-    matrix = np.eye(n, n)
-    m = n - 1
-    for i, x in enumerate(point):
-        matrix[m, i] = x
-    return matrix
+def translate(point) -> np.ndarray:
+    x, y, _ = point
+    return np.array(
+            [[1., 0., 0.],
+             [0., 1., 0.],
+             [x, y, 1.]]
+    )
+
+
+def reflect(axis: Axis, n=3) -> np.ndarray:
+    m = np.eye(n)
+    m[axis.value, axis.value] = -1
+    return m
 
 
 def scale(vector) -> np.ndarray:
@@ -36,13 +51,31 @@ def rotate2D(angle: float):
     ])
 
 
+def scale_translate(sc, tr):
+    sx, sy, _ = sc
+    tx, ty, _ = tr
+    return np.array(
+            [[sx, 0., 0.],
+             [0., sy, 0.],
+             [tx, ty, 1.]]
+    )
+
+
 def rel_transform(p, *trs):
     n = len(p)
-    m = translate(n, p * hpt(-1, -1))
+    m = None
     for t in trs:
-        m = np.matmul(m, t)
-    return np.matmul(m, translate(n, p))
+        if m is None:
+            m = t
+        else:
+            m = m @ t
+    return translate(p * hpt(-1, -1)) + m + translate(p)
 
 
 def rad(degrees: float) -> float:
     return degrees * (np.pi / 180.)
+
+
+def vlen(vec):
+    """Calculates the length of a vector"""
+    return np.sqrt(np.sum(vec ** 2))

@@ -8,8 +8,8 @@ class TranslateController(WinTranslate):
     def on_btn_apply_translation_clicked(self, _: Gtk.Button) -> None:
         selected = self.model.selected
         x, y = float(self.entry_translatex.get_text()), float(self.entry_translatey.get_text())
-        m = translate(3, hpt(x, y))
-        selected.points = np.matmul(selected.points, m)
+        m = translate(hpt(x, y))
+        selected.points = selected.points @ m
         self.win.hide()
         self.model.update()
 
@@ -23,7 +23,7 @@ class ScaleController(WinScale):
         selected = self.model.selected
         center = selected.center
         m = scale(hpt(float(self.entry_scalex.get_text()), float(self.entry_scaley.get_text())))
-        m = np.matmul(np.matmul(translate(3, center * hpt(-1, -1)), m), translate(3, center))
+        m = np.matmul(np.matmul(translate(center * hpt(-1, -1)), m), translate(center))
         selected.points = np.matmul(selected.points, m)
         self.win.hide()
         self.model.update()

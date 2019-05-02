@@ -1,6 +1,7 @@
 import abc
 import numpy as np
-from geometry import hpt, pt
+from operator import itemgetter
+from geometry import hpt, pt, rotate2D, rad, rel_transform, scale, vlen, translate, reflect, Axis, scale_translate
 from cairo import Context, SolidPattern
 import typing as tp
 import weakref
@@ -28,67 +29,70 @@ def source_rgb(ctx: Context, r: float, g: float, b: float):
 
 
 class Window:
-    def __init__(self, bottom_left, top_left, top_right, bottom_right):
-        super().__init__()
-        self.bottom_left = bottom_left
-        self.top_left = top_left
-        self.top_right = top_right
-        self.bottom_right = bottom_right
+
+    def __init__(self, center, size):
+        self.center = center
+        self.size = size
+        self.axes = np.eye(3)
+
+    @property
+    def origin(self):
+        sz = (.5 * self.size) * (self.x + self.y)
+        return hpt(*(self.center - sz)[:-1])
+
+    @property
+    def angle(self):
+        x, y, _ = self.y
+        if y == 0.:
+            k = 1 if x < 0 else -1
+            return k * np.pi / 2.
+        return np.arctan(x / y)
+
+    @property
+    def width(self) -> float:
+        return self.size[0]
+
+    @property
+    def height(self) -> float:
+        return self.size[1]
+
+    @property
+    def x(self):
+        return self.axes[0]
+
+    @property
+    def y(self):
+        return self.axes[1]
+
+    @property
+    def z(self):
+        return self.axes[2]
 
     def move_up(self, amount):
-        self.bottom_left += hpt(0., amount, last=0)
-        self.top_left += hpt(0., amount, last=0)
-        self.top_right += hpt(0., amount, last=0)
-        self.bottom_right += hpt(0., amount, last=0)
+        self.center += self.y * amount
 
     def move_down(self, amount):
-        self.bottom_left -= hpt(0., amount, last=0)
-        self.top_left -= hpt(0., amount, last=0)
-        self.top_right -= hpt(0., amount, last=0)
-        self.bottom_right -= hpt(0., amount, last=0)
+        self.center += self.y * -amount
 
     def move_left(self, amount: float):
-        self.bottom_left += hpt(amount, 0., last=0)
-        self.top_left += hpt(amount, 0., last=0)
-        self.top_right += hpt(amount, 0., last=0)
-        self.bottom_right += hpt(amount, 0., last=0)
+        self.center += self.x * -amount
 
     def move_right(self, amount: float):
-        self.bottom_left -= hpt(amount, 0., last=0)
-        self.top_left -= hpt(amount, 0., last=0)
-        self.top_right -= hpt(amount, 0., last=0)
-        self.bottom_right -= hpt(amount, 0., last=0)
+        self.center += self.x * amount
 
     def zoom_in(self, amount: float):
-        self.bottom_left += pt(amount, amount, 0.)
-        self.top_left += pt(amount, -amount, 0.)
-        self.top_right += pt(-amount, -amount, 0.)
-        self.bottom_right += pt(-amount, amount, 0.)
+        self.center += pt(amount, amount, 0)
+        self.size -= pt(2 * amount, 2 * amount, 0)
 
     def zoom_out(self, amount: float):
-        self.bottom_left -= pt(amount, amount, 0.)
-        self.top_left -= pt(amount, -amount, 0.)
-        self.top_right -= pt(-amount, -amount, 0.)
-        self.bottom_right -= pt(-amount, amount, 0.)
+        self.center -= pt(amount, amount, 0)
+        self.size += pt(2 * amount, 2 * amount, 0)
 
-    @property
-    def size(self) -> np.ndarray:
-        h = self.top_left[1] - self.bottom_left[1]
-        w = self.bottom_right[0] - self.bottom_left[0]
-        return hpt(w, h)
-
-    @property
-    def center(self):
-        return (self.top_right + self.bottom_left) / 2.
-
-    @staticmethod
-    def orthogonal(p1, p2) -> "Window":
-        w, h, _ = p2 - p1
-        x0, y0, _ = p1
-        return Window(p1, hpt(x0, y0 + h), p2, hpt(x0 + w, y0 + h))
+    def rotate(self, angle):
+        self.axes = self.axes @ rotate2D(rad(-angle))
 
     def __repr__(self):
-        return f"Window({self.bottom_left}, {self.top_right})"
+        return f"Window(origin={self.origin}, x={self.x}, y={self.y}, z={self.z}))"
 
 
 class Viewport:
@@ -96,14 +100,39 @@ class Viewport:
         self.top_left = top_left
         self.size = size
 
+    @property
+    def width(self):
+        return self.size[0]
+
+    @property
+    def height(self):
+        return self.size[1]
+
+    @property
+    def top(self):
+        return self.top_left[0]
+
+    @property
+    def left(self):
+        return self.top_left[1]
+
     def resize(self, width, height):
         size = hpt(width, height)
         self.size = size
 
     def draw(self, ctx: Context):
         with this_source(ctx, SolidPattern(1, 0, 0)):
-            ctx.rectangle(*self.top_left[:-1], *self.size[:-1])
+            ctx.rectangle(*self.top_left[:-1], *(self.top_left + self.size)[:-1])
             ctx.stroke()
+
+    def matrix(self):
+        sx, sy, _ = self.size
+        x0, y0, _ = self.top_left
+        return np.array(
+                [[sx, 0., 0.],
+                 [0., sy, 0.],
+                 [x0, y0, 1.]]
+        )
 
 
 class DrawContext:
@@ -111,10 +140,18 @@ class DrawContext:
         self.viewport = viewport
         self.win = win
         self.ctx = ctx
+        self.win_matrix = (translate(hpt(*(-self.win.center)[:-1])) @
+                           rotate2D(-self.win.angle) @
+                           translate(self.win.center))
+
+        self.origin = self.win.origin @ self.win_matrix
 
     def viewport_transform(self, p):
-        x, y, _ = (p - self.win.bottom_left) / self.win.size
-        return hpt(x, 1 - y) * self.viewport.size
+        q = p @ self.win_matrix
+        q = q @ translate(self.origin)
+        q /= self.win.size
+        x, y, _ = q
+        return hpt(x, 1 - y) @ self.viewport.matrix()
 
 
 class GraphicalObject:
@@ -147,8 +184,7 @@ class GraphicalModel:
         self.display_file: tp.Dict[str, GraphicalObject] = {}
         self.subscriptions = []
         self.list_model = list_model
-        # self.window = Window.orthogonal(hpt(-10., -10.), hpt(908., 460.))
-        self.window = Window.orthogonal(hpt(-200, -200.), hpt(200., 200.))
+        self.window = Window(hpt(210., 210.), hpt(420., 420.))
         self.selected_name = None
 
     def subscribe(self, callback):
@@ -179,7 +215,7 @@ class GraphicalModel:
 
 
 class Clipper:
-    def __init__(self, window):
+    def __init__(self, window: Window):
         self.window = window
 
     def __call__(self, obj: GraphicalObject) -> tp.Optional[GraphicalObject]:
