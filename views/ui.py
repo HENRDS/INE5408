@@ -253,9 +253,9 @@ class WinCurve(WindowEventHandler):
         self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
         self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
-        self.entry_name_polygon1: Gtk.Entry = builder.get_object("entry_name_polygon1")
         self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
         self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
+        self.comboboxtext_curve: Gtk.ComboBoxText = builder.get_object("comboboxtext_curve")
         # btn_close_curve handlers
         self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
         # btn_add_curve handlers
@@ -346,7 +346,8 @@ class WinPoint(WindowEventHandler):
         self.btn_add.connect("clicked", self.on_btn_add_clicked)
 
     def on_btn_close_clicked(self, sender: Gtk.Button) -> None:
-        self.win.hide()
+        """Handler for event 'clicked' of control btn_close."""
+        pass
 
     def on_btn_add_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_add."""
@@ -390,7 +391,8 @@ class WinScale(WindowEventHandler):
         self.btn_apply_scale.connect("clicked", self.on_btn_apply_scale_clicked)
 
     def on_btn_close_scale_clicked(self, sender: Gtk.Button) -> None:
-        self.win.hide()
+        """Handler for event 'clicked' of control btn_close_scale."""
+        pass
 
     def on_btn_apply_scale_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_apply_scale."""
@@ -411,7 +413,8 @@ class WinTranslate(WindowEventHandler):
         self.btn_apply_translation.connect("clicked", self.on_btn_apply_translation_clicked)
 
     def on_btn_close_translate_clicked(self, sender: Gtk.Button) -> None:
-        self.win.hide()
+        """Handler for event 'clicked' of control btn_close_translate."""
+        pass
 
     def on_btn_apply_translation_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_apply_translation."""
