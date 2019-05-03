@@ -28,14 +28,14 @@ class MainController(WinMain):
         self.no_shift = {
             Gdk.KEY_Up: self.on_btn_up_clicked,
             Gdk.KEY_Down: self.on_btn_down_clicked,
-            Gdk.KEY_Left: self.on_btn_right_clicked,
-            Gdk.KEY_Right: self.on_btn_left_clicked,
+            Gdk.KEY_Left: self.on_btn_left_clicked,
+            Gdk.KEY_Right: self.on_btn_right_clicked,
         }
         self.with_ctrl = {
             Gdk.KEY_Up: self.on_btn_zoom_in_clicked,
             Gdk.KEY_Down: self.on_btn_zoom_out_clicked,
-            Gdk.KEY_Left: self.on_btn_right_rotate_clicked,
-            Gdk.KEY_Right: self.on_btn_left_rotate_clicked,
+            Gdk.KEY_Left: self.on_btn_left_rotate_clicked,
+            Gdk.KEY_Right: self.on_btn_right_rotate_clicked,
             Gdk.KEY_plus: self.on_btn_zoom_in_clicked,
             Gdk.KEY_minus: self.on_btn_zoom_out_clicked,
         }
@@ -147,3 +147,7 @@ class MainController(WinMain):
         del self.model.display_file[nm]
         self.model.update()
         # self.tree_objects.set_selected(None)
+
+    def on_btn_open_clicked(self, sender: Gtk.Button) -> None:
+        pass
+

@@ -33,7 +33,7 @@ class Window:
     def __init__(self, center, size):
         self.center = center
         self.size = size
-        self.axes = np.eye(3)
+        self.axes = rotate2D(rad(91.))
 
     @property
     def origin(self):
@@ -43,10 +43,7 @@ class Window:
     @property
     def angle(self):
         x, y, _ = self.y
-        if y == 0.:
-            k = 1 if x < 0 else -1
-            return k * np.pi / 2.
-        return np.arctan(x / y)
+        return np.arctan2(x, y)
 
     @property
     def width(self) -> float:
@@ -89,7 +86,7 @@ class Window:
         self.size += pt(2 * amount, 2 * amount, 0)
 
     def rotate(self, angle):
-        self.axes = self.axes @ rotate2D(rad(-angle))
+        self.axes = self.axes @ rotate2D(rad(angle))
 
     def __repr__(self):
         return f"Window(origin={self.origin}, x={self.x}, y={self.y}, z={self.z}))"
@@ -140,17 +137,13 @@ class DrawContext:
         self.viewport = viewport
         self.win = win
         self.ctx = ctx
-        self.win_matrix = (translate(hpt(*(-self.win.center)[:-1])) @
-                           rotate2D(-self.win.angle) @
-                           translate(self.win.center))
+        self.origin = self.ppc(self.win.origin)
 
-        self.origin = self.win.origin @ self.win_matrix
+    def ppc(self, p):
+        return p @ rotate2D(-self.win.angle)
 
     def viewport_transform(self, p):
-        q = p @ self.win_matrix
-        q = q @ translate(self.origin)
-        q /= self.win.size
-        x, y, _ = q
+        x, y, _ = (self.ppc(p) - self.origin) / self.win.size
         return hpt(x, 1 - y) @ self.viewport.matrix()
 
 
@@ -209,9 +202,6 @@ class GraphicalModel:
         for obj in map(clipper, self.display_file.values()):
             if obj is not None:
                 yield obj
-
-    def remove_selected(self):
-        pass
 
 
 class Clipper:

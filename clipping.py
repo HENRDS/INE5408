@@ -1,7 +1,8 @@
 import core
-from shapes import Line, Point
+from shapes import Line, Point, Polygon
 from enum import IntFlag
 import typing as tp
+from geometry import slope, hpt
 
 
 class Direction(IntFlag):
@@ -13,15 +14,29 @@ class Direction(IntFlag):
 
 
 class CohenSutherland(core.Clipper):
+
+    def intersect(self, direction, angle, point):
+        x, y, _ = point
+        if direction & Direction.LEFT:
+            x = self.window.origin
+
+
     def clip_line(self, line: Line):
         p1, p2 = line.points
         d1, d2 = self.direction_of(p1), self.direction_of(p2)
         if (d1 | d2) == Direction.CENTER:
+            # completely inside the window
             return line
-        elif d1 != Direction.CENTER:
+        elif (d1 & d2) != Direction.CENTER:
+            # completely outside the window
+            return None
+        angle = slope(p2 - p1)
 
+        if p1 == Direction.LEFT:
+            p1 =
 
-
+    def clip_polygon(self, p: Polygon):
+        return p
 
     def clip_point(self, pt: Point):
         x, y, _ = pt.points[0]

@@ -62,20 +62,24 @@ def scale_translate(sc, tr):
 
 
 def rel_transform(p, *trs):
-    n = len(p)
     m = None
     for t in trs:
         if m is None:
             m = t
         else:
             m = m @ t
-    return translate(p * hpt(-1, -1)) + m + translate(p)
+    return translate(p * hpt(-1, -1)) @ m @ translate(p)
 
 
 def rad(degrees: float) -> float:
-    return degrees * (np.pi / 180.)
+    return degrees * np.pi / 180.
 
 
 def vlen(vec):
     """Calculates the length of a vector"""
     return np.sqrt(np.sum(vec ** 2))
+
+
+def slope(vec):
+    """Calculates the slope angle(in radians) of a vector"""
+    return np.arctan2(vec[1], vec[0])
