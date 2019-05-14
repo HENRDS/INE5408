@@ -1,11 +1,14 @@
 import numpy as np
 from geometry import hpt
-from core import GraphicalObject, DrawContext, this_source
+from core import GraphicalObject, DrawContext
+from util import this_source_rgb
+from .point import PointLike, as_ndarray
 
 
 class Polygon(GraphicalObject):
-    def __init__(self, name: str, *points):
-        super().__init__(name)
+    def __init__(self, name: str, *points: PointLike):
+        t = tuple((as_ndarray(p) for p in points))
+        super().__init__(name, np.vstack(t))
         self.points = np.vstack(points)
 
     def draw(self, ctx: DrawContext) -> None:
@@ -21,14 +24,12 @@ class Polygon(GraphicalObject):
     def draw_verbose(self, ctx: DrawContext) -> None:
         self.draw(ctx)
         cairo_ctx = ctx.ctx
-        src = cairo_ctx.get_source()
-        cairo_ctx.set_source_rgb(0., 1., 0.)
-        for point in self.points:
-            x, y = ctx.viewport_transform(point)[:-1]
-            cairo_ctx.arc(x, y, 5, 0, 2 * np.pi)
-            cairo_ctx.fill()
-            cairo_ctx.close_path()
-        cairo_ctx.set_source(src)
+        with this_source_rgb(cairo_ctx, 0., 1., 0.):
+            for point in self.points:
+                x, y = ctx.viewport_transform(point)[:-1]
+                cairo_ctx.arc(x, y, 5, 0, 2 * np.pi)
+                cairo_ctx.fill()
+                cairo_ctx.close_path()
 
 
 def rect(name: str, tl, size) -> Polygon:

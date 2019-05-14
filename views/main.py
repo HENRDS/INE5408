@@ -1,4 +1,4 @@
-from core import Viewport, DrawContext
+from core import Viewport, DrawContext, GraphicalObject
 import gi
 
 from views.ui import WinMain
@@ -9,22 +9,24 @@ from gi.repository import Gtk, Gdk
 from geometry import hpt, rotate2D, rad, rel_transform
 import typing as tp
 import numpy as np
+from .ui import UI
 
 
 class MainController(WinMain):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+    def __init__(self, app_handler: UI, builder: Gtk.Builder):
         super().__init__(app_handler, builder)
+        self.app_handler: UI = app_handler
         self._step = 10.0
         self.viewport = Viewport(hpt(10., 10.), hpt(400., 400.))
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
         self.type_col = Gtk.TreeViewColumn("Type", self.type_rt, text=1)
-        self.tree_objects.set_model(self.model.list_model)
+        self.tree_objects.set_model(app_handler.lst_store_objects)
         self.tree_objects.append_column(self.name_col)
         self.tree_objects.append_column(self.type_col)
-        self.model.subscribe(self.update_screen)
-
+        self.model.subscribe("draw", self.update_screen)
+        self.model.subscribe("add", self.on_add_object)
         self.no_shift = {
             Gdk.KEY_Up: self.on_btn_up_clicked,
             Gdk.KEY_Down: self.on_btn_down_clicked,
@@ -42,6 +44,9 @@ class MainController(WinMain):
 
     def update_screen(self):
         self.canvas.queue_draw()
+
+    def on_add_object(self, obj: GraphicalObject):
+        self.app_handler.lst_store_objects.append([obj.name, obj.__class__.__name__])
 
     def get_selected_name(self) -> tp.Optional[str]:
         selection = self.tree_objects.get_selection()
@@ -62,6 +67,7 @@ class MainController(WinMain):
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         # self.viewport.resize(float(self.canvas.get_allocated_width()) - 20.,
         #                      float(self.canvas.get_allocated_height()) - 20.)
+
         draw_ctx = DrawContext(self.viewport, self.model.window, ctx)
         for obj in self.model.objects():
             if obj.name == self.get_selected_name():
@@ -143,11 +149,10 @@ class MainController(WinMain):
         selection = self.tree_objects.get_selection()
         nm = self.get_selected_name()
         _, tree_iter = selection.get_selected()
-        self.model.list_model.remove(tree_iter)
+        self.app_handler.lst_store_objects.remove(tree_iter)
         del self.model.display_file[nm]
         self.model.update()
         # self.tree_objects.set_selected(None)
 
     def on_btn_open_clicked(self, sender: Gtk.Button) -> None:
         pass
-

@@ -15,10 +15,13 @@ class Direction(IntFlag):
 
 class CohenSutherland(core.Clipper):
 
-    def intersect(self, direction, angle, point):
+    def snap(self, direction, v, point):
         x, y, _ = point
+        xv, yv = v[:2]
         if direction & Direction.LEFT:
-            x = self.window.origin
+            x = self.window._ppc[0][0]
+
+
 
 
     def clip_line(self, line: Line):
@@ -30,10 +33,12 @@ class CohenSutherland(core.Clipper):
         elif (d1 & d2) != Direction.CENTER:
             # completely outside the window
             return None
-        angle = slope(p2 - p1)
+        new_p1 = self.snap(p2 - p1)
 
-        if p1 == Direction.LEFT:
-            p1 =
+
+
+
+
 
     def clip_polygon(self, p: Polygon):
         return p

@@ -1,12 +1,12 @@
 import numpy as np
 from core import GraphicalObject, DrawContext
+from .point import PointLike, as_ndarray
 
 
 class Line(GraphicalObject):
 
-    def __init__(self, name: str, p1, p2):
-        super().__init__(name)
-        self.points = np.vstack((p1, p2))
+    def __init__(self, name: str, p1: PointLike, p2: PointLike):
+        super().__init__(name, np.vstack((as_ndarray(p1), as_ndarray(p2))))
 
     def draw_verbose(self, ctx: DrawContext) -> None:
         self.draw(ctx)
@@ -26,6 +26,5 @@ class Line(GraphicalObject):
         cairo_ctx.move_to(*p1[:-1])
         cairo_ctx.line_to(*p2[:-1])
         cairo_ctx.stroke()
-
 
 

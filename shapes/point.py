@@ -1,12 +1,19 @@
 import numpy as np
 from core import GraphicalObject, DrawContext
+import typing as tp
 
 
 class Point(GraphicalObject):
 
-    def __init__(self, name: str, pos):
-        super().__init__(name)
-        self.points = np.array([pos])
+    def __init__(self, name: str, x: float, y: float, z: float = ...):
+        if z is ...:
+            self.is_3d = False
+            super().__init__(name, np.array([[x, y, 1.]]))
+        else:
+            self.is_3d = True
+            super().__init__(name, np.array([[x, y, z, 1.]]))
+
+
 
     def draw_verbose(self, ctx: DrawContext) -> None:
         self.draw(ctx)
@@ -25,3 +32,15 @@ class Point(GraphicalObject):
         cairo_ctx.fill()
 
 
+PointLike = tp.Union[Point, np.ndarray, tp.Tuple[float, float], tp.Tuple[float, float, float]]
+
+
+def as_ndarray(point: PointLike) -> np.ndarray:
+    if isinstance(point, np.ndarray):
+        return point
+    elif isinstance(point, tuple):
+        return np.array([*point, 1.])
+    elif isinstance(point, Point):
+        return point.points[0]
+    else:
+        raise TypeError("Invalid point.")

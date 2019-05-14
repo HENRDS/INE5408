@@ -7,8 +7,7 @@ from views import SGI
 
 
 def main():
-    builder = Gtk.Builder.new_from_file("main_window.glade")
-    v = SGI(builder)
+    v = SGI()
     v.show()
     try:
         Gtk.main()

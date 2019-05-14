@@ -1,8 +1,57 @@
-from core import GraphicalModel, WindowEventHandler, Context, ApplicationHandler
+from core import GraphicalModel, WindowEventHandler, ApplicationHandler
+from cairo import Context
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk, Gdk
+
+
+class PopAddObj(WindowEventHandler):
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler)
+        self.win: Gtk.Popover = builder.get_object("pop_add_obj")
+        self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
+        self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
+        self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
+        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
+        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
+        self.btn_include_3d: Gtk.Button = builder.get_object("btn_include_3d")
+        # btn_include_point handlers
+        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
+        # btn_include_line handlers
+        self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
+        # btn_include_polygon handlers
+        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
+        # btn_include_spline handlers
+        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
+        # btn_include_bezier handlers
+        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
+        # btn_include_3d handlers
+        self.btn_include_3d.connect("clicked", self.on_btn_include_3d_clicked)
+
+    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_point."""
+        pass
+
+    def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_line."""
+        pass
+
+    def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_polygon."""
+        pass
+
+    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_spline."""
+        pass
+
+    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_bezier."""
+        pass
+
+    def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_3d."""
+        pass
 
 
 class WinMain(WindowEventHandler):
@@ -157,54 +206,6 @@ class WinMain(WindowEventHandler):
         pass
 
 
-class PopAddObj(WindowEventHandler):
-    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
-        super().__init__(app_handler)
-        self.win: Gtk.Popover = builder.get_object("pop_add_obj")
-        self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
-        self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
-        self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
-        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
-        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
-        self.btn_include_3d: Gtk.Button = builder.get_object("btn_include_3d")
-        # btn_include_point handlers
-        self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
-        # btn_include_line handlers
-        self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
-        # btn_include_polygon handlers
-        self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
-        # btn_include_spline handlers
-        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
-        # btn_include_bezier handlers
-        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
-        # btn_include_3d handlers
-        self.btn_include_3d.connect("clicked", self.on_btn_include_3d_clicked)
-
-    def on_btn_include_point_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_point."""
-        pass
-
-    def on_btn_include_line_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_line."""
-        pass
-
-    def on_btn_include_polygon_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_polygon."""
-        pass
-
-    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_spline."""
-        pass
-
-    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_bezier."""
-        pass
-
-    def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_3d."""
-        pass
-
-
 class WinAddPolygon(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler)
@@ -255,6 +256,7 @@ class WinCurve(WindowEventHandler):
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
         self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
         self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
+        self.entry_poligonz1: Gtk.Entry = builder.get_object("entry_poligonz1")
         self.comboboxtext_curve: Gtk.ComboBoxText = builder.get_object("comboboxtext_curve")
         # btn_close_curve handlers
         self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
@@ -291,8 +293,10 @@ class WinLine(WindowEventHandler):
         self.name_line: Gtk.Entry = builder.get_object("name_line")
         self.entry_x1_line: Gtk.Entry = builder.get_object("entry_x1_line")
         self.entry_y1_line: Gtk.Entry = builder.get_object("entry_y1_line")
+        self.entry_z1_line: Gtk.Entry = builder.get_object("entry_z1_line")
         self.entry_x2_line: Gtk.Entry = builder.get_object("entry_x2_line")
         self.entry_y2_line: Gtk.Entry = builder.get_object("entry_y2_line")
+        self.entry_z2_line: Gtk.Entry = builder.get_object("entry_z2_line")
         # btn_close_line handlers
         self.btn_close_line.connect("clicked", self.on_btn_close__clicked)
         # btn_add_line handlers
@@ -340,6 +344,7 @@ class WinPoint(WindowEventHandler):
         self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
         self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
         self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
+        self.entry_add_pointz: Gtk.Entry = builder.get_object("entry_add_pointz")
         # btn_close handlers
         self.btn_close.connect("clicked", self.on_btn_close_clicked)
         # btn_add handlers
@@ -422,8 +427,8 @@ class WinTranslate(WindowEventHandler):
 
 
 class UI(ApplicationHandler):
-    _WIN_MAIN = WinMain
     _POP_ADD_OBJ = PopAddObj
+    _WIN_MAIN = WinMain
     _WIN_ADD_POLYGON = WinAddPolygon
     _WIN_CURVE = WinCurve
     _WIN_LINE = WinLine
@@ -433,10 +438,25 @@ class UI(ApplicationHandler):
     _WIN_SCALE = WinScale
     _WIN_TRANSLATE = WinTranslate
 
-    def __init__(self, builder: Gtk.Builder, model: GraphicalModel = ...):
-        super().__init__(builder, model)
-        self.win_main: WinMain = self._WIN_MAIN(self, builder)
+    def __init__(self, model: GraphicalModel = ...):
+        super().__init__(model)
+        builder = Gtk.Builder.new_from_file("main_window.glade")
+        self.finish_obj: Gtk.Image = builder.get_object("finish_obj")
+        self.finish_object: Gtk.Image = builder.get_object("finish_object")
+        self.image1: Gtk.Image = builder.get_object("image1")
+        self.image_clean: Gtk.Image = builder.get_object("image_clean")
+        self.image_down: Gtk.Image = builder.get_object("image_down")
+        self.image_lef: Gtk.Image = builder.get_object("image_lef")
+        self.image_left: Gtk.Image = builder.get_object("image_left")
+        self.image_righ: Gtk.Image = builder.get_object("image_righ")
+        self.image_right: Gtk.Image = builder.get_object("image_right")
+        self.image_up: Gtk.Image = builder.get_object("image_up")
+        self.image_zoom_in: Gtk.Image = builder.get_object("image_zoom_in")
+        self.image_zoom_out: Gtk.Image = builder.get_object("image_zoom_out")
+        self.imagine_remove_object: Gtk.Image = builder.get_object("imagine_remove_object")
+        self.lst_store_objects: Gtk.ListStore = builder.get_object("lst_store_objects")
         self.pop_add_obj: PopAddObj = self._POP_ADD_OBJ(self, builder)
+        self.win_main: WinMain = self._WIN_MAIN(self, builder)
         self.win_add_polygon: WinAddPolygon = self._WIN_ADD_POLYGON(self, builder)
         self.win_curve: WinCurve = self._WIN_CURVE(self, builder)
         self.win_line: WinLine = self._WIN_LINE(self, builder)
