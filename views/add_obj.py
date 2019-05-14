@@ -28,16 +28,9 @@ class AddObjController(PopAddObj):
         win_polygon.win.show()
         self.win.hide()
 
-    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        win_bezier = self.app_handler.win_curve
-        self.app_handler.clean_entries(win_bezier)
-        win_bezier.win.show()
-        self.win.hide()
-
-    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        win_spline = self.app_handler.win_curve
-        self.app_handler.clean_entries(win_spline)
-        win_spline.win.show()
+    def on_btn_include_curve_clicked(self, sender: Gtk.Button) -> None:
+        self.app_handler.clean_entries(self.app_handler.win_curve)
+        self.win_curve.win.show()
         self.win.hide()
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:

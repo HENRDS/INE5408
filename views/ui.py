@@ -164,8 +164,7 @@ class PopAddObj(WindowEventHandler):
         self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
         self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
         self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
-        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
-        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
+        self.btn_include_curve: Gtk.Button = builder.get_object("btn_include_curve")
         self.btn_include_3d: Gtk.Button = builder.get_object("btn_include_3d")
         # btn_include_point handlers
         self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
@@ -173,10 +172,8 @@ class PopAddObj(WindowEventHandler):
         self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
         # btn_include_polygon handlers
         self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
-        # btn_include_spline handlers
-        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
-        # btn_include_bezier handlers
-        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
+        # btn_include_curve handlers
+        self.btn_include_curve.connect("clicked", self.on_btn_include_curve_clicked)
         # btn_include_3d handlers
         self.btn_include_3d.connect("clicked", self.on_btn_include_3d_clicked)
 
@@ -192,12 +189,8 @@ class PopAddObj(WindowEventHandler):
         """Handler for event 'clicked' of control btn_include_polygon."""
         pass
 
-    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_spline."""
-        pass
-
-    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_bezier."""
+    def on_btn_include_curve_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_curve."""
         pass
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
@@ -255,6 +248,7 @@ class WinCurve(WindowEventHandler):
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
         self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
         self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
+        self.entry_poligonz1: Gtk.Entry = builder.get_object("entry_poligonz1")
         self.comboboxtext_curve: Gtk.ComboBoxText = builder.get_object("comboboxtext_curve")
         # btn_close_curve handlers
         self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
@@ -291,8 +285,10 @@ class WinLine(WindowEventHandler):
         self.name_line: Gtk.Entry = builder.get_object("name_line")
         self.entry_x1_line: Gtk.Entry = builder.get_object("entry_x1_line")
         self.entry_y1_line: Gtk.Entry = builder.get_object("entry_y1_line")
+        self.entry_z1_line: Gtk.Entry = builder.get_object("entry_z1_line")
         self.entry_x2_line: Gtk.Entry = builder.get_object("entry_x2_line")
         self.entry_y2_line: Gtk.Entry = builder.get_object("entry_y2_line")
+        self.entry_z2_line: Gtk.Entry = builder.get_object("entry_z2_line")
         # btn_close_line handlers
         self.btn_close_line.connect("clicked", self.on_btn_close__clicked)
         # btn_add_line handlers
@@ -340,6 +336,7 @@ class WinPoint(WindowEventHandler):
         self.entry_add_name: Gtk.Entry = builder.get_object("entry_add_name")
         self.entry_add_pointx: Gtk.Entry = builder.get_object("entry_add_pointx")
         self.entry_add_pointy: Gtk.Entry = builder.get_object("entry_add_pointy")
+        self.entry_add_pointz: Gtk.Entry = builder.get_object("entry_add_pointz")
         # btn_close handlers
         self.btn_close.connect("clicked", self.on_btn_close_clicked)
         # btn_add handlers
