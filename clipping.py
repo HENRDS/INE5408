@@ -16,15 +16,27 @@ class Direction(IntFlag):
 class CohenSutherland(core.Clipper):
 
     def snap(self, direction, v, point):
-        x, y, _ = point
-        xv, yv = v[:2]
+        x, y, *_ = point
+        xv, yv, *_ = v
+        win_p1, win_p2 = self.window._ppc
+        m = slope(v)
         if direction & Direction.LEFT:
-            x = self.window._ppc[0][0]
+            new_x = win_p1[0]
+            new_y = m * (new_x - win_p1[0]) + win_p1[1]
+        elif direction & Direction.RIGHT:
+            new_x = win_p2[0]
+            new_y = m * (new_x - win_p1[0]) + win_p1[1]
+        elif direction & Direction.UP:
+            new_y = win_p2[1]
+            new_x = win_p1[0] + 1 / m * (new_y - win_p1[1])
+        elif direction & Direction.DOWN:
+            new_y = win_p1[1]
+            new_x = win_p1[0] + 1 / m * (new_y - win_p1[1])
+        else:
+            new_x, new_y = x, y
+        return hpt(new_x, new_y)
 
-
-
-
-    def clip_line(self, line: Line):
+    def clip_line(self, line: Line) -> tp.Optional[Line]:
         p1, p2 = line.points
         d1, d2 = self.direction_of(p1), self.direction_of(p2)
         if (d1 | d2) == Direction.CENTER:
@@ -33,12 +45,10 @@ class CohenSutherland(core.Clipper):
         elif (d1 & d2) != Direction.CENTER:
             # completely outside the window
             return None
-        new_p1 = self.snap(p2 - p1)
+        new_p1 = self.snap(d1, p2 - p1, p1)
+        new_p2 = self.snap(d2, p1 - p2, p2)
 
-
-
-
-
+        return Line(new_p1, new_p2)
 
     def clip_polygon(self, p: Polygon):
         return p
@@ -54,8 +64,8 @@ class CohenSutherland(core.Clipper):
         return pt
 
     def direction_of(self, point):
-        cod = Direction.CENTER
 
+        cod = Direction.CENTER
         if point[1] > self.window.p2[1]:
             cod |= Direction.UP
         elif point[1] < self.window.p1[1]:
