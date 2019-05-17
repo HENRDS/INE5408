@@ -6,7 +6,7 @@ class Axis(Enum):
     X = 0
     Y = 1
     Z = 2
-    T = 3
+    W = 3
 
 
 def pt(*items) -> np.ndarray:

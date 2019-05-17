@@ -35,7 +35,7 @@ class GraphicalModel:
     def objects(self, clipper=...):
         ppc_matrix = rotate2D(-self.window.angle)
         bl = self.window.origin @ ppc_matrix
-        tr = hpt(*(self.window.origin + self.window.size)[:-1])
+        tr = hpt(*(bl + self.window.size)[:-1])
         self.window._ppc = np.vstack((bl, tr))
         if clipper is ...:
             clipper = lambda x: x
