@@ -6,6 +6,17 @@ from cairo import Context
 from geometry import hpt
 
 
+class DrawContext:
+    def __init__(self, viewport: Viewport, win: Window, ctx: Context):
+        self.viewport = viewport
+        self.win = win
+        self.ctx = ctx
+
+    def viewport_transform(self, p):
+        x, y, _ = (p - self.win._ppc[0]) / self.win.size
+        return hpt(x, 1 - y) @ self.viewport.matrix()
+
+
 class GraphicalObject:
     def __init__(self, name: str, points: np.ndarray):
         self._name = name

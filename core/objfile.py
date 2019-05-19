@@ -151,3 +151,20 @@ class Parser:
         return self.objects
 
 
+def load(path: str):
+    objects = []
+    with open(path) as file:
+        parser = Parser(Lexer(file))
+        for obj in parser.parse():
+            name = obj["name"]
+            points = obj["points"]
+            n = len(obj["points"])
+            if n == 1:
+                x, y, z, *_ = points[0].array
+                objects.append(Point(name, x, y, z))
+            elif n == 2:
+                pass
+
+
+def save():
+    pass
