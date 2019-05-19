@@ -31,7 +31,7 @@ class Token:
 
 class Lexer:
     _TOKEN_SPEC = {
-        TokenType.ID: r"\b[a-zA-Z]+\b",
+        TokenType.ID: r"\b[a-zA-Z]\w+\b",
         TokenType.NUM: r"[-+]?\d+\.\d+",
         TokenType.IDX: r"[-+]?\d+",
         TokenType.WS: r"[\t ]+",
@@ -78,17 +78,16 @@ class Vertex:
         self.tokens = tokens
         self.array = np.array(tk.value for tk in tokens)
 
+
 class Parser:
     def __init__(self, lexer: Lexer):
         self.tokens = [tk for tk in lexer]
         self.current = 0
-        self.vertices = {
-            "v": [],
-            "vn": [],
-            "vt": [],
-            "vp": [],
-        }
+        self.vertices = []
         self.objects = []
+
+    def current_obj(self):
+        return self.objects[-1] if self.objects else None
 
     def err(self, msg, tk=...) -> tp.NoReturn:
         if tk is ...:
@@ -118,54 +117,37 @@ class Parser:
         return tokens
 
     def skip_until(self, tok: TokenType):
-        for i, tk in enumerate(self.tokens[self.current:]):
+        i = 0
+        for tk in self.tokens[self.current:]:
             if tk.type == tok:
-                self.current += i
                 break
+            i += 1
+        self.current += i
 
     def vertex(self):
-        self.vertices["v"].append(Vertex(*self.match_interval(TokenType.NUM, 3, 4)))
-
-    def points(self, name: tp.Optional[str]):
-        if name is None:
-            name = "Point"
-        for i, v in enumerate(self.match_interval(TokenType.NUM, 1)):
-            idx = int(v.value)
-            vtx = self.vertices["v"][idx]
-            nm = name + (str(i) if i > 0 else "")
-            self.objects.append(Point(nm, *vtx.array[:3]))
-
-    def lines(self, name: tp.Optional[str]):
-        if name is None:
-            name = "Line"
-        match = self.match_interval(TokenType.NUM, 2)
-        vertices = self.vertices["v"]
-        for i, (p1, p2) in enumerate(zip(match[:-1], match[1:])):
-            v1, v2 = vertices[int(p1.value)].array, vertices[int(p2.value)].array
-            nm = name + (str(i) if i > 0 else "")
-            self.objects.append(Line(nm, v1, v2))
-
-    def parse_command(self, cmd: str):
-        pass
+        v = Vertex(*self.match_interval(TokenType.NUM, 3, 4))
+        self.vertices.append(v)
+        if self.current_obj() is not None:
+            self.current_obj()["points"].append(v)
+        return v
 
     def parse(self):
-        name: tp.Optional[str] = None
         while not self.is_at_end():
             cmd = self.match(TokenType.ID)
             if cmd is None:
                 self.err("Expected command")
             if cmd.lexeme == "v":
                 self.vertex()
-            elif cmd.lexeme == "p":
-                self.points(name)
-            elif cmd.lexeme == "l":
-                self.lines(name)
             elif cmd.lexeme == "o":
                 tk = self.match(TokenType.ID)
                 if tk is None:
                     self.err("Expected object name")
-                name = tk.lexeme
+                obj = {"name": tk.lexeme, "points": []}
+                self.objects.append(obj)
                 continue
             else:
+                print(f"Warning: Unknown command '{self.current_token().type.name}'.")
                 self.skip_until(TokenType.ID)
-            name = None
+        return self.objects
+
+
