@@ -6,6 +6,7 @@ from cairo import Context
 from geometry import hpt
 
 
+
 class GraphicalObject:
     def __init__(self, name: str, points: np.ndarray):
         self._name = name
