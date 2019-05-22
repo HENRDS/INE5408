@@ -125,4 +125,4 @@ class AddCurveController(WinCurve):
         super().on_btn_close_curve_clicked(sender)
 
 class AddObj3dController(WinObj3D):
-    def on_btn_add
+    pass
