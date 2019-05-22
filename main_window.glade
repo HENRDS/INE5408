@@ -1675,6 +1675,21 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
+              <object class="GtkButton">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="btn_add_vertice">
                 <property name="label" translatable="yes">Add Vertice</property>
                 <property name="visible">True</property>
@@ -1688,7 +1703,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -1707,7 +1722,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -2185,7 +2200,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkComboBoxText">
+                  <object class="GtkComboBoxText" id="id_comboxBox_rotate">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="active">0</property>
@@ -2217,7 +2232,7 @@
                     <property name="width_request">150</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Angle (in radians): </property>
+                    <property name="label" translatable="yes">Angle (in degrees): </property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

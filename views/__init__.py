@@ -3,7 +3,7 @@ from shapes import Line, rect, Point
 from geometry import hpt
 from .ui import UI
 from .main import MainController
-from .add_obj import AddObjController, AddPointController, AddLineController, AddPolygonController
+from .add_obj import AddObjController, AddPointController, AddLineController, AddPolygonController, AddCurveController, AddObj3dController
 from .transforms import TranslateController, ScaleController, RotateController
 import gi
 
@@ -20,6 +20,8 @@ class SGI(UI):
     _WIN_TRANSLATE = TranslateController
     _WIN_SCALE = ScaleController
     _WIN_ROTATE = RotateController
+    _WIN_CURVE = AddCurveController
+    _WIN_OBJ_3D = AddObj3dController
 
     def __init__(self):
         super().__init__()
