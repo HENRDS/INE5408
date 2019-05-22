@@ -40,6 +40,8 @@ class GraphicalModel:
         if clipper is ...:
             clipper = lambda x: x
 
-        for obj in map(clipper, self.display_file.values()):
-            if obj is not None:
-                yield obj
+        for obj in self.display_file.values():
+            obj._ppc = obj.points @ ppc_matrix
+            tobj = clipper(obj)
+            if tobj is not None:
+                yield tobj

@@ -10,7 +10,7 @@ class Line(GraphicalObject):
 
     def draw_verbose(self, ctx: DrawContext) -> None:
         self.draw(ctx)
-        p1, p2 = [ctx.viewport_transform(p) for p in self.points][:2]
+        p1, p2 = [ctx.viewport_transform(p) for p in self._ppc][:2]
         cairo_ctx = ctx.ctx
         src = cairo_ctx.get_source()
         cairo_ctx.set_source_rgb(0., 1., 0.)
@@ -21,7 +21,7 @@ class Line(GraphicalObject):
         cairo_ctx.set_source(src)
 
     def draw(self, ctx: DrawContext) -> None:
-        p1, p2 = [ctx.viewport_transform(p) for p in self.points][:2]
+        p1, p2 = [ctx.viewport_transform(p) for p in self._ppc][:2]
         cairo_ctx = ctx.ctx
         cairo_ctx.move_to(*p1[:-1])
         cairo_ctx.line_to(*p2[:-1])

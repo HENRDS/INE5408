@@ -7,13 +7,6 @@ from gi.repository import Gtk
 from views import SGI
 
 
-def wowo():
-    with open("data/test1.obj") as f:
-        parser = Parser(Lexer(f))
-        objects = parser.parse()
-        print(objects)
-
-
 def main():
     v = SGI()
     v.show()
@@ -25,4 +18,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # wowo()
+

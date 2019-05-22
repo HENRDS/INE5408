@@ -69,7 +69,8 @@ class MainController(WinMain):
         #                      float(self.canvas.get_allocated_height()) - 20.)
 
         draw_ctx = DrawContext(self.viewport, self.model.window, ctx)
-        for obj in self.model.objects():
+        from clipping import CohenSutherland
+        for obj in self.model.objects(CohenSutherland(self.model.window)):
             if obj.name == self.get_selected_name():
                 ctx.set_source_rgb(1., 0., 0.)
                 obj.draw_verbose(draw_ctx)
@@ -77,9 +78,6 @@ class MainController(WinMain):
             else:
                 obj.draw(draw_ctx)
         self.viewport.draw(ctx)
-        cx, cy, _ = draw_ctx.viewport_transform(draw_ctx.win.center)
-        ctx.arc(cx, cy, 5, 0, 2 * np.pi)
-        ctx.fill()
 
     def on_btn_new_clicked(self, sender: Gtk.Button) -> None:
         super().on_btn_new_clicked(sender)
