@@ -358,6 +358,7 @@ class WinRotate(WindowEventHandler):
         self.win: Gtk.Dialog = builder.get_object("win_rotate")
         self.btn_close_rotate: Gtk.Button = builder.get_object("btn_close_rotate")
         self.btn_apply_rotate: Gtk.Button = builder.get_object("btn_apply_rotate")
+        self.id_comboxBox_rotate: Gtk.ComboBoxText = builder.get_object("id_comboxBox_rotate")
         self.entry_radian: Gtk.Entry = builder.get_object("entry_radian")
         self.entry_rotatex: Gtk.Entry = builder.get_object("entry_rotatex")
         self.entry_rotatey: Gtk.Entry = builder.get_object("entry_rotatey")

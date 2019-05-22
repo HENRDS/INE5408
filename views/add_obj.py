@@ -47,7 +47,8 @@ class AddPointController(WinPoint):
         name = self.entry_add_name.get_text()
         x = float(self.entry_add_pointx.get_text())
         y = float(self.entry_add_pointy.get_text())
-        self.model.add_obj(Point(name, hpt(x, y)))
+        z = float(self.entry_add_pointz.get_text())
+        self.model.add_obj(Point(name, x, y, z))
         self.win.hide()
 
     def on_btn_close_clicked(self, sender: Gtk.Button) -> None:
@@ -94,9 +95,6 @@ class AddPolygonController(WinAddPolygon):
         self.__points.append((float(self.entry_poligonx.get_text()),
                              float(self.entry_poligony.get_text()),
                              float(self.entry_poligonz.get_text())))
-        self.entry_poligonx.set_text("0.0")
-        self.entry_poligony.set_text("0.0")
-        self.entry_poligonz.set_text("0.0")
 
     def on_btn_remove_polygon_point_clicked(self, sender: Gtk.Button) -> None:
         selection = self.__points.get_selection()
@@ -125,4 +123,5 @@ class AddCurveController(WinCurve):
         super().on_btn_close_curve_clicked(sender)
 
 class AddObj3dController(WinObj3D):
-    def on_btn_add
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)

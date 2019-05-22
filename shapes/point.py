@@ -11,7 +11,7 @@ class Point(GraphicalObject):
             super().__init__(name, np.array([[x, y, 1.]]))
         else:
             self.is_3d = True
-            super().__init__(name, np.array([[x, y, z, 1.]]))
+            super().__init__(name, np.array([[x, y, z]]))
 
 
 
