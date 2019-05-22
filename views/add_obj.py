@@ -127,6 +127,20 @@ class AddCurveController(WinCurve):
 class AddObj3dController(WinObj3D):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
+        self.__points = Gtk.ListStore(float, float, float)
+        self.x_rt = Gtk.CellRendererText()
+        self.y_rt = Gtk.CellRendererText()
+        self.z_rt = Gtk.CellRendererText()
+        self.x_col = Gtk.TreeViewColumn("x", self.x_rt, text=0)
+        self.y_col = Gtk.TreeViewColumn("y", self.y_rt, text=1)
+        self.z_col = Gtk.TreeViewColumn("z", self.z_rt, text=2)
+        self.tree_polygon_points.set_model(self.__points)
+        self.tree_polygon_points.append_column(self.x_col)
+        self.tree_polygon_points.append_column(self.y_col)
+        self.tree_polygon_points.append_column(self.z_col)
+
+    def __init__(self, app_handler: "UI", builder: Gtk.Builder):
+        super().__init__(app_handler, builder)
 
     def on_btn_finish_obj_clicked(self, sender: Gtk.Button):
         self.win.hide()
