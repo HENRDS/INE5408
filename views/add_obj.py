@@ -60,9 +60,11 @@ class AddLineController(WinLine):
         name = self.name_line.get_text()
         x1 = float(self.entry_x1_line.get_text())
         y1 = float(self.entry_y1_line.get_text())
+        z1 = float(self.entry_z1_line.get_text())
         x2 = float(self.entry_x2_line.get_text())
         y2 = float(self.entry_y2_line.get_text())
-        self.model.add_obj(Line(name, hpt(x1, y1), hpt(x2, y2)))
+        z2 = float(self.entry_z2_line.get_text())
+        self.model.add_obj(Line(name, pt(x1, y1, z1), pt(x2, y2, z2)))
         self.win.hide()
 
     def on_btn_close__clicked(self, sender: Gtk.Button) -> None:
@@ -117,11 +119,18 @@ class AddCurveController(WinCurve):
         self.__points = Gtk.ListStore(float, float, float)
 
     def on_btn_add_curve_clicked(self, sender: Gtk.Button):
-        pass
+        self.win.hide()
 
     def on_btn_close_curve_clicked(self, sender: Gtk.Button):
-        super().on_btn_close_curve_clicked(sender)
+        self.win.hide()
 
 class AddObj3dController(WinObj3D):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
+
+    def on_btn_finish_obj_clicked(self, sender: Gtk.Button):
+        self.win.hide()
+
+
+    def on_btn_close_obj3d_clicked(self, sender: Gtk.Button):
+        self.win.hide()
