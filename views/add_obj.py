@@ -1,4 +1,4 @@
-from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj, WinCurve
+from views.ui import WinPoint, WinLine, WinAddPolygon, PopAddObj, WinCurve, WinObj3D
 import typing as tp
 import gi
 
@@ -30,11 +30,14 @@ class AddObjController(PopAddObj):
 
     def on_btn_include_curve_clicked(self, sender: Gtk.Button) -> None:
         self.app_handler.clean_entries(self.app_handler.win_curve)
-        self.win_curve.win.show()
+        self.app_handler.win_curve.win.show()
         self.win.hide()
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
-        pass
+        win_obj3d = self.app_handler.win_obj_3d
+        self.app_handler.clean_entries(win_obj3d)
+        win_obj3d.win.show()
+        self.win.hide()
 
 
 class AddPointController(WinPoint):
@@ -110,7 +113,7 @@ class AddPolygonController(WinAddPolygon):
         self.win.hide()
 
 
-class AddCurveCotroller(WinCurve):
+class AddCurveController(WinCurve):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler, builder)
         self.__points = Gtk.ListStore(float, float, float)
@@ -120,3 +123,6 @@ class AddCurveCotroller(WinCurve):
 
     def on_btn_close_curve_clicked(self, sender: Gtk.Button):
         super().on_btn_close_curve_clicked(sender)
+
+class AddObj3dController(WinObj3D):
+    def on_btn_add

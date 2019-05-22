@@ -13,8 +13,7 @@ class PopAddObj(WindowEventHandler):
         self.btn_include_point: Gtk.Button = builder.get_object("btn_include_point")
         self.btn_include_line: Gtk.Button = builder.get_object("btn_include_line")
         self.btn_include_polygon: Gtk.Button = builder.get_object("btn_include_polygon")
-        self.btn_include_spline: Gtk.Button = builder.get_object("btn_include_spline")
-        self.btn_include_bezier: Gtk.Button = builder.get_object("btn_include_bezier")
+        self.btn_include_curve: Gtk.Button = builder.get_object("btn_include_curve")
         self.btn_include_3d: Gtk.Button = builder.get_object("btn_include_3d")
         # btn_include_point handlers
         self.btn_include_point.connect("clicked", self.on_btn_include_point_clicked)
@@ -22,10 +21,8 @@ class PopAddObj(WindowEventHandler):
         self.btn_include_line.connect("clicked", self.on_btn_include_line_clicked)
         # btn_include_polygon handlers
         self.btn_include_polygon.connect("clicked", self.on_btn_include_polygon_clicked)
-        # btn_include_spline handlers
-        self.btn_include_spline.connect("clicked", self.on_btn_include_spline_clicked)
-        # btn_include_bezier handlers
-        self.btn_include_bezier.connect("clicked", self.on_btn_include_bezier_clicked)
+        # btn_include_curve handlers
+        self.btn_include_curve.connect("clicked", self.on_btn_include_curve_clicked)
         # btn_include_3d handlers
         self.btn_include_3d.connect("clicked", self.on_btn_include_3d_clicked)
 
@@ -41,12 +38,8 @@ class PopAddObj(WindowEventHandler):
         """Handler for event 'clicked' of control btn_include_polygon."""
         pass
 
-    def on_btn_include_spline_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_spline."""
-        pass
-
-    def on_btn_include_bezier_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_include_bezier."""
+    def on_btn_include_curve_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_include_curve."""
         pass
 
     def on_btn_include_3d_clicked(self, sender: Gtk.Button) -> None:
