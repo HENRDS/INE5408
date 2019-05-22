@@ -308,23 +308,23 @@ class WinObj3D(WindowEventHandler):
     def __init__(self, app_handler: "UI", builder: Gtk.Builder):
         super().__init__(app_handler)
         self.win: Gtk.Dialog = builder.get_object("win_obj_3d")
-        self.btn_add_vertice: Gtk.Button = builder.get_object("btn_add_vertice")
-        self.btn_finish_obj: Gtk.Button = builder.get_object("btn_finish_obj")
+        self.btn_close_obj3d: Gtk.Button = builder.get_object("btn_close_obj3d")
+        self.btn_finish_obj3d: Gtk.Button = builder.get_object("btn_finish_obj3d")
         self.entry_obj_name: Gtk.Entry = builder.get_object("entry_obj_name")
         self.entry_verticex: Gtk.Entry = builder.get_object("entry_verticex")
         self.entry_verticey: Gtk.Entry = builder.get_object("entry_verticey")
         self.entry_verticez: Gtk.Entry = builder.get_object("entry_verticez")
-        # btn_add_vertice handlers
-        self.btn_add_vertice.connect("clicked", self.on_btn_add_vertice_clicked)
-        # btn_finish_obj handlers
-        self.btn_finish_obj.connect("clicked", self.on_btn_finish_obj_clicked)
+        # btn_close_obj3d handlers
+        self.btn_close_obj3d.connect("clicked", self.on_btn_close_obj3d_clicked)
+        # btn_finish_obj3d handlers
+        self.btn_finish_obj3d.connect("clicked", self.on_btn_finish_obj_clicked)
 
-    def on_btn_add_vertice_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_add_vertice."""
+    def on_btn_close_obj3d_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_close_obj3d."""
         pass
 
     def on_btn_finish_obj_clicked(self, sender: Gtk.Button) -> None:
-        """Handler for event 'clicked' of control btn_finish_obj."""
+        """Handler for event 'clicked' of control btn_finish_obj3d."""
         pass
 
 
@@ -436,7 +436,6 @@ class UI(ApplicationHandler):
         super().__init__(model)
         builder = Gtk.Builder.new_from_file("main_window.glade")
         self.finish_obj: Gtk.Image = builder.get_object("finish_obj")
-        self.finish_object: Gtk.Image = builder.get_object("finish_object")
         self.image1: Gtk.Image = builder.get_object("image1")
         self.image_clean: Gtk.Image = builder.get_object("image_clean")
         self.image_down: Gtk.Image = builder.get_object("image_down")
