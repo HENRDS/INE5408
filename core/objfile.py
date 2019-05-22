@@ -4,7 +4,8 @@ from itertools import takewhile, islice
 from pathlib import Path
 from enum import Enum
 from dataclasses import dataclass
-from shapes import Point, Line
+from shapes import Point, Line, Polygon
+from core import GraphicalObject
 import numpy as np
 
 PathLike = tp.Union[Path, str]
@@ -131,6 +132,18 @@ class Parser:
             self.current_obj()["points"].append(v)
         return v
 
+    def build_object(self, obj):
+        name = obj["name"]
+        vertices = obj["points"]
+        n = len(vertices)
+        if n == 1:
+            x, y, z, *_ = vertices[0].array
+            return Point(name, x, y, z)
+        elif n == 2:
+            return Line(name, *(v.array[:3] for v in vertices))
+        else:
+            return Polygon(name, *(v.array[:3] for v in vertices))
+
     def parse(self):
         while not self.is_at_end():
             cmd = self.match(TokenType.ID)
@@ -148,23 +161,22 @@ class Parser:
             else:
                 print(f"Warning: Unknown command '{self.current_token().type.name}'.")
                 self.skip_until(TokenType.ID)
-        return self.objects
+
+        return [self.build_object(o) for o in self.objects]
 
 
 def load(path: str):
-    objects = []
     with open(path) as file:
-        parser = Parser(Lexer(file))
-        for obj in parser.parse():
-            name = obj["name"]
-            points = obj["points"]
-            n = len(obj["points"])
-            if n == 1:
-                x, y, z, *_ = points[0].array
-                objects.append(Point(name, x, y, z))
-            elif n == 2:
-                pass
+        return Parser(Lexer(file)).parse()
 
 
-def save():
-    pass
+def save(path: str, objects: tp.List[GraphicalObject]):
+    with open(path, "w") as file:
+        def emit(text):
+            file.write(f"{text}\n")
+
+        for obj in objects:
+            emit(f"o {obj.name}")
+            for point in obj.points:
+                c = " ".join(map(str, point[:3]))
+                emit(f"v {c}")

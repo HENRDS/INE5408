@@ -34,10 +34,11 @@ class ScaleController(WinScale):
 
 class RotateController(WinRotate):
     def on_btn_apply_rotate_clicked(self, sender: Gtk.Button) -> None:
+
         selected = self.model.selected
         center = selected.center
         m = rel_transform(center, rotate2D(rad(float(self.entry_radian.get_text()))))
-        selected.points = np.matmul(selected.points, m)
+        selected.points = selected.points @ m
         self.win.hide()
         self.model.update()
 

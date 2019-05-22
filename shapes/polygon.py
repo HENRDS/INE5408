@@ -13,7 +13,7 @@ class Polygon(GraphicalObject):
 
     def draw(self, ctx: DrawContext) -> None:
         cairo_ctx = ctx.ctx
-        pts = iter(self.points)
+        pts = iter(self._ppc)
         x = ctx.viewport_transform(next(pts))
         cairo_ctx.move_to(*x[:-1])
         for p in pts:
@@ -25,11 +25,12 @@ class Polygon(GraphicalObject):
         self.draw(ctx)
         cairo_ctx = ctx.ctx
         with this_source_rgb(cairo_ctx, 0., 1., 0.):
-            for point in self.points:
+            for point in self._ppc:
                 x, y = ctx.viewport_transform(point)[:-1]
                 cairo_ctx.arc(x, y, 5, 0, 2 * np.pi)
                 cairo_ctx.fill()
                 cairo_ctx.close_path()
+
 
 
 def rect(name: str, tl, size) -> Polygon:
