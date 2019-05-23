@@ -21,7 +21,9 @@ class CohenSutherland(core.Clipper):
         x, y, *_ = point
         xv, yv, *_ = v
         win_p1, win_p2 = self.window._ppc
-        m = 1 if xv == 0. else yv / xv
+        m = 1. if xv == 0. else yv / xv
+        if m == 0:
+            m = 1.
         if direction & Direction.LEFT:
             new_x = win_p1[0]
             new_y = m * (win_p1[0] - x) + y
@@ -30,10 +32,10 @@ class CohenSutherland(core.Clipper):
             new_y = m * (new_x - x) + y
         elif direction & Direction.UP:
             new_y = win_p2[1]
-            new_x = x + 1 / m * (new_y - y)
+            new_x = x + (1 / m) * (new_y - y)
         elif direction & Direction.DOWN:
             new_y = win_p1[1]
-            new_x = x + 1 / m * (new_y - y)
+            new_x = x + (1 / m) * (new_y - y)
         else:
             new_x, new_y = x, y
         return hpt(new_x, new_y)
@@ -78,24 +80,39 @@ class CohenSutherland(core.Clipper):
         return cod
 
     def clip_polygon(self, polygon: Polygon):
-        # Sutherland-Hodgeman
-
+        """Sutherland-Hodgeman"""
+        points = polygon._ppc
+        for direction in Direction:
+            if not direction:
+                continue
+            points = self.clip(direction, points)
+        polygon._ppc = points
         return polygon
 
-    def clip(self, direction: Direction, points: np.ndarray):
-        lines = zip(points, chain(points[1:], [points[0]]))
-        new_points = []
-        for p1, p2 in lines:
-            d1, d2 = self.direction_of(p1), self.direction_of(p2)
-            if (d1 & d2) & direction:
-                continue
-            if d1 & direction:
-                new_p1 = self.snap(d1, p2 - p1, p1)
-            else:
-                new_p1 = p1
-            if d2 & direction:
-                new_p2 = self.snap(d2, p1 - p2, p2)
-            else:
-                new_p2 = p2
+    def snap_straight(self, direction, point):
+        wp1, wp2 = self.window._ppc
+        if direction == Direction.LEFT:
+            point[0] = wp1[0]
+        elif direction == Direction.RIGHT:
+            point[0] = wp2[0]
+        elif direction == Direction.DOWN:
+            point[1] = wp1[1]
+        elif direction == Direction.UP:
+            point[1] = wp2[1]
+        return point
 
+    def clip(self, direction: Direction, points: np.ndarray):
+        n = len(points)
+        new_points = []
+        for i, point in enumerate(points):
+            direct = self.direction_of(point)
+            following = points[(i + 1) % n]
+            folo_dir = self.direction_of(following)
+            if folo_dir & direct & direction:
+                new_points.append(self.snap_straight(direct, point))
+            elif direct & direction:
+                v = following - point
+                new_points.append(self.snap(direct, v, point))
+            else:
+                new_points.append(point)
         return np.vstack(new_points)
