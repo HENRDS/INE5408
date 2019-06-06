@@ -92,18 +92,6 @@ class CohenSutherland(core.Clipper):
         polygon._ppc = points
         return polygon
 
-    def snap_straight(self, direction, point):
-        wp1, wp2 = self.window._ppc
-        if direction == Direction.LEFT:
-            point[0] = wp1[0]
-        elif direction == Direction.RIGHT:
-            point[0] = wp2[0]
-        elif direction == Direction.DOWN:
-            point[1] = wp1[1]
-        elif direction == Direction.UP:
-            point[1] = wp2[1]
-        return point
-
     def clip(self, direction: Direction, points: np.ndarray):
         n = len(points)
         new_points = []
@@ -126,7 +114,17 @@ class CohenSutherland(core.Clipper):
 
 class LiangBarsky(CohenSutherland):
     def clip_line(self, line: Line) -> tp.Optional[Line]:
-        return super().clip_line(line)
+        p1, p2 = line._ppc
+        win_p1, win_p2 = self.window._ppc
+
+        vector = p1 - p2
+        u1 = 0.0
+        u2 = 1.0
+        p = 0
+        q = 0
+        r = 0
+
+
 
     def clip_point(self, pt: Point):
         return super().clip_point(pt)
