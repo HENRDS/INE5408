@@ -122,3 +122,14 @@ class CohenSutherland(core.Clipper):
                     new_points.append(following)
 
         return np.vstack(new_points) if new_points else None
+
+
+class LiangBarsky(CohenSutherland):
+    def clip_line(self, line: Line) -> tp.Optional[Line]:
+        return super().clip_line(line)
+
+    def clip_point(self, pt: Point):
+        return super().clip_point(pt)
+
+    def clip_polygon(self, polygon: Polygon):
+        return super().clip_polygon(polygon)
