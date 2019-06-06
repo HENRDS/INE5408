@@ -247,9 +247,9 @@ class WinCurve(WindowEventHandler):
         self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
         self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
-        self.entry_poligonx1: Gtk.Entry = builder.get_object("entry_poligonx1")
-        self.entry_poligony1: Gtk.Entry = builder.get_object("entry_poligony1")
-        self.entry_poligonz1: Gtk.Entry = builder.get_object("entry_poligonz1")
+        self.entry_curvex: Gtk.Entry = builder.get_object("entry_curvex")
+        self.entry_curvey: Gtk.Entry = builder.get_object("entry_curvey")
+        self.entry_curvez: Gtk.Entry = builder.get_object("entry_curvez")
         self.comboboxtext_curve: Gtk.ComboBoxText = builder.get_object("comboboxtext_curve")
         # btn_close_curve handlers
         self.btn_close_curve.connect("clicked", self.on_btn_close_curve_clicked)
@@ -310,6 +310,8 @@ class WinObj3D(WindowEventHandler):
         self.win: Gtk.Dialog = builder.get_object("win_obj_3d")
         self.btn_close_obj3d: Gtk.Button = builder.get_object("btn_close_obj3d")
         self.btn_finish_obj3d: Gtk.Button = builder.get_object("btn_finish_obj3d")
+        self.btn_remove_polygon3d_point: Gtk.Button = builder.get_object("btn_remove_polygon3d_point")
+        self.btn_add_polygon3d_point: Gtk.Button = builder.get_object("btn_add_polygon3d_point")
         self.entry_obj_name: Gtk.Entry = builder.get_object("entry_obj_name")
         self.entry_verticex: Gtk.Entry = builder.get_object("entry_verticex")
         self.entry_verticey: Gtk.Entry = builder.get_object("entry_verticey")
@@ -318,6 +320,8 @@ class WinObj3D(WindowEventHandler):
         self.btn_close_obj3d.connect("clicked", self.on_btn_close_obj3d_clicked)
         # btn_finish_obj3d handlers
         self.btn_finish_obj3d.connect("clicked", self.on_btn_finish_obj_clicked)
+        # btn_remove_polygon3d_point handlers
+        self.btn_remove_polygon3d_point.connect("clicked", self.on_btn_remove_polygon3d_point_clicked)
 
     def on_btn_close_obj3d_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_close_obj3d."""
@@ -325,6 +329,10 @@ class WinObj3D(WindowEventHandler):
 
     def on_btn_finish_obj_clicked(self, sender: Gtk.Button) -> None:
         """Handler for event 'clicked' of control btn_finish_obj3d."""
+        pass
+
+    def on_btn_remove_polygon3d_point_clicked(self, sender: Gtk.Button) -> None:
+        """Handler for event 'clicked' of control btn_remove_polygon3d_point."""
         pass
 
 

@@ -1179,7 +1179,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry_poligonx1">
+                      <object class="GtkEntry" id="entry_curvex">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="input_purpose">number</property>
@@ -1214,7 +1214,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry_poligony1">
+                      <object class="GtkEntry" id="entry_curvey">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="input_purpose">number</property>
@@ -1249,7 +1249,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry_poligonz1">
+                      <object class="GtkEntry" id="entry_curvez">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="input_purpose">number</property>
