@@ -149,8 +149,8 @@ class MainController(WinMain):
         _, tree_iter = selection.get_selected()
         self.app_handler.lst_store_objects.remove(tree_iter)
         del self.model.display_file[nm]
+        self.model.selected_name = self.get_selected_name()
         self.model.update()
-        # self.tree_objects.set_selected(None)
 
     def on_btn_open_clicked(self, sender: Gtk.Button) -> None:
         pass

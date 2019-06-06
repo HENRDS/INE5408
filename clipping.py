@@ -21,9 +21,7 @@ class CohenSutherland(core.Clipper):
         x, y, *_ = point
         xv, yv, *_ = v
         win_p1, win_p2 = self.window._ppc
-        m = 1. if xv == 0. else yv / xv
-        if m == 0:
-            m = 1.
+        m = 0. if xv == 0. else yv / xv
         if direction & Direction.LEFT:
             new_x = win_p1[0]
             new_y = m * (win_p1[0] - x) + y
@@ -32,10 +30,12 @@ class CohenSutherland(core.Clipper):
             new_y = m * (new_x - x) + y
         elif direction & Direction.UP:
             new_y = win_p2[1]
-            new_x = x + (1 / m) * (new_y - y)
+            m = 1. / m if m else 0.0
+            new_x = x + m * (new_y - y)
         elif direction & Direction.DOWN:
             new_y = win_p1[1]
-            new_x = x + (1 / m) * (new_y - y)
+            m = 1. / m if m else 0.0
+            new_x = x + m * (new_y - y)
         else:
             new_x, new_y = x, y
         return hpt(new_x, new_y)
@@ -43,10 +43,10 @@ class CohenSutherland(core.Clipper):
     def clip_line(self, line: Line) -> tp.Optional[Line]:
         p1, p2 = line._ppc
         d1, d2 = self.direction_of(p1), self.direction_of(p2)
-        if (d1 | d2) == Direction.CENTER:
+        if not (d1 | d2):
             # completely inside the window
             return line
-        elif (d1 & d2) != Direction.CENTER:
+        elif d1 & d2:
             # completely outside the window
             return None
         new_p1 = self.snap(d1, p2 - p1, p1)
@@ -86,6 +86,9 @@ class CohenSutherland(core.Clipper):
             if not direction:
                 continue
             points = self.clip(direction, points)
+            if points is None:
+                return None
+
         polygon._ppc = points
         return polygon
 
@@ -107,12 +110,15 @@ class CohenSutherland(core.Clipper):
         for i, point in enumerate(points):
             direct = self.direction_of(point)
             following = points[(i + 1) % n]
-            folo_dir = self.direction_of(following)
-            if folo_dir & direct & direction:
-                new_points.append(self.snap_straight(direct, point))
-            elif direct & direction:
-                v = following - point
-                new_points.append(self.snap(direct, v, point))
+            follo_dir = self.direction_of(following)
+            if direct & direction:
+                if not (follo_dir & direction):
+                    new_points.append(self.snap(direct, following - point, point))
+                    new_points.append(following)
             else:
-                new_points.append(point)
-        return np.vstack(new_points)
+                if follo_dir & direction:
+                    new_points.append(self.snap(follo_dir, point - following, following))
+                else:
+                    new_points.append(following)
+
+        return np.vstack(new_points) if new_points else None
