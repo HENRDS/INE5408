@@ -178,21 +178,6 @@ class LiangBarsky(CohenSutherland):
 
         return point
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def clip_point(self, pt: Point):
         return super().clip_point(pt)
 
