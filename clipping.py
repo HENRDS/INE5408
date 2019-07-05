@@ -92,18 +92,6 @@ class CohenSutherland(core.Clipper):
         polygon._ppc = points
         return polygon
 
-    def snap_straight(self, direction, point):
-        wp1, wp2 = self.window._ppc
-        if direction == Direction.LEFT:
-            point[0] = wp1[0]
-        elif direction == Direction.RIGHT:
-            point[0] = wp2[0]
-        elif direction == Direction.DOWN:
-            point[1] = wp1[1]
-        elif direction == Direction.UP:
-            point[1] = wp2[1]
-        return point
-
     def clip(self, direction: Direction, points: np.ndarray):
         n = len(points)
         new_points = []
@@ -126,7 +114,84 @@ class CohenSutherland(core.Clipper):
 
 class LiangBarsky(CohenSutherland):
     def clip_line(self, line: Line) -> tp.Optional[Line]:
-        return super().clip_line(line)
+        p1, p2 = line._ppc
+        win_p1, win_p2 = self.window._ppc
+        point = []
+        vector = p2 - p1
+        u1 = 0.0
+        u2 = 1.0
+        p = 0
+        q = 0
+        r = 0
+        draw = True
+
+        for side in Direction:
+            if not Direction:
+                continue
+
+            if side == Direction.LEFT:
+                p = -(p2[0] - p1[0])
+                q = p1[0] - win_p1[0]
+
+            if side == Direction.RIGHT:
+                p = p2[0] - p1[0]
+                q = win_p2[0] - p1[0]
+
+            if side == Direction.DOWN:
+                p = -(p2[1] - p1[1])
+                q = p1[1] - win_p1[1]
+
+            if side == Direction.UP:
+                p = p2[1] - p1[1]
+                q = win_p2[1] - p1[1]
+
+            if p == 0:
+                p = 1
+
+            r = q / p
+
+            if p == 0 and q < 0:
+                draw = False
+
+            if p < 0:
+                if r > u2:
+                    draw = False
+                if r > u1:
+                    u1 = r
+
+            if p > 0:
+                if r < u1:
+                    draw = False
+                if r < u2:
+                    u2 = r
+
+        if draw:
+            p1[0] = p1[0] + u1 * (p2[0] - p1[0])
+            p1[1] = p1[1] + u1 * (p2[1] - p1[1])
+            p2[0] = p1[0] + u2 * (p2[0] - p1[0])
+            p1[1] = p1[1] + u2 * (p2[1] - p1[1])
+
+            point.append(p1[0])
+            point.append(p1[1])
+            point.append(p2[0])
+            point.append(p1[1])
+
+        return point
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def clip_point(self, pt: Point):
         return super().clip_point(pt)
