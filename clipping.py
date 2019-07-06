@@ -1,5 +1,5 @@
 import core
-from shapes import Line, Point, Polygon
+from shapes import Line, Point, Polygon, Bezier
 from enum import IntFlag
 import typing as tp
 from geometry import slope, hpt
@@ -92,6 +92,10 @@ class CohenSutherland(core.Clipper):
         polygon._ppc = points
         return polygon
 
+    def clip_bezier(self,  bezier: Bezier):
+        return bezier
+
+
     def clip(self, direction: Direction, points: np.ndarray):
         n = len(points)
         new_points = []
@@ -110,6 +114,7 @@ class CohenSutherland(core.Clipper):
                     new_points.append(following)
 
         return np.vstack(new_points) if new_points else None
+
 
 
 class LiangBarsky(CohenSutherland):
@@ -177,21 +182,6 @@ class LiangBarsky(CohenSutherland):
             point.append(p1[1])
 
         return point
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def clip_point(self, pt: Point):
         return super().clip_point(pt)

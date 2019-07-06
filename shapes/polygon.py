@@ -32,7 +32,6 @@ class Polygon(GraphicalObject):
                 cairo_ctx.close_path()
 
 
-
 def rect(name: str, tl, size) -> Polygon:
     br = tl + size
     x0, y0 = tl[:-1]

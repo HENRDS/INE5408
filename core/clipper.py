@@ -12,4 +12,5 @@ class Clipper:
         method = f"clip_{name.lower()}"
         if hasattr(self, method):
             return getattr(self, method)(obj)
+        # return obj
         raise TypeError(f"This clipper cannot clip a {name}.")

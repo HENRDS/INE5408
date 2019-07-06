@@ -1,5 +1,5 @@
 import numpy as np
-from shapes import Line, rect, Point
+from shapes import Line, rect, Point, Bezier
 from geometry import hpt
 from .ui import UI
 from .main import MainController
@@ -28,6 +28,7 @@ class SGI(UI):
         self.model.add_obj(Line("noia", np.array([10, 10, 1]), np.array([100, 100, 1])))
         self.model.add_obj(rect("wee", np.array([10, 10, 1]), np.array([80, 80, 0])))
         self.model.add_obj(Point("kkk", 69, 69))
+        self.model.add_obj(Bezier("weed", np.array([69, 89, 1]), np.array([99, 109, 1]), np.array([269, 190, 1]), np.array([270, 290, 1])))
         self.win_main: MainController = self.win_main
 
 

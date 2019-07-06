@@ -37,6 +37,5 @@ class GraphicalObject:
     def draw(self, ctx: DrawContext) -> None:
         pass
 
-    @abc.abstractmethod
     def draw_verbose(self, ctx: DrawContext) -> None:
-        pass
+        self.draw(ctx)

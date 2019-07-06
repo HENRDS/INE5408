@@ -34,3 +34,4 @@ def pop_msg(widget: Gtk.Widget, msg: str):
     pop.add(pop.lbl_txt)
     pop.set_position(Gtk.PositionType.RIGHT)
     return pop
+
