@@ -247,6 +247,7 @@ class WinCurve(WindowEventHandler):
         self.btn_remove_curve_point: Gtk.Button = builder.get_object("btn_remove_curve_point")
         self.btn_add_curve_point: Gtk.Button = builder.get_object("btn_add_curve_point")
         self.tree_curve_points: Gtk.TreeView = builder.get_object("tree_curve_points")
+        self.entry_curve_name: Gtk.Entry = builder.get_object("entry_curve_name")
         self.entry_curvex: Gtk.Entry = builder.get_object("entry_curvex")
         self.entry_curvey: Gtk.Entry = builder.get_object("entry_curvey")
         self.entry_curvez: Gtk.Entry = builder.get_object("entry_curvez")

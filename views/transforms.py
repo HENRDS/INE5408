@@ -34,9 +34,15 @@ class ScaleController(WinScale):
 
 class RotateController(WinRotate):
     def on_btn_apply_rotate_clicked(self, sender: Gtk.Button) -> None:
-
         selected = self.model.selected
-        center = selected.center
+        rel_to = self.id_comboxBox_rotate.get_active_id()
+        if rel_to == 0:
+            center = selected.center
+        elif rel_to == 1:
+            center = hpt(0.0, 0.0)
+        else:
+            center = hpt(float(self.entry_rotatex.get_text()), float(self.entry_rotatey.get_text()))
+
         m = rel_transform(center, rotate2D(rad(float(self.entry_radian.get_text()))))
         selected.points = selected.points @ m
         self.win.hide()

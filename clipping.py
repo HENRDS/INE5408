@@ -92,9 +92,8 @@ class CohenSutherland(core.Clipper):
         polygon._ppc = points
         return polygon
 
-    def clip_bezier(self,  bezier: Bezier):
+    def clip_bezier(self, bezier: Bezier):
         return bezier
-
 
     def clip(self, direction: Direction, points: np.ndarray):
         n = len(points)
@@ -114,7 +113,6 @@ class CohenSutherland(core.Clipper):
                     new_points.append(following)
 
         return np.vstack(new_points) if new_points else None
-
 
 
 class LiangBarsky(CohenSutherland):
@@ -182,9 +180,3 @@ class LiangBarsky(CohenSutherland):
             point.append(p1[1])
 
         return point
-
-    def clip_point(self, pt: Point):
-        return super().clip_point(pt)
-
-    def clip_polygon(self, polygon: Polygon):
-        return super().clip_polygon(polygon)

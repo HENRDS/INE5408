@@ -10,7 +10,7 @@ class GraphicalModel:
         from .window import Window
         self.display_file: tp.Dict[str, GraphicalObject] = {}
         self.subscriptions = {}
-        self.window = Window(hpt(210., 210.), hpt(420., 420.))
+        self.window = Window(hpt(447., 234.), hpt(894.0, 468.0))
         self.selected_name = None
 
     def subscribe(self, event: str, callback):

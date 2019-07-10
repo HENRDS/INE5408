@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gtk
 from geometry import hpt, pt
-from shapes import Line, Point, Polygon, Curve
+from shapes import Line, Point, Polygon, Bezier
 
 
 class AddObjController(PopAddObj):
@@ -141,6 +141,8 @@ class AddCurveController(WinCurve):
         self.__points.remove(tree_iter)
 
     def on_btn_add_curve_clicked(self, sender: Gtk.Button):
+        points = [hpt(*p[:-1]) for p in self.__points]
+        self.model.add_obj(Bezier(self.entry_curve_name.get_text(), *points))
         self.win.hide()
 
     def on_btn_close_curve_clicked(self, sender: Gtk.Button):

@@ -30,6 +30,11 @@ class Viewport:
         self.size = size
 
     def draw(self, ctx: Context):
+        with this_source_rgb(ctx, 1., 1., 1.):
+            ctx.set_line_width(20)
+            ctx.rectangle(0, 0, 894.0, 468.0)
+            ctx.stroke()
+        ctx.set_line_width(1)
         with this_source_rgb(ctx, 1., 0., 0.):
             ctx.rectangle(*self.top_left[:-1], *(self.top_left + self.size)[:-1])
             ctx.stroke()

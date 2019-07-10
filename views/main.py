@@ -17,7 +17,7 @@ class MainController(WinMain):
         super().__init__(app_handler, builder)
         self.app_handler: UI = app_handler
         self._step = 10.0
-        self.viewport = Viewport(hpt(10., 10.), hpt(400., 400.))
+        self.viewport = Viewport(hpt(10., 10.), hpt(864.0, 438.0))
         self.name_rt = Gtk.CellRendererText()
         self.type_rt = Gtk.CellRendererText()
         self.name_col = Gtk.TreeViewColumn("Name", self.name_rt, text=0)
@@ -67,6 +67,11 @@ class MainController(WinMain):
     def on_canvas_draw(self, sender: Gtk.DrawingArea, ctx) -> None:
         # self.viewport.resize(float(self.canvas.get_allocated_width()) - 20.,
         #                      float(self.canvas.get_allocated_height()) - 20.)
+        # print((float(self.canvas.get_allocated_width()) - 20., float(self.canvas.get_allocated_height()) - 20.))
+        from util import this_source_rgb
+        with this_source_rgb(ctx, 1., 1., 1.):
+            ctx.rectangle(0, 0, 900, 500)
+            ctx.fill()
 
         draw_ctx = DrawContext(self.viewport, self.model.window, ctx)
         from clipping import CohenSutherland
